@@ -1,0 +1,23 @@
+{% extends 'inventory/base.html' %}
+{% block body %}
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">Item</th>
+      <th scope="col">Category</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Price</th>
+    </tr>
+  </thead>
+{% for supply in object_list %}
+<tbody>
+    <tr>
+      <td>{{ supply.supplyName }}</td>
+      <td>{{ supply.category}}</td>
+      <td>{{ supply.quantity }}</td>
+      <td>{{ supply.price }}</td>
+    </tr>
+{% endfor %}
+</tbody>
+</table>
+{% endblock body %}
