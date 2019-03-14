@@ -52,10 +52,16 @@ class MealItemAdmin(admin.ModelAdmin):
     list_display = ('foodName', 'mealName', 'quantity')
     search_fields = ['mealName__meal_name', 'foodName__food_name']
 
+class suppliesAdmin(admin.ModelAdmin):
+    """Configure how I want the database to look in the admin page. Also making it searchable."""
+    
+    list_display = ('supplyName', 'category', 'quantity', 'price')
+    search_fields = ['supplyName', 'category']
+
 admin.site.register(vans)
 admin.site.register(KitSupplies, KitSuppliesAdmin)
 admin.site.register(van_kit, van_kitAdmin)
-admin.site.register(supplies)
+admin.site.register(supplies, suppliesAdmin)
 admin.site.register(trips, tripsAdmin)
 admin.site.register(food)
 admin.site.register(customer, customerAdmin)

@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'inventory',
     'phonenumber_field',
+    'django_filters',
+    'bootstrapform',
 ]
 
 MIDDLEWARE = [
