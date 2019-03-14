@@ -1,8 +1,6 @@
 {% extends 'inventory/base.html' %}
 {% block body %}
-<br>
-<br>
-<br>
+
 <form method="GET">
 <div class="form-group" style="font-family: cursive;">
 {{ filter.form.as_p }}
@@ -11,7 +9,7 @@
 </form>
 <div class="table-responsive">
 <table class="table table-hover">
-  <thead>
+  <thead class="thead-dark">
     <tr>
       <th scope="col">Item</th>
       <th scope="col">Category</th>
