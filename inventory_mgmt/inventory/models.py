@@ -17,6 +17,9 @@ class employee(customer):
 class warehouse(models.Model):
     location = models.CharField(max_length=100, unique=True)
 
+    def __str__(self):
+        return self.location
+
 
 class trailers(models.Model):
     choices = (

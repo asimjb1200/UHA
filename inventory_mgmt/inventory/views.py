@@ -18,3 +18,13 @@ class SuppliesView(generic.ListView):
     def get_queryset(self):
         """Return a list of all the supplies in an object."""
         return supplies.objects.all()
+    
+class VansView(generic.ListView):
+    """Display a list of the vans for the user."""
+
+    model = vans
+    template_name = 'inventory/vans_list.html'
+
+    def get_queryset(self):
+        """Return a list of all vans in the database."""
+        return vans.objects.all()
