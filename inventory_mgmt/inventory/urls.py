@@ -4,5 +4,6 @@ from . import views
 app_name = 'inventory'
 urlpatterns = [
     url(r'^$', views.index, name='index'),
-    url(r'supplies/$', views.SuppliesView.as_view(), name='supplies'),
+    url(r'^supplies/$', views.SuppliesView.as_view(), name='supplies'),
+    url(r'^vans/$', views.VansView.as_view(), name='vans'),
 ]

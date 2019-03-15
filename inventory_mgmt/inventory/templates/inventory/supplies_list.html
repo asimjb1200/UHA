@@ -1,7 +1,15 @@
 {% extends 'inventory/base.html' %}
 {% block body %}
+
+<form method="GET">
+<div class="form-group" style="font-family: cursive;">
+{{ filter.form.as_p }}
+<button type="submit" class="btn btn-primary fa fa-search">&nbsp;</button>
+</div>
+</form>
+<div class="table-responsive">
 <table class="table table-hover">
-  <thead>
+  <thead class="thead-dark">
     <tr>
       <th scope="col">Item</th>
       <th scope="col">Category</th>
@@ -9,7 +17,7 @@
       <th scope="col">Price</th>
     </tr>
   </thead>
-{% for supply in object_list %}
+{% for supply in filter.qs %}
 <tbody>
     <tr>
       <td>{{ supply.supplyName }}</td>
@@ -20,4 +28,5 @@
 {% endfor %}
 </tbody>
 </table>
+</div>
 {% endblock body %}
