@@ -123,9 +123,16 @@ class food(models.Model):
     food_name = models.CharField(max_length=100, blank=False)
     price = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True) # inputting price is optional
     quantity = models.PositiveSmallIntegerField(blank=False) 
+    warehouse = models.ManyToManyField(warehouse, related_name='warehouse', through='foodWarehouse', through_fields=('food_name','warehouse'))
 
     def __str__(self):
         return self.food_name
+
+
+class foodWarehouse(models.Model):
+    food_name = models.ForeignKey(food, on_delete=models.CASCADE)
+    warehouse = models.ForeignKey(warehouse, on_delete=models.CASCADE)
+    qty = models.PositiveSmallIntegerField(blank=False)
 
 
 class meal(models.Model):
