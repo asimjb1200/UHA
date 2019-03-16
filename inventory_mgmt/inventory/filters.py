@@ -10,3 +10,4 @@ class SupplyFilter(django_filters.FilterSet):
             'supplyName': ['icontains'],
             'category': ['icontains'],
         }
+

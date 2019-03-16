@@ -40,9 +40,12 @@ INSTALLED_APPS = [
     'inventory',
     'phonenumber_field',
     'django_filters',
-    'bootstrapform',
+    'crispy_forms',
     'psycopg2',
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+PHONENUMBER_DEFAULT_REGION = 'US'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

@@ -4,6 +4,7 @@ from .models import supplies, van_kit, vans
 from django.views.generic.edit import CreateView, UpdateView, DeleteView 
 from django.views.generic import View
 from .filters import SupplyFilter # import the filter
+from .forms import TripForm
 
 # Create your views here.
 def index(request):
@@ -38,5 +39,13 @@ class VansView(generic.ListView):
         """Return a list of all vans in the database."""
         return vans.objects.all()
     
-class VanKitView(generic.ListView):
-    """Display the van kits and allow them to change what goes into a van kit"""
+
+class TripBuilder(View):
+    """This view will allow the user to build a trip."""
+    
+    form_class = TripForm
+    template_name = 'inventory/trip_builder.html'
+
+    def get(self, request):
+        form = self.form_class(None)
+        return render(request, self.template_name, {'form': form})

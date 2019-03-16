@@ -64,6 +64,10 @@ class foodWarehouseAdmin(admin.ModelAdmin):
     list_display = ('food_name', 'warehouse', 'qty')
     search_fields = ['food_name__food_name', 'warehouse__warehouse']
 
+class warehouseAdmin(admin.ModelAdmin):
+    list_display = ('id', 'location')
+
+
 admin.site.register(vans)
 admin.site.register(KitSupplies, KitSuppliesAdmin)
 admin.site.register(van_kit, van_kitAdmin)
@@ -78,5 +82,5 @@ admin.site.register(menu)
 admin.site.register(meal)
 admin.site.register(MealItem, MealItemAdmin)
 admin.site.register(menu_meals, menu_mealsAdmin)
-admin.site.register(warehouse)
+admin.site.register(warehouse, warehouseAdmin)
 admin.site.register(foodWarehouse, foodWarehouseAdmin)
