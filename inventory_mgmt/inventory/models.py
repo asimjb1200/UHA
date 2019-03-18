@@ -9,6 +9,9 @@ class customer(models.Model):
     email = models.EmailField(max_length=254, blank=False)
     group_size = models.PositiveSmallIntegerField(blank=False, default=0)
 
+    def __str__(self):
+        return self.first_name + " " + self.last_name
+
 
 class employee(customer):
     role = models.CharField(max_length=100)
@@ -22,6 +25,8 @@ class warehouse(models.Model):
 
 
 class trailers(models.Model):
+    class Meta:
+        verbose_name_plural = "trailers"
     choices = (
         ('Ready','No Issues'),
         ('Work Needed','Issues identified'),
@@ -65,7 +70,7 @@ class vans(models.Model):
     condition = models.CharField(max_length=50, choices = choices)
     available = models.BooleanField(default=True, blank=False)
     mileage = models.PositiveIntegerField()
-    trailer = models.ForeignKey(trailers, on_delete=models.CASCADE)
+    trailer = models.ForeignKey(trailers, on_delete=models.CASCADE, blank=True, null=True)
     comments = models.TextField(blank=True, null=True)
    
     # set up how the vans will be referenced in the admin page
@@ -141,7 +146,7 @@ class meal(models.Model):
     description = models.TextField(max_length=200)
 
     def __str__(self):
-        self.meal_name
+        return self.meal_name
 
 
 class MealItem(models.Model):
@@ -183,11 +188,11 @@ class trips(models.Model):
     trip_start = models.DateField(blank=False)
     trip_end = models.DateField(blank=False)
     van_used = models.ManyToManyField(vans)
-    kayak_used = models.ManyToManyField(kayak, related_name="kayak")
+    kayak_used = models.ManyToManyField(kayak, related_name="kayak", blank=True, null=True)
     menu = models.ForeignKey(menu, on_delete=models.CASCADE, related_name="trip_menu", null=True)
-    extra_meals_purchased = models.ManyToManyField(meal, related_name="trip_meals")
-    extra_food_purchased = models.ManyToManyField(food, related_name='food_used')
-    extra_supplies = models.ManyToManyField(supplies, related_name='trip_extras')
+    extra_meals_purchased = models.ManyToManyField(meal, related_name="trip_meals", blank=True, null=True)
+    extra_food_purchased = models.ManyToManyField(food, related_name='food_used', blank=True, null=True)
+    extra_supplies = models.ManyToManyField(supplies, related_name='trip_extras', blank=True, null=True)
     
     def __str__(self):
         return self.first_name + ' ' + self.last_name

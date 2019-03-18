@@ -1,12 +1,16 @@
 {% extends 'inventory/base.html' %}
+{% load crispy_forms_tags %}
 {% block body %}
 
+
 <form method="GET">
-<div class="form-group" style="font-family: cursive;">
-{{ filter.form.as_p }}
+<div class="form-group" style="width: 50%;">
+{{ filter.form|crispy }}
 <button type="submit" class="btn btn-primary fa fa-search">&nbsp;</button>
 </div>
+</div>
 </form>
+
 <div class="table-responsive">
 <table class="table table-hover">
   <thead class="thead-dark">
