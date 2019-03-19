@@ -1,9 +1,12 @@
 from django.views import generic
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import supplies, van_kit, vans
 from django.views.generic.edit import CreateView, UpdateView, DeleteView 
+from django.urls import reverse_lazy
+from django.contrib.auth import authenticate, login
 from django.views.generic import View
 from .filters import SupplyFilter # import the filter
+from .forms import TripForm, UserForm
 
 # Create your views here.
 def index(request):
@@ -38,5 +41,81 @@ class VansView(generic.ListView):
         """Return a list of all vans in the database."""
         return vans.objects.all()
     
-class VanKitView(generic.ListView):
-    """Display the van kits and allow them to change what goes into a van kit"""
+
+class UserFormView(View):
+    # what is the form's blueprint/class?
+    form_class = UserForm
+    template_name = 'inventory/registration_form.html'
+
+    # whenever the user calls the form it's a get request, go here and display a blank form
+    def get(self, request):
+        form = self.form_class(None)# no data by default in the blank form
+        return render(request, self.template_name, {'form': form})
+    
+    # process form data
+    def post(self, request):
+        form = self.form_class(request.POST) # pass in the user's data to that was submitted in form 
+
+        if form.is_valid():
+            user = form.save(commit=False) # create an object from the form, but don't save the form's data to the database yet
+
+            # cleaned (normalized) data
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user.set_password(password)
+            user.save()# now save them to the database
+
+            # returns User onjects if credentials are correct
+            user = authenticate(username=username, password=password)
+
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    # request.user.username
+                    # now redirect them to a page after login
+                    return redirect('inventory:index')
+                    
+        # if it doesn't work, have them try again
+        return render(request, self.template_name, {'form': form})       
+
+
+class TripBuilder(View):
+    """This view will allow the user to build a trip through a form."""
+    
+    form_class = TripForm
+    template_name = 'inventory/trip_builder.html'
+
+    def get(self, request):
+        """Return a blank form to the user to be filled out."""
+        form = self.form_class(None)
+        return render(request, self.template_name, {'form': form})
+
+    
+    def post(self, request):
+        """Take in user data, clean it, and then post it to the database."""
+        form = self.form_class(request.POST) # pass in the user's data to that was submitted in form 
+
+        if form.is_valid():
+            trip = form.save(commit=False) # create an object so we can clean the data before saving it
+
+            # now get the clean and normalize the data
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            comments = form.cleaned_data['comments']
+            payment_status = form.cleaned_data['payment_status']
+            trip_start = form.cleaned_data['trip_start']
+            trip_end = form.cleaned_data['trip_end']
+            van_used = form.cleaned_data['van_used']
+            kayak_used = form.cleaned_data['kayak_used']
+            menu = form.cleaned_data['menu']
+            extra_meals_purchased = form.cleaned_data['extra_meals_purchased']
+            extra_food_purchased = form.cleaned_data['extra_food_purchased']
+            extra_supplies = form.cleaned_data['extra_supplies']
+
+            trip.save()
+
+            if trip is not None:
+                return redirect('inventory:index')
+
+        # if it doesn't work, have them try again
+        return render(request, self.template_name, {'form': form})

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import vans, van_kit, supplies, food, trips, KitSupplies, menu, meal, menu_meals, MealItem, kayak, warehouse, employee, customer, trailers
+from .models import vans, van_kit, supplies, food, trips, KitSupplies, menu, meal, menu_meals, MealItem, kayak, warehouse, employee, customer, trailers, foodWarehouse
 # Register your models here so they'll show in the admin page.
 
 class van_kitAdmin(admin.ModelAdmin):
@@ -58,6 +58,16 @@ class suppliesAdmin(admin.ModelAdmin):
     list_display = ('supplyName', 'category', 'quantity', 'price')
     search_fields = ['supplyName', 'category']
 
+class foodWarehouseAdmin(admin.ModelAdmin):
+    """Configure how I want the database to look in the admin page. Also making it searchable."""
+    
+    list_display = ('food_name', 'warehouse', 'qty')
+    search_fields = ['food_name__food_name', 'warehouse__warehouse']
+
+class warehouseAdmin(admin.ModelAdmin):
+    list_display = ('id', 'location')
+
+
 admin.site.register(vans)
 admin.site.register(KitSupplies, KitSuppliesAdmin)
 admin.site.register(van_kit, van_kitAdmin)
@@ -72,4 +82,5 @@ admin.site.register(menu)
 admin.site.register(meal)
 admin.site.register(MealItem, MealItemAdmin)
 admin.site.register(menu_meals, menu_mealsAdmin)
-admin.site.register(warehouse)
+admin.site.register(warehouse, warehouseAdmin)
+admin.site.register(foodWarehouse, foodWarehouseAdmin)
