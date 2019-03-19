@@ -87,7 +87,7 @@ DATABASES = {
         #'NAME': 'os.path.join(BASE_DIR, 'db.sqlite3')',
         'NAME': 'inventory',
         'USER': 'postgres',
-        'PASSWORD': 'Megabad2',
+        'PASSWORD': 'devpostgres',
         'HOST': '127.0.0.1',
         'PORT': '5432'
     }
