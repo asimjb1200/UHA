@@ -3,9 +3,10 @@ from django.shortcuts import render, redirect
 from .models import supplies, van_kit, vans
 from django.views.generic.edit import CreateView, UpdateView, DeleteView 
 from django.urls import reverse_lazy
+from django.contrib.auth import authenticate, login
 from django.views.generic import View
 from .filters import SupplyFilter # import the filter
-from .forms import TripForm
+from .forms import TripForm, UserForm
 
 # Create your views here.
 def index(request):
@@ -40,6 +41,43 @@ class VansView(generic.ListView):
         """Return a list of all vans in the database."""
         return vans.objects.all()
     
+
+class UserFormView(View):
+    # what is the form's blueprint/class?
+    form_class = UserForm
+    template_name = 'inventory/registration_form.html'
+
+    # whenever the user calls the form it's a get request, go here and display a blank form
+    def get(self, request):
+        form = self.form_class(None)# no data by default in the blank form
+        return render(request, self.template_name, {'form': form})
+    
+    # process form data
+    def post(self, request):
+        form = self.form_class(request.POST) # pass in the user's data to that was submitted in form 
+
+        if form.is_valid():
+            user = form.save(commit=False) # create an object from the form, but don't save the form's data to the database yet
+
+            # cleaned (normalized) data
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            user.set_password(password)
+            user.save()# now save them to the database
+
+            # returns User onjects if credentials are correct
+            user = authenticate(username=username, password=password)
+
+            if user is not None:
+                if user.is_active:
+                    login(request, user)
+                    # request.user.username
+                    # now redirect them to a page after login
+                    return redirect('inventory:index')
+                    
+        # if it doesn't work, have them try again
+        return render(request, self.template_name, {'form': form})       
+
 
 class TripBuilder(View):
     """This view will allow the user to build a trip through a form."""
