@@ -8,6 +8,8 @@ class customer(models.Model):
     phone_number = PhoneNumberField(blank=False)
     email = models.EmailField(max_length=254, blank=False)
     group_size = models.PositiveSmallIntegerField(blank=False, default=0)
+    def __str__(self):
+        return self.first_name + " " + self.last_name
 
     def __str__(self):
         return self.first_name + " " + self.last_name
