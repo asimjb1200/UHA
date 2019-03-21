@@ -1,0 +1,18 @@
+{% extends 'inventory/base.html' %}
+{% block title %}<title>Login</title>{% endblock title %}
+
+{% block body %}
+    <div class="card border-secondary mb-3">
+        <div class="card-header rounded">
+        Login
+        </div>
+        <div class="card-body text-dark">
+            <h5 class="card-title">Welcome to Ultimate High Adventures</h5>
+            <form class="font-weight-bold" id="login-form" method="post" action="{% url 'inventory:login' %}">
+                {% csrf_token %}
+                {% include 'inventory/form-template.html' %}
+                <button type="submit" value="Login" class="btn btn-primary fa fa-sign-in">&nbsp;</button> 
+            </form>
+        </div>
+    </div>
+{% endblock body %}

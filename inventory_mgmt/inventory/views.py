@@ -1,12 +1,13 @@
 from django.views import generic
 from django.shortcuts import render, redirect
-from .models import supplies, van_kit, vans
+from .models import supplies, van_kit, vans, trips
 from django.views.generic.edit import CreateView, UpdateView, DeleteView 
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login
 from django.views.generic import View
 from .filters import SupplyFilter # import the filter
 from .forms import TripForm, UserForm
+import datetime
 
 # Create your views here.
 def index(request):
@@ -29,7 +30,19 @@ class SuppliesView(generic.ListView):
         context['filter'] = SupplyFilter(self.request.GET, queryset=self.get_queryset())
         return context
 
-    
+class TripManager(generic.ListView):
+    """This view will display the trips in the db in card fashion."""
+
+    model = trips
+    template_name = 'inventory/trip_manager.html'
+
+    def get_queryset(self):
+        return trips.objects.all()
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['today'] = datetime.date.today()
+        return context
     
 class VansView(generic.ListView):
     """Display a list of the vans for the user."""

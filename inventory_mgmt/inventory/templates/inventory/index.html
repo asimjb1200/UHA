@@ -2,74 +2,13 @@
 {% load static %}
 {% block body %}
 <div class="row">
-    {% comment %} <div class="card-deck">
-        <div class="card">
-            <img class="card-img-top" src="..." alt="Card image cap">
-            <div class="card-body">
-            <h5 class="card-title">Vans</h5>
-            <p class="card-text">Manage company vehicles</p>
-            </div>
-            <div class="card-footer">
-            <small class="text-muted">Last updated 3 mins ago</small>
-            </div>
-        </div>
-        <div class="card">
-            <img class="card-img-top" src="..." alt="Card image cap">
-            <div class="card-body">
-            <h5 class="card-title">Inventory</h5>
-            <p class="card-text">Manage the entire inventory list</p>
-            </div>
-            <div class="card-footer">
-            <small class="text-muted">Last updated 3 mins ago</small>
-            </div>
-        </div>
-        <div class="card">
-            <img class="card-img-top" src="..." alt="Card image cap">
-            <div class="card-body">
-            <h5 class="card-title">Van Kits</h5>
-            <p class="card-text">Manage van kits</p>
-            </div>
-            <div class="card-footer">
-            <small class="text-muted">Last updated 3 mins ago</small>
-            </div>
-        </div>
-        <div class="card">
-            <img class="card-img-top" src="..." alt="Card image cap">
-            <div class="card-body">
-            <h5 class="card-title">Food and Meals</h5>
-            <p class="card-text">Manage food inventory</p>
-            </div>
-            <div class="card-footer">
-            <small class="text-muted">Last updated 3 mins ago</small>
-            </div>
-        </div>
-        <div class="card">
-            <img class="card-img-top" src="..." alt="Card image cap">
-            <div class="card-body">
-            <h5 class="card-title">Trips</h5>
-            <p class="card-text">Manage trips</p>
-            </div>
-            <div class="card-footer">
-            <small class="text-muted">Last updated 3 mins ago</small>
-            </div>
-        </div>
-        <div class="card">
-            <img class="card-img-top" src="..." alt="Card image cap">
-            <div class="card-body">
-            <h5 class="card-title">Financial Reports</h5>
-            <p class="card-text">View pricing and other financial information</p>
-            </div>
-            <div class="card-footer">
-            <small class="text-muted">Last updated 3 mins ago</small>
-            </div>
-        </div>
-    </div> {% endcomment %}
+    <div class="card-deck">
     <div class="col">
         <div class="card border border-dark">
            <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
            <span class="fa fa-car fa-5x text-center">&nbsp;</span>
             <div class="card-body">
-            <h5 class="card-title"><a href="{% url 'inventory:vans'%}">Vans</a></h5>
+            <h5 class="card-title"><a href="{% url 'inventory:vans'%}" class="stretched-link">Vans</a></h5>
             <p class="card-text">Manage company vehicles</p>
             </div>
             <div class="card-footer">
@@ -82,7 +21,7 @@
             <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
             <span class="fa fa-wrench fa-5x text-center">&nbsp;</span>
             <div class="card-body">
-            <h5 class="card-title"><a href="{% url 'inventory:supplies'%}">Inventory</a></h5>
+            <h5 class="card-title"><a href="{% url 'inventory:supplies'%}" class="stretched-link">Inventory</a></h5>
             <p class="card-text">Manage the entire inventory list</p>
             </div>
             <div class="card-footer">
@@ -147,6 +86,7 @@
             </div>
         </div>
     </div>
+</div>
 </div>
    
 {% endblock body %}
