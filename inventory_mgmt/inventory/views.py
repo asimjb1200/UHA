@@ -6,6 +6,7 @@ from django.urls import reverse_lazy
 from django.views.generic import View
 from .filters import SupplyFilter # import the filter
 from .forms import TripForm
+from .forms import VanKitForm
 
 # Create your views here.
 def index(request):
@@ -39,7 +40,41 @@ class VansView(generic.ListView):
     def get_queryset(self):
         """Return a list of all vans in the database."""
         return vans.objects.all()
-    
+
+class VanKitView(View):
+    """This view will allow the user to build a Van Kit through a form"""
+
+    form_class = VanKitForm
+    template_name = 'inventory/van_kits.html'
+
+    def get(self, request):
+        """Return a blank form to user to be filled out."""
+        form = self.form_class(None)
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        """Take in user data, clean, and post to db"""
+        form = self.form_class(request.POST) # pass in submitted user data
+
+        if form.is_valid():
+            vkit = form.save(commit=False) # create an object to clean data before saving
+
+            # now get clean and normalize data
+            supply_name = form.cleaned_data['supply_name']
+            van_kit_name = form.cleaned_data['van_kit_name']
+            vanName = form.cleaned_data['vanName']
+            Available = form.cleaned_data['Available']
+            comments = form.cleaned_data['comments']
+
+            vkit.save()
+
+            if vkit is not None:
+                return redirect('inventory:index')
+
+        # if it doesn't work, have them try again
+        return render(request, self.template_name, {'form': form})
+
+
 
 class TripBuilder(View):
     """This view will allow the user to build a trip through a form."""
