@@ -7,6 +7,6 @@ urlpatterns = [
     url(r'^supplies/$', views.SuppliesView.as_view(), name='supplies'),
     url(r'^vans/$', views.VansView.as_view(), name='vans'),
     url(r'^trips/build_trip/$', views.TripBuilder.as_view(), name='trip-builder'),
-    url(r'^vankits/$', views.VanKitView.as_view, name='vans'),
+    url(r'^vankits/$', views.VanKitView.as_view(), name='vankit'),
 
 ]
