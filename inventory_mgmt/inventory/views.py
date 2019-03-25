@@ -37,13 +37,26 @@ class TripManager(generic.ListView):
     template_name = 'inventory/trip_manager.html'
 
     def get_queryset(self):
-        return trips.objects.all()
+        return trips.objects.all().order_by('trip_start')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['today'] = datetime.date.today()
         return context
+
+
+class TripDetails(generic.DetailView):
+    """This view will be used to display the details of a trip from the view trips page."""
     
+    model = trips
+    template_name = 'inventory/trip_details.html'
+
+    
+        
+        
+
+
+
 class VansView(generic.ListView):
     """Display a list of the vans for the user."""
 
