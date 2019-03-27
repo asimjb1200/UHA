@@ -30,6 +30,8 @@ class SuppliesView(generic.ListView):
         context['filter'] = SupplyFilter(self.request.GET, queryset=self.get_queryset())
         return context
 
+
+
 class TripManager(generic.ListView):
     """This view will display the trips in the db in card fashion."""
 
@@ -51,12 +53,12 @@ class TripDetails(generic.DetailView):
     model = trips
     template_name = 'inventory/trip_details.html'
 
-    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['today'] = datetime.date.today()
+        return context
         
         
-
-
-
 class VansView(generic.ListView):
     """Display a list of the vans for the user."""
 

@@ -2,9 +2,9 @@
 {% load static %}
 {% block body %}
 <div class="row">
-    <div class="card-deck">
-    <div class="col">
-        <div class="card border border-dark">
+    <div class="card-columns">
+    
+        <div class="card border border-dark shadow-lg">
            <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
            <span class="fa fa-car fa-5x text-center">&nbsp;</span>
             <div class="card-body">
@@ -15,9 +15,9 @@
             <small class="text-muted">Last updated 3 mins ago</small>
             </div>
         </div>
-    </div>
-    <div class="col">
-        <div class="card border border-dark">
+   
+    
+        <div class="card border border-dark shadow-lg">
             <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
             <span class="fa fa-wrench fa-5x text-center">&nbsp;</span>
             <div class="card-body">
@@ -28,11 +28,12 @@
             <small class="text-muted">Last updated 3 mins ago</small>
             </div>
         </div>
+    
+    <!--<div class="w-100">
     </div>
-    <div class="w-100">
-    </div>
-    <div class="col">
-        <div class="card border border-dark">
+    -->
+    
+        <div class="card border border-dark shadow-lg">
             <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
             <span class="fa fa-suitcase fa-5x text-center">&nbsp;</span>
             <div class="card-body">
@@ -43,9 +44,8 @@
             <small class="text-muted">Last updated 3 mins ago</small>
             </div>
         </div>
-    </div>
-    <div class="col">
-        <div class="card border border-dark">
+    
+        <div class="card border border-dark shadow-lg">
             <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
             <span class="fa fa-cutlery fa-5x text-center">&nbsp;</span>
             <div class="card-body">
@@ -56,25 +56,25 @@
             <small class="text-muted">Last updated 3 mins ago</small>
             </div>
         </div>
-    </div>
     
-    <div class="w-100">
+    <!--<div class="w-100">
     </div>
-    <div class="col">
-        <div class="card border border-dark">
+    -->
+    
+        <div class="card border border-dark shadow-lg">
             <!--<img class="card-img-top" src="{% static '/images/map.png' %}" alt="Card image cap" style="height: 5em;">-->
             <span class="fa fa-map fa-5x text-center">&nbsp;</span>
             <div class="card-body">
-            <h5 class="card-title">Trips</h5>
+            <h5 class="card-title"><a href="{% url 'inventory:trips' %}">Trips</a></h5>
             <p class="card-text">Manage trips</p>
             </div>
             <div class="card-footer">
             <small class="text-muted">Last updated 3 mins ago</small>
             </div>
         </div>
-    </div>
-    <div class="col">
-        <div class="card border border-dark">
+    
+
+        <div class="card border border-dark shadow-lg">
             <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
             <span class="fa fa-usd fa-5x text-center">&nbsp;</span>
             <div class="card-body">
@@ -85,7 +85,7 @@
             <small class="text-muted">Last updated 3 mins ago</small>
             </div>
         </div>
-    </div>
+    
 </div>
 </div>
    

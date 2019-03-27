@@ -1,8 +1,66 @@
 {% extends 'inventory/base.html' %}
 {% block title %}<title>Trip Details</title>{% endblock title %}
 {% block body %}
-<h1>{{ trips.first_name}}</h1>
-<h1>{{ trips.last_name }}</h1>
-
+<div class="card shadow-lg mb-3 text-center rounded">
+        <!--<img class="card-img-top fa fa-address-card fa-5x" src="" alt="Card image">-->
+        <span class="fa fa-address-card fa-5x">&nbsp;</span>
+            {% if trips.trip_start > today  %}
+            <h5 class="card-title">Upcoming Trip</h5>
+            {% elif trips.trip_start < today and trips.trip_end > today %}
+            <h5 class="card-title">Trip Ongoing</h5>
+            {% else %}
+            <h5 class="card-title">Trip Ended</h5>
+            {% endif %}
+        <h3 class="card-title">{{ trips.first_name }} {{ trips.last_name }}</h3>
+        <div class="card-footer text-muted">
+            <p class="card-text"><strong>{{ trips.trip_start }} - {{ trips.trip_end }}</strong></p>
+        </div>
+</div>
+<div class="card shadow-lg mb-3 text-center rounded">
+<div class="table-responsive">
+    <table class="table table-striped table-sm">
+  <thead>
+    <tr>
+      <th scope="col">Van Used</th>
+      <th scope="col">Kayak Used</th>
+      <th scope="col">Menu</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>{{ trips.van_used }}</td>
+      <td>{{ trips.kayak_used }}</td>
+      <td>{{ trips.menu }}</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+<br>
+<div id="wrapper" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;">
+  <div id="left">
+    <h2>Extra Food Purchased</h2>
+    <ul>
+    {% for food in trips.extra_food_purchased.all  %}
+      <li>{{ food }}</li>
+    {% endfor %}
+    </ul>
+  </div>
+  <div id="center" >
+    <h2>Extra Meals Purchased</h2>
+    <ul>
+    {% for food in trips.extra_meals_purchased.all  %}
+      <li>{{ food }}</li>
+    {% endfor %}
+    </ul>
+  </div>
+  <div id="right">
+    <h2>Extra Supplies Purchased</h2>
+    <ul>
+    {% for supplies in trips.extra_supplies.all  %}
+      <li>{{ supplies }}</li>
+    {% endfor %}
+    </ul>
+  </div>
+</div>
 {% endblock body %}
 
