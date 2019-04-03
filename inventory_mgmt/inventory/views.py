@@ -147,3 +147,15 @@ class TripBuilder(View):
 
         # if it doesn't work, have them try again
         return render(request, self.template_name, {'form': form})
+
+class TripUpdate(UpdateView):
+    model = trips
+    form_class = TripForm
+    template_name = 'inventory/trip_builder.html'
+
+    def get_success_url(self):
+        return reverse_lazy('inventory:details', kwargs={'pk': self.kwargs['pk']})
+
+class TripDelete(DeleteView):
+    model = trips
+    success_url = reverse_lazy('inventory:index')

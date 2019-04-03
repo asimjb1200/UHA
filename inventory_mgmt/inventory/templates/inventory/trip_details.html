@@ -2,7 +2,7 @@
 {% block title %}<title>Trip Details</title>{% endblock title %}
 {% block body %}
 <div class="card shadow-lg mb-3 text-center rounded">
-        <!--<img class="card-img-top fa fa-address-card fa-5x" src="" alt="Card image">-->
+        <div class="card-header"> <a href="{% url 'inventory:update-trip' trips.id %}"><strong>Update Trip</strong></a></div>
         <span class="fa fa-address-card fa-5x">&nbsp;</span>
             {% if trips.trip_start > today  %}
             <h5 class="card-title">Upcoming Trip</h5>
@@ -16,51 +16,68 @@
             <p class="card-text"><strong>{{ trips.trip_start }} - {{ trips.trip_end }}</strong></p>
         </div>
 </div>
+
 <div class="card shadow-lg mb-3 text-center rounded">
-<div class="table-responsive">
-    <table class="table table-striped table-sm">
-  <thead>
-    <tr>
-      <th scope="col">Van Used</th>
-      <th scope="col">Kayak Used</th>
-      <th scope="col">Menu</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>{{ trips.van_used }}</td>
-      <td>{{ trips.kayak_used }}</td>
-      <td>{{ trips.menu }}</td>
-    </tr>
-  </tbody>
-</table>
+  <div id="wrapper1" style="display: flex; flex-wrap: wrap; justify-content: space-evenly; align-items: center;">
+      <div id="left1">
+        <h4>Van Used</h4>
+        <ul>
+        {% for van in trips.van_used.all  %}
+          <li>{{ van }}</li>
+        {% endfor %}
+        </ul>
+      </div>
+      <div id="center1" >
+        <h4>Kayak Used</h4>
+        <ul>
+        {% for kayak in trips.kayak_used.all  %}
+          <li>{{ kayak }}</li>
+        {% endfor %}
+        </ul>
+      </div>
+      <div id="right1">
+        <h4>Menu</h4>
+        <ul>
+        {% for menu in trips.menu.all  %}
+          <li>{{ menu }}</li>
+        {% endfor %}
+        </ul>
+      </div>
+  </div>
 </div>
-<br>
-<div id="wrapper" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center;">
-  <div id="left">
-    <h2>Extra Food Purchased</h2>
-    <ul>
-    {% for food in trips.extra_food_purchased.all  %}
-      <li>{{ food }}</li>
-    {% endfor %}
-    </ul>
+
+<div class="card shadow-lg mb-3 text-center rounded">
+    <div id="wrapper" style="display: flex; flex-wrap: wrap; justify-content: space-evenly; align-items: center;">
+      <div id="left">
+        <h4>Extra Food Purchased</h4>
+        <ul>
+        {% for food in trips.extra_food_purchased.all  %}
+          <li>{{ food }}</li>
+        {% endfor %}
+        </ul>
+      </div>
+      <div id="center" >
+        <h4>Extra Meals Purchased</h4>
+        <ul>
+        {% for food in trips.extra_meals_purchased.all  %}
+          <li>{{ food }}</li>
+        {% endfor %}
+        </ul>
+      </div>
+      <div id="right">
+        <h4>Extra Supplies Purchased</h4>
+        <ul>
+        {% for supplies in trips.extra_supplies.all  %}
+          <li>{{ supplies }}</li>
+        {% endfor %}
+        </ul>
+      </div>
+    </div>
   </div>
-  <div id="center" >
-    <h2>Extra Meals Purchased</h2>
-    <ul>
-    {% for food in trips.extra_meals_purchased.all  %}
-      <li>{{ food }}</li>
-    {% endfor %}
-    </ul>
-  </div>
-  <div id="right">
-    <h2>Extra Supplies Purchased</h2>
-    <ul>
-    {% for supplies in trips.extra_supplies.all  %}
-      <li>{{ supplies }}</li>
-    {% endfor %}
-    </ul>
-  </div>
+  
+<div class="card shadow-lg mb-3 text-center rounded">
+  <h3 class="card-title">Comments About Trip</h3>
+  <p class="card-text">{{ trips.comments }}</p>
 </div>
 {% endblock body %}
 

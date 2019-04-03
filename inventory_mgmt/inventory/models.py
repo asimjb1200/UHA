@@ -11,8 +11,6 @@ class customer(models.Model):
     def __str__(self):
         return self.first_name + " " + self.last_name
 
-    def __str__(self):
-        return self.first_name + " " + self.last_name
 
 
 class employee(customer):
@@ -192,9 +190,9 @@ class trips(models.Model):
     van_used = models.ManyToManyField(vans)
     kayak_used = models.ManyToManyField(kayak, related_name="kayak", blank=True, null=True)
     menu = models.ForeignKey(menu, on_delete=models.CASCADE, related_name="trip_menu", null=True)
-    extra_meals_purchased = models.ManyToManyField(meal, related_name="trip_meals", blank=True, null=True)
-    extra_food_purchased = models.ManyToManyField(food, related_name='food_used', blank=True, null=True)
-    extra_supplies = models.ManyToManyField(supplies, related_name='trip_extras', blank=True, null=True)
+    extra_meals_purchased = models.ManyToManyField(meal, related_name="trip_meals", blank=True)
+    extra_food_purchased = models.ManyToManyField(food, related_name='food_used', blank=True)
+    extra_supplies = models.ManyToManyField(supplies, related_name='trip_extras', blank=True)
     
     def __str__(self):
         return self.first_name + ' ' + self.last_name
