@@ -158,4 +158,4 @@ class TripUpdate(UpdateView):
 
 class TripDelete(DeleteView):
     model = trips
-    success_url = reverse_lazy('inventory:index')
+    success_url = reverse_lazy('inventory:view-trips')

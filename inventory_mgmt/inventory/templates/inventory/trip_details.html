@@ -1,6 +1,9 @@
 {% extends 'inventory/base.html' %}
 {% block title %}<title>Trip Details</title>{% endblock title %}
 {% block body %}
+<a class="btn btn-primary fa fa-long-arrow-left" href="{% url 'inventory:view-trips' %}" role="button">&nbsp;</a>
+<br>
+<br>
 <div class="card shadow-lg mb-3 text-center rounded">
         <div class="card-header"> <a href="{% url 'inventory:update-trip' trips.id %}"><strong>Update Trip</strong></a></div>
         <span class="fa fa-address-card fa-5x">&nbsp;</span>
