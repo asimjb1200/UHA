@@ -188,7 +188,7 @@ class trips(models.Model):
     trip_start = models.DateField(blank=False)
     trip_end = models.DateField(blank=False)
     van_used = models.ManyToManyField(vans)
-    kayak_used = models.ManyToManyField(kayak, related_name="kayak", blank=True, null=True)
+    kayak_used = models.ManyToManyField(kayak, related_name="kayak", blank=True)
     menu = models.ForeignKey(menu, on_delete=models.CASCADE, related_name="trip_menu", null=True)
     extra_meals_purchased = models.ManyToManyField(meal, related_name="trip_meals", blank=True)
     extra_food_purchased = models.ManyToManyField(food, related_name='food_used', blank=True)

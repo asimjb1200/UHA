@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic import View
 from .filters import SupplyFilter # import the filter
-from .forms import TripForm, UserForm
+from .forms import TripForm, UserForm, SupplyForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 import datetime
@@ -18,6 +18,42 @@ def index(request):
     return render(request, 'inventory/index.html')
     
 
+# class SupplyUpdate(LoginRequiredMixin, UpdateView):
+#     # Add functionality to update a supply
+#     return Null
+
+class AddSupply(LoginRequiredMixin, View):
+    # allow an item to be added to the table/database
+    form_class = SupplyForm
+    template_name = 'inventory/new_supply.html'
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
+
+    def get(self, request):
+        """Return a blank form to the user to be filled out."""
+        form = self.form_class(None)
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        """Take in user data, clean it, and then post it to the database."""
+        form = self.form_class(request.POST) # pass in the user's data to that was submitted in form 
+
+        if form.is_valid():
+            supply = form.save(commit=False) # create an object so we can clean the data before saving it
+
+            # now get the clean and normalize the data
+            supplyName = form.cleaned_data['supplyName']
+            category = form.cleaned_data['category']
+            quantity = form.cleaned_data['quantity']
+            price = form.cleaned_data['price']
+            
+            supply.save()
+
+            if supply is not None:
+                return redirect('inventory:supplies')
+
+        # if it doesn't work, have them try again
+        return render(request, self.template_name, {'form': form})
 
 class SuppliesView(LoginRequiredMixin, generic.ListView):
     """Display a table of inventory for the user."""
@@ -37,40 +73,6 @@ class SuppliesView(LoginRequiredMixin, generic.ListView):
         context['filter'] = SupplyFilter(self.request.GET, queryset=self.get_queryset())
         return context
 
-
-
-class TripManager(LoginRequiredMixin, generic.ListView):
-    """This view will display the trips in the db in card fashion."""
-
-    model = trips
-    template_name = 'inventory/trip_manager.html'
-    login_url = '/'
-    redirect_field_name = 'redirect_to'
-
-    def get_queryset(self):
-        return trips.objects.all().order_by('trip_start')
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['today'] = datetime.date.today()
-        return context
-
-
-
-class TripDetails(LoginRequiredMixin, generic.DetailView):
-    """This view will be used to display the details of a trip from the view trips page."""
-    
-    model = trips
-    template_name = 'inventory/trip_details.html'
-    login_url = '/'
-    redirect_field_name = 'redirect_to'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['today'] = datetime.date.today()
-        return context
-
-
       
 class VansView(LoginRequiredMixin, generic.ListView):
     """Display a list of the vans for the user."""
@@ -83,7 +85,6 @@ class VansView(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         """Return a list of all vans in the database."""
         return vans.objects.all()
-
 
 
 class UserFormView(LoginRequiredMixin, View):
@@ -168,6 +169,36 @@ class TripBuilder(LoginRequiredMixin, View):
         # if it doesn't work, have them try again
         return render(request, self.template_name, {'form': form})
 
+class TripManager(LoginRequiredMixin, generic.ListView):
+    """This view will display the trips in the db in card fashion."""
+
+    model = trips
+    template_name = 'inventory/trip_manager.html'
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
+
+    def get_queryset(self):
+        return trips.objects.all().order_by('trip_start')
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['today'] = datetime.date.today()
+        return context
+
+
+
+class TripDetails(LoginRequiredMixin, generic.DetailView):
+    """This view will be used to display the details of a trip from the view trips page."""
+    
+    model = trips
+    template_name = 'inventory/trip_details.html'
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['today'] = datetime.date.today()
+        return context
 
 
 class TripUpdate(LoginRequiredMixin, UpdateView):
@@ -182,7 +213,6 @@ class TripUpdate(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         """Will allow the user to return to the details page of that trip after updating."""
         return reverse_lazy('inventory:details', kwargs={'pk': self.kwargs['pk']})
-
 
 
 class TripDelete(LoginRequiredMixin, DeleteView):
