@@ -8,9 +8,13 @@
         </div>
         <div class="card-body text-dark">
             <h5 class="card-title">Welcome to Ultimate High Adventures</h5>
+            {% if next %}
+                <p class="card-title"><strong>You have to log in first</strong></p>
+            {% endif %}
             <form class="font-weight-bold" id="login-form" method="post" action="{% url 'inventory:login' %}">
                 {% csrf_token %}
                 {% include 'inventory/form-template.html' %}
+                
                 <button type="submit" value="Login" class="btn btn-primary fa fa-sign-in">&nbsp;</button> 
             </form>
         </div>

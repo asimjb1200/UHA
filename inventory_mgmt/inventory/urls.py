@@ -1,11 +1,12 @@
 from django.conf.urls import url
 from . import views
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, LogoutView
 
 app_name = 'inventory'
 urlpatterns = [
-    url(r'^login/$', LoginView.as_view(), name="login"),
-    url(r'^$', views.index, name='index'),
+    url(r'^$', LoginView.as_view(), name="login"),
+    url(r'^logout/$', LogoutView.as_view(), name="logout"),
+    url(r'^home/$', views.index, name='index'),
     url(r'^supplies/$', views.SuppliesView.as_view(), name='supplies'),
     url(r'^vans/$', views.VansView.as_view(), name='vans'),
     url(r'^trips/view-trips/$', views.TripManager.as_view(), name='view-trips'),
