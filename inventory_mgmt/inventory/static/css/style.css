@@ -2,3 +2,7 @@
     height: fit-content;
     margin-bottom: 10px !important;
 }
+
+h5 {
+    font-family: Arial, Helvetica, sans-serif;
+}

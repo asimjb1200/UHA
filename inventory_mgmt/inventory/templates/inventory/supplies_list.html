@@ -6,19 +6,21 @@
 <form method="GET">
 <div class="form-group" style="width: 50%;">
 {{ filter.form|crispy }}
-<button type="submit" class="btn btn-primary fa fa-search">&nbsp;</button>
+<button type="submit" class="btn btn-success fa fa-search">&nbsp;</button>
 </div>
 </div>
 </form>
-<a href="{% url 'inventory:add-supply' %}" class="btn btn-primary" role="button">Add Supply</a>
+<a href="{% url 'inventory:add-supply' %}" class="btn btn-success" role="button">Add Supply</a>
 <div class="table-responsive">
 <table class="table table-hover">
-  <thead class="thead-dark">
-    <tr>
+  <thead style="background-color: Dodgerblue;">
+    <tr style="color: white;">
       <th scope="col">Item</th>
       <th scope="col">Category</th>
       <th scope="col">Quantity</th>
       <th scope="col">Price</th>
+      <th scope="col">Edit</th>
+      <th scope="col">Remove</th>
     </tr>
   </thead>
 {% for supply in filter.qs %}
@@ -28,6 +30,8 @@
       <td>{{ supply.category}}</td>
       <td>{{ supply.quantity }}</td>
       <td>{{ supply.price }}</td>
+      <td><a href="{% url 'inventory:edit-supply' supply.id %}" class="btn btn-warning fas fa-edit" role="button">&nbsp;</a></td>
+      <td><a href="{% url 'inventory:delete-supply' supply.id %}" class="btn btn-danger fas fa-trash" role="button">&nbsp;</a></td>
     </tr>
 {% endfor %}
 </tbody>

@@ -16,11 +16,26 @@ import datetime
 def index(request):
     """Display the landing page of the website."""
     return render(request, 'inventory/index.html')
-    
 
-# class SupplyUpdate(LoginRequiredMixin, UpdateView):
-#     # Add functionality to update a supply
-#     return Null
+
+class SuppliesView(LoginRequiredMixin, generic.ListView):
+    """Display a table of inventory for the user."""
+
+    model = supplies
+    template_name = 'inventory/supplies_list.html'
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
+    
+    def get_queryset(self):
+        return supplies.objects.all()
+
+    def get_context_data(self, **kwargs):
+        # get the context data from the generic list view
+        context = super().get_context_data(**kwargs)
+        # add the filter to the context that will go to the template
+        context['filter'] = SupplyFilter(self.request.GET, queryset=self.get_queryset())
+        return context
+    
 
 class AddSupply(LoginRequiredMixin, View):
     # allow an item to be added to the table/database
@@ -55,23 +70,23 @@ class AddSupply(LoginRequiredMixin, View):
         # if it doesn't work, have them try again
         return render(request, self.template_name, {'form': form})
 
-class SuppliesView(LoginRequiredMixin, generic.ListView):
-    """Display a table of inventory for the user."""
 
+class SupplyUpdate(LoginRequiredMixin, UpdateView):
+    """This will allow the user to update an item."""
     model = supplies
-    template_name = 'inventory/supplies_list.html'
+    form_class = SupplyForm
+    template_name = 'inventory/new_supply.html'
     login_url = '/'
     redirect_field_name = 'redirect_to'
-    
-    def get_queryset(self):
-        return supplies.objects.all()
+    success_url = reverse_lazy('inventory:supplies')
 
-    def get_context_data(self, **kwargs):
-        # get the context data from the generic list view
-        context = super().get_context_data(**kwargs)
-        # add the filter to the context that will go to the template
-        context['filter'] = SupplyFilter(self.request.GET, queryset=self.get_queryset())
-        return context
+
+class SupplyDelete(LoginRequiredMixin, DeleteView):
+    """Will allow the user to delete a trip from the database."""
+    model = supplies
+    success_url = reverse_lazy('inventory:supplies')
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
 
       
 class VansView(LoginRequiredMixin, generic.ListView):

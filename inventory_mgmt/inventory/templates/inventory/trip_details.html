@@ -1,20 +1,19 @@
 {% extends 'inventory/base.html' %}
 {% block title %}<title>Trip Details</title>{% endblock title %}
 {% block body %}
-<a class="btn btn-primary fa fa-long-arrow-left" href="{% url 'inventory:view-trips' %}" role="button">&nbsp;</a>
-<br>
+<a class="btn fas fa-arrow-alt-circle-left fa-2x" href="{% url 'inventory:view-trips' %}" role="button" style="color: Dodgerblue;">&nbsp;</a>
 <br>
 <div class="card shadow-lg mb-3 text-center rounded">
         <div class="card-header"> <a href="{% url 'inventory:update-trip' trips.id %}"><strong>Update Trip</strong></a></div>
-        <span class="fa fa-address-card fa-5x">&nbsp;</span>
+        <span class="fas fa-id-card fa-5x">&nbsp;</span>
             {% if trips.trip_start > today  %}
-            <h5 class="card-title">Upcoming Trip</h5>
+            <h5 class="card-title text-warning">Upcoming Trip</h5>
             {% elif trips.trip_start < today and trips.trip_end > today %}
-            <h5 class="card-title">Trip Ongoing</h5>
+            <h5 class="card-title text-success">Trip Ongoing</h5>
             {% else %}
-            <h5 class="card-title">Trip Ended</h5>
+            <h5 class="card-title text-danger">Trip Ended</h5>
             {% endif %}
-        <h3 class="card-title">{{ trips.first_name }} {{ trips.last_name }}</h3>
+        <h3 class="card-title" style="color: Dodgerblue;">{{ trips.first_name }} {{ trips.last_name }}</h3>
         <div class="card-footer text-muted">
             <p class="card-text"><strong>{{ trips.trip_start }} - {{ trips.trip_end }}</strong></p>
         </div>
