@@ -11,6 +11,9 @@
         <th scope="col">Condition</th>
         <th scope="col">Mileage</th>
         <th scope="col">Trailer</th>
+        <th scope="col">Comments</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Remove</th>
         </tr>
     </thead>
     {% for van in object_list %}
@@ -20,7 +23,10 @@
         <td>{{ van.available }}</td>
         <td>{{ van.condition }}</td>
         <td>{{ van.mileage }}</td>
-        <td>{{ van.trailer }}
+        <td>{{ van.trailer }}</td>
+        <td>{{ van.comments }}</td>
+        <td><a href="{% url 'inventory:edit-van' van.id %}" class="btn btn-warning fas fa-edit" role="button">&nbsp;</a></td>
+        <td><a href="{% url 'inventory:delete-van' van.id %}" class="btn btn-danger fas fa-trash" role="button">&nbsp;</a></td>
         </tr>
     {% endfor %}
     </tbody>

@@ -138,6 +138,26 @@ class AddVan(LoginRequiredMixin, View):
         # if it doesn't work, have them try again
         return render(request, self.template_name, {'form': form})
 
+class VanUpdate(LoginRequiredMixin, UpdateView):
+    """This view will allow the user to update van information."""
+
+    model = vans
+    form_class = VanForm
+    template_name = 'inventory/new_supply.html'
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
+    success_url = reverse_lazy('inventory:vans')
+
+
+class VanDelete(LoginRequiredMixin, DeleteView):
+    """Will allow the user to delete a trip from the database."""
+    model = vans
+    template_name = 'inventory/confirm_delete.html'
+    success_url = reverse_lazy('inventory:vans')
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
+
+
 class UserFormView(LoginRequiredMixin, View):
     # what is the form's blueprint/class?
     form_class = UserForm
@@ -215,7 +235,7 @@ class TripBuilder(LoginRequiredMixin, View):
             trip.save()
 
             if trip is not None:
-                return redirect('inventory:index')
+                return redirect('inventory:view-trips')
 
         # if it doesn't work, have them try again
         return render(request, self.template_name, {'form': form})
