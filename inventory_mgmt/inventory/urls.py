@@ -7,6 +7,7 @@ urlpatterns = [
     url(r'^$', LoginView.as_view(), name="login"),
     url(r'^logout/$', LogoutView.as_view(), name="logout"),
     url(r'^home/$', views.index, name='index'),
+    url(r'^food/build_meal/$', views.MealBuilder.as_view(), name='meal-builder'),
     url(r'^supplies/$', views.SuppliesView.as_view(), name='supplies'),
     url(r'^supplies/add/$', views.AddSupply.as_view(), name='add-supply'),
     url(r'^supplies/edit/(?P<pk>[0-9]+)/$', views.SupplyUpdate.as_view(), name='edit-supply'),

@@ -1,12 +1,12 @@
 from django.views import generic
 from django.shortcuts import render, redirect
-from .models import supplies, van_kit, vans, trips
+from .models import supplies, van_kit, vans, trips, meal
 from django.views.generic.edit import CreateView, UpdateView, DeleteView 
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic import View
 from .filters import SupplyFilter # import the filter
-from .forms import SupplyForm, UserForm, TripForm, VanForm
+from .forms import SupplyForm, UserForm, TripForm, VanForm, MealForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 import datetime
@@ -16,6 +16,39 @@ import datetime
 def index(request):
     """Display the landing page of the website."""
     return render(request, 'inventory/index.html')
+
+class MealBuilder(LoginRequiredMixin, View):
+    """This view will allow the user to build a trip through a form."""
+    
+    form_class = MealForm
+    template_name = 'inventory/new_supply.html'
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
+
+    def get(self, request):
+        """Return a blank form to the user to be filled out."""
+        form = self.form_class(None)
+        return render(request, self.template_name, {'form': form})
+
+    
+    def post(self, request):
+        """Take in user data, clean it, and then post it to the database."""
+        form = self.form_class(request.POST) # pass in the user's data to that was submitted in form 
+
+        if form.is_valid():
+            newMeal = form.save(commit=False) 
+
+            meal_name = form.cleaned_data['meal_name']
+            items = form.cleaned_data['items']
+            description = form.cleaned_data['description']
+
+            newMeal.save()
+
+            if newMeal is not None:
+                return redirect('inventory:index')
+
+        # if it doesn't work, have them try again
+        return render(request, self.template_name, {'form': form})
 
 
 class SuppliesView(LoginRequiredMixin, generic.ListView):
