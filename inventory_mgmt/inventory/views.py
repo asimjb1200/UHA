@@ -84,6 +84,7 @@ class SupplyUpdate(LoginRequiredMixin, UpdateView):
 class SupplyDelete(LoginRequiredMixin, DeleteView):
     """Will allow the user to delete a trip from the database."""
     model = supplies
+    template_name = 'inventory/confirm_delete.html'
     success_url = reverse_lazy('inventory:supplies')
     login_url = '/'
     redirect_field_name = 'redirect_to'
@@ -233,6 +234,7 @@ class TripUpdate(LoginRequiredMixin, UpdateView):
 class TripDelete(LoginRequiredMixin, DeleteView):
     """Will allow the user to delete a trip from the database."""
     model = trips
+    template_name = 'inventory/confirm_delete.html'
     success_url = reverse_lazy('inventory:view-trips')
     login_url = '/'
     redirect_field_name = 'redirect_to'
