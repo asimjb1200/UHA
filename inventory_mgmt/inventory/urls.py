@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^supplies/edit/(?P<pk>[0-9]+)/$', views.SupplyUpdate.as_view(), name='edit-supply'),
     url(r'^supplies/(?P<pk>[0-9]+)/delete/$', views.SupplyDelete.as_view(), name='delete-supply'),
     url(r'^vans/$', views.VansView.as_view(), name='vans'),
+    url(r'^vans/add/$', views.AddVan.as_view(), name='add-van'),
     url(r'^trips/view-trips/$', views.TripManager.as_view(), name='view-trips'),
     url(r'^trips/build_trip/$', views.TripBuilder.as_view(), name='trip-builder'),
     url(r'^trips/view-trips/trip_details/(?P<pk>[0-9]+)/$', views.TripDetails.as_view(), name='details'),

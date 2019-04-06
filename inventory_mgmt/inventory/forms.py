@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import trips, supplies
+from .models import trips, supplies, vans
 
 class TripForm(forms.ModelForm):
     """This class will be used to build trips."""
@@ -21,7 +21,14 @@ class SupplyForm(forms.ModelForm):
         model = supplies
         fields = ['supplyName', 'category', 'quantity', 'price']
 
+class VanForm(forms.ModelForm):
+    """Allow the user to add a new vehicle to the database."""
 
+    class Meta:
+        """Specify the db and fields that will be used."""
+
+        model = vans
+        fields = ['vanName', 'condition', 'available', 'mileage', 'trailer', 'comments']
 
 class UserForm(forms.ModelForm):
     """This class will be used to make the form for account generation."""

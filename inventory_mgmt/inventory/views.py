@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic import View
 from .filters import SupplyFilter # import the filter
-from .forms import TripForm, UserForm, SupplyForm
+from .forms import SupplyForm, UserForm, TripForm, VanForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 import datetime
@@ -102,6 +102,41 @@ class VansView(LoginRequiredMixin, generic.ListView):
         """Return a list of all vans in the database."""
         return vans.objects.all()
 
+
+class AddVan(LoginRequiredMixin, View):
+    # allow an item to be added to the table/database
+    form_class = VanForm
+    template_name = 'inventory/new_supply.html'
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
+
+    def get(self, request):
+        """Return a blank form to the user to be filled out."""
+        form = self.form_class(None)
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        """Take in user data, clean it, and then post it to the database."""
+        form = self.form_class(request.POST) # pass in the user's data to that was submitted in form 
+
+        if form.is_valid():
+            van = form.save(commit=False) # create an object so we can clean the data before saving it
+
+            # now get the clean and normalize the data
+            vanName = form.cleaned_data['vanName']
+            condition = form.cleaned_data['condition']
+            available = form.cleaned_data['available']
+            mileage = form.cleaned_data['mileage']
+            trailer = form.cleaned_data['trailer']
+            comments = form.cleaned_data['comments']
+            
+            van.save()
+
+            if van is not None:
+                return redirect('inventory:vans')
+
+        # if it doesn't work, have them try again
+        return render(request, self.template_name, {'form': form})
 
 class UserFormView(LoginRequiredMixin, View):
     # what is the form's blueprint/class?

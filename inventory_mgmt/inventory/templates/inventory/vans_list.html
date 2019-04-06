@@ -1,6 +1,7 @@
 {% extends 'inventory/base.html' %}
 {% block title %} <title>Vans</title> {% endblock title %}
 {% block body %}
+<a href="{% url 'inventory:add-van' %}" class="btn btn-success" role="button">Add Vehicle</a>
 <div class="table-responsive">
     <table class="table table-hover table-bordered">
     <thead style="background-color: Dodgerblue;">
