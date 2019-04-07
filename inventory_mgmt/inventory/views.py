@@ -1,12 +1,12 @@
 from django.views import generic
 from django.shortcuts import render, redirect
-from .models import supplies, van_kit, vans, trips, meal
+from .models import supplies, van_kit, vans, trips, meal, menu, food
 from django.views.generic.edit import CreateView, UpdateView, DeleteView 
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic import View
 from .filters import SupplyFilter # import the filter
-from .forms import SupplyForm, UserForm, TripForm, VanForm, MealForm
+from .forms import SupplyForm, FoodForm,MenuForm, UserForm, TripForm, VanForm, MealForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 import datetime
@@ -16,6 +16,117 @@ import datetime
 def index(request):
     """Display the landing page of the website."""
     return render(request, 'inventory/index.html')
+
+class MealsView(LoginRequiredMixin, generic.ListView):
+    """Display menus and meals to the user"""
+
+    model = meal
+    template_name = 'inventory/food_sets.html'
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
+    
+    def get_context_data(self, **kwargs):
+        """Add the menu list to the context."""
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the books
+        context['menu_list'] = menu.objects.all()
+        context['food_list'] = food.objects.all()
+        return context
+
+
+class NewFood(LoginRequiredMixin, View):
+    """This view will allow the user to build a trip through a form."""
+    
+    form_class = FoodForm
+    template_name = 'inventory/new_supply.html'
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
+
+    def get(self, request):
+        """Return a blank form to the user to be filled out."""
+        form = self.form_class(None)
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        """Take in user data, clean it, and then post it to the database."""
+        form = self.form_class(request.POST) # pass in the user's data to that was submitted in form 
+
+        if form.is_valid():
+            newFood = form.save(commit=False) 
+
+            food_name = form.cleaned_data['food_name']
+            price = form.cleaned_data['price']
+            quantity = form.cleaned_data['quantity']
+            warehouse = form.cleaned_data['warehouse']
+
+            newFood.save()
+
+            if newFood is not None:
+                return redirect('inventory:meals')
+
+        # if it doesn't work, have them try again
+        return render(request, self.template_name, {'form': form})
+
+
+class MealUpdate(LoginRequiredMixin, UpdateView):
+    """This view will allow the user to update meals."""
+
+    model = meal
+    form_class = MealForm
+    template_name = 'inventory/new_supply.html'
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
+
+    def get_success_url(self):
+        """Will allow the user to return to the main food page."""
+        return reverse_lazy('inventory:meals', kwargs={'pk': self.kwargs['pk']})
+
+class MenuUpdate(LoginRequiredMixin, UpdateView):
+    """This view will allow the user to update menus."""
+
+    model = menu
+    form_class = MenuForm
+    template_name = 'inventory/new_supply.html'
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
+
+    def get_success_url(self):
+        """Will allow the user to return to the main food page."""
+        return reverse_lazy('inventory:meals', kwargs={'pk': self.kwargs['pk']})
+
+class MenuBuilder(LoginRequiredMixin, View):
+    """This view will allow the user to build a trip through a form."""
+    
+    form_class = MenuForm
+    template_name = 'inventory/new_supply.html'
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
+
+    def get(self, request):
+        """Return a blank form to the user to be filled out."""
+        form = self.form_class(None)
+        return render(request, self.template_name, {'form': form})
+
+    
+    def post(self, request):
+        """Take in user data, clean it, and then post it to the database."""
+        form = self.form_class(request.POST) # pass in the user's data to that was submitted in form 
+
+        if form.is_valid():
+            newMenu = form.save(commit=False) 
+
+            menu_name = form.cleaned_data['menu_name']
+            meal_name = form.cleaned_data['meal_name']
+
+            newMenu.save()
+
+            if newMenu is not None:
+                return redirect('inventory:meals')
+
+        # if it doesn't work, have them try again
+        return render(request, self.template_name, {'form': form})
+
 
 class MealBuilder(LoginRequiredMixin, View):
     """This view will allow the user to build a trip through a form."""
@@ -45,7 +156,7 @@ class MealBuilder(LoginRequiredMixin, View):
             newMeal.save()
 
             if newMeal is not None:
-                return redirect('inventory:index')
+                return redirect('inventory:meals')
 
         # if it doesn't work, have them try again
         return render(request, self.template_name, {'form': form})

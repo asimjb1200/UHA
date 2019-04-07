@@ -20,6 +20,13 @@ class TripForm(forms.ModelForm):
         self.fields["extra_food_purchased"].widget = forms.widgets.CheckboxSelectMultiple()
         self.fields["extra_supplies"].widget = forms.widgets.CheckboxSelectMultiple()
 
+
+class FoodForm(forms.ModelForm):
+    class Meta:
+        model = food
+        fields = ['food_name', 'price', 'quantity', 'warehouse']
+
+
 class MealForm(forms.ModelForm):
     class Meta:
         model = meal
@@ -29,6 +36,18 @@ class MealForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['items'].widget = forms.widgets.CheckboxSelectMultiple()
         self.fields["items"].queryset = food.objects.all()
+
+
+class MenuForm(forms.ModelForm):
+    class Meta:
+        model = menu
+        fields = ['menu_name', 'meal_name']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['meal_name'].widget = forms.widgets.CheckboxSelectMultiple()
+        self.fields['meal_name'].queryset = meal.objects.all()
+
 
 class SupplyForm(forms.ModelForm):
     """Allow the user to add a new item to the database."""
