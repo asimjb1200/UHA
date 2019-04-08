@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import trips, customer, supplies, vans, kayak, meal, menu, food, menu_meals, MealItem
+from .models import trips, warehouse, trailers, customer, supplies, vans, kayak, meal, menu, food, menu_meals, MealItem
+
 
 class TripForm(forms.ModelForm):
     """This class will be used to build trips."""
@@ -8,9 +9,10 @@ class TripForm(forms.ModelForm):
     class Meta:
         """Specifying the database and fields to use."""
         model = trips
-        fields = ['first_name', 'last_name', 'comments', 'payment_status', 'trip_start', 'trip_end', 'van_used', 'kayak_used', 'menu', 'extra_meals_purchased', 'extra_food_purchased', 'extra_supplies']
+        fields = ['first_name', 'last_name', 'comments', 'payment_status', 'trip_start', 'trip_end',
+                  'van_used', 'kayak_used', 'menu', 'extra_meals_purchased', 'extra_food_purchased', 'extra_supplies']
 
-    def __init__ (self, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["van_used"].widget = forms.widgets.CheckboxSelectMultiple()
         self.fields["van_used"].queryset = vans.objects.filter(available=True)
@@ -31,10 +33,30 @@ class FoodForm(forms.ModelForm):
         self.fields["warehouse"].widget = forms.widgets.CheckboxSelectMultiple()
 
 
+class WarehouseForm(forms.ModelForm):
+    class Meta:
+        model = warehouse
+        fields = ['location']
+
+
+class KayakForm(forms.ModelForm):
+    class Meta:
+        model = kayak
+        fields = ['kayak_name', 'warehouse', 'condition', 'available']
+
+
+class TrailerForm(forms.ModelForm):
+    class Meta:
+        model = trailers
+        fields = ['trailer_name', 'warehouse', 'condition', 'available']
+
+
 class CustomerForm(forms.ModelForm):
     class Meta:
         model = customer
-        fields = ['first_name', 'last_name', 'phone_number', 'email', 'group_size']
+        fields = ['first_name', 'last_name',
+                  'phone_number', 'email', 'group_size']
+
 
 class MealForm(forms.ModelForm):
     class Meta:
@@ -67,6 +89,7 @@ class SupplyForm(forms.ModelForm):
         model = supplies
         fields = ['supplyName', 'category', 'quantity', 'price']
 
+
 class VanForm(forms.ModelForm):
     """Allow the user to add a new vehicle to the database."""
 
@@ -74,14 +97,17 @@ class VanForm(forms.ModelForm):
         """Specify the db and fields that will be used."""
 
         model = vans
-        fields = ['vanName', 'condition', 'available', 'mileage', 'trailer', 'comments']
+        fields = ['vanName', 'condition', 'available',
+                  'mileage', 'trailer', 'comments']
+
 
 class UserForm(forms.ModelForm):
     """This class will be used to make the form for account generation."""
-    
+
     password = forms.CharField(widget=forms.PasswordInput)
+
     class Meta:
         """Specifying the database and fields to use."""
-        
+
         model = User
         fields = ['username', 'email', 'password']

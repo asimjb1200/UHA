@@ -1,12 +1,12 @@
 from django.views import generic
 from django.shortcuts import render, redirect
-from .models import supplies, van_kit, vans, trips, meal, menu, food, customer
+from .models import supplies, van_kit, vans, trips, meal, menu, food, customer, warehouse, trailers, kayak
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic import View
 from .filters import SupplyFilter # import the filter
-from .forms import SupplyForm, FoodForm, CustomerForm, MenuForm, UserForm, TripForm, VanForm, MealForm
+from .forms import SupplyForm, WarehouseForm, KayakForm, TrailerForm, FoodForm, CustomerForm, MenuForm, UserForm, TripForm, VanForm, MealForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 import datetime
@@ -26,6 +26,22 @@ class Customers(LoginRequiredMixin, generic.ListView):
         """Return a list of all vans in the database."""
         return customer.objects.all()
 
+class OtherCompanyInfo(LoginRequiredMixin, generic.ListView):
+    model = warehouse
+    template_name = 'inventory/warehouses.html'
+    login_url = '/'
+    redirect_field_name ='redirect_to'
+    def get_queryset(self):
+        return warehouse.objects.all()
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        # Add in a QuerySet of all the books
+        context['trailer_list'] = trailers.objects.all()
+        context['kayak_list'] = kayak.objects.all()
+        return context
+
 
 class CustomerUpdate(LoginRequiredMixin, UpdateView):
     """This view will allow the user to update customer information."""
@@ -37,9 +53,108 @@ class CustomerUpdate(LoginRequiredMixin, UpdateView):
     redirect_field_name = 'redirect_to'
     success_url = reverse_lazy('inventory:customers')
 
+class NewTrailer(LoginRequiredMixin, View):
+    """This view will allow the user to add a trailer"""
+    
+    form_class = TrailerForm
+    template_name = 'inventory/new_supply.html'
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
+
+    def get(self, request):
+        """Return a blank form to the user to be filled out."""
+        form = self.form_class(None)
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        """Take in user data, clean it, and then post it to the database."""
+        form = self.form_class(request.POST) # pass in the user's data to that was submitted in form 
+
+        if form.is_valid():
+            trailer = form.save(commit=False) 
+
+            trailer_name = form.cleaned_data['trailer_name']
+            warehouse = form.cleaned_data['warehouse']
+            condition = form.cleaned_data['condition']
+            available = form.cleaned_data['available']
+
+            trailer.save()
+
+            if trailer is not None:
+                return redirect('inventory:other')
+
+        # if it doesn't work, have them try again
+        return render(request, self.template_name, {'form': form})
+
+
+class NewKayak(LoginRequiredMixin, View):
+    """This view will allow the user to add a kayak to the database."""
+    
+    form_class = KayakForm
+    template_name = 'inventory/new_supply.html'
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
+
+    def get(self, request):
+        """Return a blank form to the user to be filled out."""
+        form = self.form_class(None)
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        """Take in user data, clean it, and then post it to the database."""
+        form = self.form_class(request.POST) # pass in the user's data to that was submitted in form 
+
+        if form.is_valid():
+            kayak = form.save(commit=False) 
+
+            kayak_name = form.cleaned_data['kayak_name']
+            warehouse = form.cleaned_data['warehouse']
+            condition = form.cleaned_data['condition']
+            available = form.cleaned_data['available']
+
+            kayak.save()
+
+            if kayak is not None:
+                return redirect('inventory:other')
+
+        # if it doesn't work, have them try again
+        return render(request, self.template_name, {'form': form})
+
+
+class NewWarehouse(LoginRequiredMixin, View):
+    """This view will allow the user to add a warehouse to the database."""
+    
+    form_class = WarehouseForm
+    template_name = 'inventory/new_supply.html'
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
+
+    def get(self, request):
+        """Return a blank form to the user to be filled out."""
+        form = self.form_class(None)
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        """Take in user data, clean it, and then post it to the database."""
+        form = self.form_class(request.POST) # pass in the user's data to that was submitted in form 
+
+        if form.is_valid():
+            storage = form.save(commit=False) 
+
+            location = form.cleaned_data['location']
+
+            storage.save()
+
+            if storage is not None:
+                return redirect('inventory:other')
+
+        # if it doesn't work, have them try again
+        return render(request, self.template_name, {'form': form})
+
+
 
 class NewCustomer(LoginRequiredMixin, View):
-    """This view will allow the user to build a trip through a form."""
+    """This view will allow the user to add a customer to the database."""
     
     form_class = CustomerForm
     template_name = 'inventory/new_supply.html'
