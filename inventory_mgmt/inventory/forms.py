@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import trips, supplies, vans, kayak, meal, menu, food, menu_meals, MealItem
+from .models import trips, customer, supplies, vans, kayak, meal, menu, food, menu_meals, MealItem
 
 class TripForm(forms.ModelForm):
     """This class will be used to build trips."""
@@ -26,6 +26,15 @@ class FoodForm(forms.ModelForm):
         model = food
         fields = ['food_name', 'price', 'quantity', 'warehouse']
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["warehouse"].widget = forms.widgets.CheckboxSelectMultiple()
+
+
+class CustomerForm(forms.ModelForm):
+    class Meta:
+        model = customer
+        fields = ['first_name', 'last_name', 'phone_number', 'email', 'group_size']
 
 class MealForm(forms.ModelForm):
     class Meta:

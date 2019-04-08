@@ -1,12 +1,12 @@
 from django.views import generic
 from django.shortcuts import render, redirect
-from .models import supplies, van_kit, vans, trips, meal, menu, food
-from django.views.generic.edit import CreateView, UpdateView, DeleteView 
+from .models import supplies, van_kit, vans, trips, meal, menu, food, customer
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic import View
 from .filters import SupplyFilter # import the filter
-from .forms import SupplyForm, FoodForm,MenuForm, UserForm, TripForm, VanForm, MealForm
+from .forms import SupplyForm, FoodForm, CustomerForm, MenuForm, UserForm, TripForm, VanForm, MealForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 import datetime
@@ -16,6 +16,62 @@ import datetime
 def index(request):
     """Display the landing page of the website."""
     return render(request, 'inventory/index.html')
+
+class Customers(LoginRequiredMixin, generic.ListView):
+    model = customer
+    template_name = 'inventory/customers.html'
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
+    def get_queryset(self):
+        """Return a list of all vans in the database."""
+        return customer.objects.all()
+
+
+class CustomerUpdate(LoginRequiredMixin, UpdateView):
+    """This view will allow the user to update customer information."""
+
+    model = customer
+    form_class = CustomerForm
+    template_name = 'inventory/new_supply.html'
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
+    success_url = reverse_lazy('inventory:customers')
+
+
+class NewCustomer(LoginRequiredMixin, View):
+    """This view will allow the user to build a trip through a form."""
+    
+    form_class = CustomerForm
+    template_name = 'inventory/new_supply.html'
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
+
+    def get(self, request):
+        """Return a blank form to the user to be filled out."""
+        form = self.form_class(None)
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        """Take in user data, clean it, and then post it to the database."""
+        form = self.form_class(request.POST) # pass in the user's data to that was submitted in form 
+
+        if form.is_valid():
+            newCust = form.save(commit=False) 
+
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            phone_number = form.cleaned_data['phone_number']
+            email = form.cleaned_data['email']
+            group_size = form.cleaned_data['group_size']
+
+            newCust.save()
+
+            if newCust is not None:
+                return redirect('inventory:customers')
+
+        # if it doesn't work, have them try again
+        return render(request, self.template_name, {'form': form})
+
 
 class MealsView(LoginRequiredMixin, generic.ListView):
     """Display menus and meals to the user"""
@@ -160,6 +216,15 @@ class MealBuilder(LoginRequiredMixin, View):
 
         # if it doesn't work, have them try again
         return render(request, self.template_name, {'form': form})
+
+
+class FoodDelete(LoginRequiredMixin, DeleteView):
+    """Will allow the user to delete food from the database."""
+    model = food
+    template_name = 'inventory/confirm_delete.html'
+    success_url = reverse_lazy('inventory:meals')
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
 
 
 class SuppliesView(LoginRequiredMixin, generic.ListView):

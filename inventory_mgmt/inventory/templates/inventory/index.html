@@ -4,16 +4,14 @@
 
     <div class="card-columns" style="margin: 12px;">
     
-        <div class="card shadow">
+        <div class="card shadow" >
            <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
            <span class="fas fa-shuttle-van fa-5x" style="opacity: 0.5; color: Dodgerblue;">&nbsp;</span>
             <div class="card-body">
             <h5 class="card-title"><a href="{% url 'inventory:vans'%}" class="stretched-link">Vans</a></h5>
             <p class="card-text">Manage company vehicles</p>
             </div>
-            <div class="card-footer">
-            <small class="text-muted">Last updated 3 mins ago</small>
-            </div>
+    
         </div>
     
         <div class="card shadow">
@@ -23,9 +21,7 @@
             <h5 class="card-title"><a href="{% url 'inventory:supplies'%}" class="stretched-link">Inventory</a></h5>
             <p class="card-text">Manage the entire inventory list</p>
             </div>
-            <div class="card-footer">
-            <small class="text-muted">Last updated 3 mins ago</small>
-            </div>
+        
         </div>
     
         <div class="card shadow">
@@ -35,9 +31,7 @@
             <h5 class="card-title">Van Kits</h5>
             <p class="card-text">Manage van kits</p>
             </div>
-            <div class="card-footer">
-            <small class="text-muted">Last updated 3 mins ago</small>
-            </div>
+            
         </div>
     
         <div class="card shadow">
@@ -47,9 +41,7 @@
             <h5 class="card-title"><a href="{% url 'inventory:meals' %}" class="stretched-link">Food and Meals</a></h5>
             <p class="card-text">Manage food inventory</p>
             </div>
-            <div class="card-footer">
-            <small class="text-muted">Last updated 3 mins ago</small>
-            </div>
+    
         </div>
     
         <div class="card shadow">
@@ -59,9 +51,16 @@
             <h5 class="card-title"><a href="{% url 'inventory:view-trips' %}" class="stretched-link">Trips</a></h5>
             <p class="card-text">Manage trips</p>
             </div>
-            <div class="card-footer">
-            <small class="text-muted">Last updated 3 mins ago</small>
+        </div>
+
+        <div class="card shadow">
+            <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
+            <span class="fas fa-address-book fa-5x" style="opacity: 0.5; color: Dodgerblue;">&nbsp;</span>
+            <div class="card-body">
+            <h5 class="card-title"><a href="{% url 'inventory:customers' %}" class="stretched-link">Customers</a></h5>
+            <p class="card-text">View customer information</p>
             </div>
+            
         </div>
     
         <div class="card shadow">
@@ -71,11 +70,8 @@
             <h5 class="card-title">Financial Reports</h5>
             <p class="card-text">View pricing and other financial information</p>
             </div>
-            <div class="card-footer">
-            <small class="text-muted">Last updated 3 mins ago</small>
-            </div>
+            
         </div>
 </div>
 
-   
 {% endblock body %}

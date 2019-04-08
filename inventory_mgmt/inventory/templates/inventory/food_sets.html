@@ -16,5 +16,29 @@
         <h2 class="btn btn-primary border text-center rounded-circle shadow-lg" role="button" style="color: white; margin: 10px; font-family: Oleo Script;">{{ menu.menu_name }}<a href="{% url 'inventory:edit-menu' menu.id %}" class="fas fa-pencil-alt text-white">&nbsp;</a></h2>
     {% endfor %}
 </div>
-
+<a href="{% url 'inventory:add-food' %}" class="btn btn-success" role="button">Add Food</a>
+<div class="table-responsive">
+<table class="table table-hover">
+  <thead style="background-color: Dodgerblue;">
+    <tr style="color: white;">
+      <th scope="col">Item</th>
+      <th scope="col">Quantity</th>
+      <th scope="col">Warehouse</th>
+      <th scope="col">Price</th>
+      <th scope="col">Remove</th>
+    </tr>
+  </thead>
+{% for item in food_list %}
+<tbody>
+    <tr>
+      <td>{{ item.food_name }}</td>
+      <td>{{ item.quantity}}</td>
+      <td>{{ item.warehouse }}</td>
+      <td>{{ item.price }}</td>
+      <td><a href="{% url 'inventory:delete-food' item.id %}" class="btn btn-danger fas fa-trash" role="button">&nbsp;</a></td>
+    </tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
 {% endblock %}
