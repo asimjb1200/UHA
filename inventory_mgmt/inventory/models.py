@@ -14,7 +14,11 @@ class customer(models.Model):
 
 
 class employee(customer):
+    
     role = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.first_name
 
 
 class warehouse(models.Model):
@@ -97,6 +101,11 @@ class supplies(models.Model):
    
     def show_qty(self):
         return self.quantity
+    
+    def _get_total(self):
+        return self.quantity * self.price
+
+    total = property(_get_total)
 
 
 class van_kit(models.Model):

@@ -9,7 +9,7 @@ class TripForm(forms.ModelForm):
     class Meta:
         """Specifying the database and fields to use."""
         model = trips
-        fields = ['first_name', 'last_name', 'comments', 'payment_status', 'trip_start', 'trip_end',
+        fields = ['first_name', 'last_name','comments', 'payment_status', 'trip_start', 'trip_end',
                   'van_used', 'kayak_used', 'menu', 'extra_meals_purchased', 'extra_food_purchased', 'extra_supplies']
 
     def __init__(self, *args, **kwargs):

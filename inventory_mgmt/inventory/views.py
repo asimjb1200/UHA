@@ -395,6 +395,17 @@ class AddSupply(LoginRequiredMixin, View):
         return render(request, self.template_name, {'form': form})
 
 
+class FinancialListView(LoginRequiredMixin, generic.ListView):
+    model = supplies
+    template_name = "inventory/reports.html"
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["supplies"] = supplies.objects.all()
+        return context
+    
+
+
 class SupplyUpdate(LoginRequiredMixin, UpdateView):
     """This will allow the user to update an item."""
     model = supplies

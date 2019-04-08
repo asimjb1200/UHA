@@ -8,6 +8,7 @@ urlpatterns = [
     url(r'^logout/$', LogoutView.as_view(), name="logout"),
     url(r'^home/$', views.index, name='index'),
     url(r'^customers/$', views.Customers.as_view(), name="customers"),
+    url(r'^reports/$', views.FinancialListView.as_view(), name="reports"),
     url(r'^other/$', views.OtherCompanyInfo.as_view(), name="other"),
     url(r'^other/add-warehouse/$', views.NewWarehouse.as_view(), name='add-warehouse'),
     url(r'^other/add-trailer/$', views.NewTrailer.as_view(), name='add-trailer'),
