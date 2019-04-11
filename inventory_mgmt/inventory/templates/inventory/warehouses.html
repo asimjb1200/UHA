@@ -1,7 +1,7 @@
 {% extends 'inventory/base.html' %}
 {% load static %}
 {% block body %}
-    
+<button class="fas fa-chevron-circle-up" onclick="topFunction()" id="myBtn" title="Go to top">&nbsp;</button>
             <div class="card shadow" >
                 <div class="card-body">
                 <a href="{% url 'inventory:add-warehouse' %}" class="btn btn-outline-success" role="button">Add Warehouse</a>
