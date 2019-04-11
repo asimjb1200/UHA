@@ -1,30 +1,31 @@
+
 {% extends 'inventory/base.html' %}
 {% load static %}
 {% block body %}
-
+    
     <div class="card-columns" style="margin: 12px;">
     
-        <div class="card shadow" style="font-weight: bold;">
-           <img class="card-img" src="{% static 'images\cars.jpg' %}" alt="Card image cap" style="opacity: 0.5;">
+        <div class="card shadow homePage" >
+           <img class="card-img" src="{% static 'images\cars.jpg' %}" alt="Card image cap" >
            <!--<span class="fas fa-shuttle-van fa-5x" style="opacity: 0.5; color: Dodgerblue;">&nbsp;</span>-->
             <div class="card-img-overlay">
-            <h5 class="card-title"><a href="{% url 'inventory:vans'%}" class="stretched-link" style="font-weight: bold; color: black; font-family: Oleo Script;">Vehicles</a></h5>
+            <h5 class="card-title"><a href="{% url 'inventory:vans'%}" class="stretched-link" >Vehicles</a></h5>
             <p class="card-text">Manage company vehicles</p>
             </div>
     
         </div>
     
-        <div class="card shadow" style="font-weight: bold;">
-            <img class="card-img" src="{% static 'images/inventory.jpg' %}" alt="Card image cap" style="opacity: 0.5;">
+        <div class="card shadow homePage" >
+            <img class="card-img" src="{% static 'images/inventory.jpg' %}" alt="Card image cap" >
             <!-- <span class="fas fa-box-open fa-5x" style="opacity: 0.5; color: Dodgerblue;">&nbsp;</span> -->
             <div class="card-img-overlay">
-            <h5 class="card-title"><a href="{% url 'inventory:supplies'%}" style="font-weight: bold; color: black; font-family: Oleo Script;" class="stretched-link">Inventory</a></h5>
+            <h5 class="card-title"><a href="{% url 'inventory:supplies'%}"  class="stretched-link">Inventory</a></h5>
             <p class="card-text">Manage the entire inventory list</p>
             </div>
         
         </div>
     
-        <div class="card shadow">
+        <div class="card shadow homePage">
             <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
             <span class="fas fa-toolbox fa-5x" style="opacity: 0.5; color: Dodgerblue;">&nbsp;</span>
             <div class="card-body">
@@ -34,49 +35,49 @@
             
         </div>
     
-        <div class="card shadow" style="font-weight: bold;">
-            <img class="card-img" src="{% static 'images\food.jpg' %}" alt="Card image cap" style="opacity: 0.5;">
+        <div class="card shadow homePage">
+            <img class="card-img" src="{% static 'images\food.jpg' %}" alt="Card image cap" >
             <!-- <span class="fas fa-drumstick-bite fa-5x" style="opacity: 0.5; color: Dodgerblue;">&nbsp;</span> -->
             <div class="card-img-overlay">
-            <h5 class="card-title"><a href="{% url 'inventory:meals' %}" class="stretched-link" style="font-weight: bold; color: black; font-family: Oleo Script;">Food and Meals</a></h5>
+            <h5 class="card-title"><a href="{% url 'inventory:meals' %}" class="stretched-link" >Food and Meals</a></h5>
             <p class="card-text">Manage food inventory</p>
             </div>
     
         </div>
     
-        <div class="card shadow" style="font-weight: bold;">
-            <img class="card-img" src="{% static 'images\trips.jpg' %}" alt="Card image cap" style="opacity: 0.5;">
+        <div class="card shadow homePage">
+            <img class="card-img" src="{% static 'images\trips.jpg' %}" alt="Card image cap" >
             <!--<span class="fas fa-route fa-5x" style="opacity: 0.5; color: Dodgerblue;">&nbsp;</span>-->
             <div class="card-img-overlay">
-            <h5 class="card-title"><a href="{% url 'inventory:view-trips' %}" class="stretched-link" style="font-weight: bold; color: black; font-family: Oleo Script;">Trips</a></h5>
+            <h5 class="card-title"><a href="{% url 'inventory:view-trips' %}" class="stretched-link" >Trips</a></h5>
             <p class="card-text">Manage trips</p>
             </div>
         </div>
 
-        <div class="card shadow">
-            <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
-            <span class="fas fa-address-book fa-5x" style="opacity: 0.5; color: Dodgerblue;">&nbsp;</span>
-            <div class="card-body">
-            <h5 class="card-title"><a href="{% url 'inventory:customers' %}" class="stretched-link">Customers</a></h5>
+        <div class="card shadow homePage">
+            <img class="card-img" src="{% static 'images\customers.jpg' %}" alt="Card image cap" >
+            <!-- <span class="fas fa-address-book fa-5x" style="opacity: 0.5; color: Dodgerblue;">&nbsp;</span> -->
+            <div class="card-img-overlay">
+            <h5 class="card-title"><a href="{% url 'inventory:customers' %}" class="stretched-link" >Customers</a></h5>
             <p class="card-text">View customer information</p>
             </div>
             
         </div>
     
-        <div class="card shadow">
-            <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
-            <span class="fas fa-file-invoice-dollar fa-5x" style="opacity: 0.5; color: Dodgerblue;">&nbsp;</span>
-            <div class="card-body">
-            <h5 class="card-title"><a href="{% url 'inventory:reports'%}" class="stretched-link">Financial Reports</a></h5>
+        <div class="card shadow homePage">
+            <img class="card-img" src="{% static 'images\report.jpg' %}" alt="Card image cap">
+            <!-- <span class="fas fa-file-invoice-dollar fa-5x" style="opacity: 0.5; color: Dodgerblue;">&nbsp;</span> -->
+            <div class="card-img-overlay">
+            <h5 class="card-title"><a href="{% url 'inventory:reports'%}" class="stretched-link" >Financial Reports</a></h5>
             <p class="card-text">View pricing and other financial information</p>
             </div>
             
         </div>
 
-        <div class="card shadow" >
-           <!-- <img class="card-img-top" src="..." alt="Card image cap"> -->
-           <span class="fas fa-building fa-5x" style="opacity: 0.5; color: Dodgerblue;">&nbsp;</span>
-            <div class="card-body">
+        <div class="card shadow homePage">
+           <img class="card-img" src="{% static 'images\storage.jpg' %}" alt="Card image cap">
+           <!-- <span class="fas fa-building fa-5x" style="opacity: 0.5; color: Dodgerblue;">&nbsp;</span> -->
+            <div class="card-img-overlay">
             <h5 class="card-title"><a href="{% url 'inventory:other'%}" class="stretched-link">Storage</a></h5>
             <p class="card-text">View storage locations, kayaks and trailers</p>
             </div>
