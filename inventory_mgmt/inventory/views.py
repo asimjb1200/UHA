@@ -1,12 +1,12 @@
 from django.views import generic
 from django.shortcuts import render, redirect
-from .models import supplies, van_kit, vans, trips, meal, menu, food, customer
+from .models import supplies, van_kit, vans, trips, meal, menu, food, customer, VanKitMasterlist
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic import View
 from .filters import SupplyFilter # import the filter
-from .forms import SupplyForm, FoodForm, CustomerForm, MenuForm, UserForm, TripForm, VanForm, MealForm
+from .forms import SupplyForm, FoodForm, CustomerForm, MenuForm, UserForm, TripForm, VanForm, MealForm, VanKitForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 import datetime
@@ -367,6 +367,73 @@ class VanDelete(LoginRequiredMixin, DeleteView):
     redirect_field_name = 'redirect_to'
 
 
+class VanKitView(LoginRequiredMixin, generic.ListView):
+    """Display list of VanKits for user"""
+
+    model = van_kit, VanKitMasterlist
+    template_name = 'inventory/vankits.html'
+    login_url = '/'
+    redirect_field_name = 'redirect_to'    
+
+    def get_queryset(self):
+        """Return a list of all vankits in db"""
+        return van_kit.objects.all()
+
+
+class AddVanKit(LoginRequiredMixin, View):
+    # allow an item to be added to the table/database
+    form_class = VanKitForm
+    template_name = 'inventory/new_supply.html'
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
+
+    def get(self, request):
+        """Return a blank form to the user to be filled out."""
+        form = self.form_class(None)
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        """Take in user data, clean it, and then post it to the database."""
+        form = self.form_class(request.POST) # pass in the user's data to that was submitted in form 
+
+        if form.is_valid():
+            vankit = form.save(commit=False) # create an object so we can clean the data before saving it
+
+            # now get the clean and normalize the data
+            van_kit_name = form.cleaned_data['van_kit_name']
+            vanName = form.cleaned_data['vanName']
+            Available = form.cleaned_data['Available']
+            comments = form.cleaned_data['comments']
+            
+            vankit.save()
+
+            if vankit is not None:
+                return redirect('inventory:vankits')
+
+        # if it doesn't work, have them try again
+        return render(request, self.template_name, {'form': form})
+
+
+class VanKitUpdate(LoginRequiredMixin, UpdateView):
+    """This view will allow the user to update vk information."""
+
+    model = van_kit
+    form_class = VanKitForm
+    template_name = 'inventory/new_supply.html'
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
+    success_url = reverse_lazy('inventory:vankits')
+
+
+class VanKitDelete(LoginRequiredMixin, DeleteView):
+    """Will allow the user to delete a vk from the database."""
+    model = van_kit
+    template_name = 'inventory/confirm_delete.html'
+    success_url = reverse_lazy('inventory:vankits')
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
+
+
 class UserFormView(LoginRequiredMixin, View):
     # what is the form's blueprint/class?
     form_class = UserForm
@@ -403,16 +470,7 @@ class UserFormView(LoginRequiredMixin, View):
                     return redirect('inventory:index')
                     
         # if it doesn't work, have them try again
-        return render(request, self.template_name, {'form': form})       
-class VanKitView(generic.ListView):
-    """Display list of VanKits for user"""
-
-    model = van_kit
-    template_name = 'inventory/vankits.html'
-
-    def get_queryset(self):
-        """Return a list of all vankits in db"""
-        return van_kit.objects.all()
+        return render(request, self.template_name, {'form': form})
 
 
 class TripBuilder(LoginRequiredMixin, View):

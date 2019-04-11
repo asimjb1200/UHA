@@ -12,7 +12,6 @@ class customer(models.Model):
         return self.first_name + " " + self.last_name
 
 
-
 class employee(customer):
     role = models.CharField(max_length=100)
 
@@ -97,6 +96,14 @@ class supplies(models.Model):
    
     def show_qty(self):
         return self.quantity
+
+
+class VanKitMasterlist(models.Model):
+    supplyName = models.CharField(max_length=100, blank=False) # over max length, return error
+    supplyQuantity = models.PositiveSmallIntegerField(blank=False) # set up default
+
+    def __str__(self):
+        return self.supplyName
 
 
 class van_kit(models.Model):

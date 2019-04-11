@@ -32,5 +32,8 @@ urlpatterns = [
     url(r'^trips/view-trips/(?P<pk>[0-9]+)/delete/$', views.TripDelete.as_view(), name='delete-trip'),
     url(r'^register/$', views.UserFormView.as_view(), name='register'),
     url(r'^vankits/$', views.VanKitView.as_view(), name='vankit'),
+    url(r'^vankits/add/$', views.AddVanKit.as_view(), name='add-vankit'),
+    url(r'^vankits/(?P<pk>[0-9]+)/delete/$', views.VanKitDelete.as_view(), name='delete-vankits'),
+    url(r'^vankits/edit/(?P<pk>[0-9]+)/$', views.VanKitUpdate.as_view(), name='edit-vankits'),
 
 ]
