@@ -404,6 +404,15 @@ class UserFormView(LoginRequiredMixin, View):
                     
         # if it doesn't work, have them try again
         return render(request, self.template_name, {'form': form})       
+class VanKitView(generic.ListView):
+    """Display list of VanKits for user"""
+
+    model = van_kit
+    template_name = 'inventory/vankits.html'
+
+    def get_queryset(self):
+        """Return a list of all vankits in db"""
+        return van_kit.objects.all()
 
 
 class TripBuilder(LoginRequiredMixin, View):

@@ -1,0 +1,26 @@
+{% extends 'inventory/base.html' %}
+{% block title %} <title>Van Kits</title> {% endblock title %}
+{% block body %}
+<div class="table-responsive">
+    <table class="table table-hover table-bordered">
+    <thead class="thead-dark">
+        <tr>
+        <th scope="col">Van Kit</th>
+        <th scope="col">Van Name</th>
+        <th scope="col">Available</th>
+        <th scope="col">Comments</th>
+        </tr>
+    </thead>
+    {% for van_kit in object_list %}
+    <tbody>
+        <tr>
+        <td>{{ van_kit.van_kit_name }}</td>
+        <td>{{ van_kit.vanName }}</td>
+        <td>{{ van_kit.Available }}</td>
+        <td>{{ van_kit.comments }}</td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+</div>
+{% endblock body %}
