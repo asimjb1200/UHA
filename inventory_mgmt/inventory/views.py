@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic import View
 from .filters import SupplyFilter # import the filter
-from .forms import SupplyForm, FoodForm, CustomerForm, MenuForm, UserForm, TripForm, VanForm, MealForm, VanKitForm
+from .forms import SupplyForm, FoodForm, CustomerForm, MenuForm, UserForm, TripForm, VanForm, MealForm, VanKitForm, VKMasterlistForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 import datetime
@@ -408,7 +408,7 @@ class AddVanKit(LoginRequiredMixin, View):
             vankit.save()
 
             if vankit is not None:
-                return redirect('inventory:vankits')
+                return redirect('inventory:vankit')
 
         # if it doesn't work, have them try again
         return render(request, self.template_name, {'form': form})
@@ -422,14 +422,65 @@ class VanKitUpdate(LoginRequiredMixin, UpdateView):
     template_name = 'inventory/new_supply.html'
     login_url = '/'
     redirect_field_name = 'redirect_to'
-    success_url = reverse_lazy('inventory:vankits')
+    success_url = reverse_lazy('inventory:vankit')
 
 
 class VanKitDelete(LoginRequiredMixin, DeleteView):
     """Will allow the user to delete a vk from the database."""
     model = van_kit
     template_name = 'inventory/confirm_delete.html'
-    success_url = reverse_lazy('inventory:vankits')
+    success_url = reverse_lazy('inventory:vankit')
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
+
+
+class AddVKMasterlist(LoginRequiredMixin, View):
+    # allow an item to be added to the table/database
+    form_class = VKMasterlistForm
+    template_name = 'inventory/new_supply.html'
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
+
+    def get(self, request):
+        """Return a blank form to the user to be filled out."""
+        form = self.form_class(None)
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        """Take in user data, clean it, and then post it to the database."""
+        form = self.form_class(request.POST) # pass in the user's data to that was submitted in form 
+
+        if form.is_valid():
+            vkml = form.save(commit=False) # create an object so we can clean the data before saving it
+
+            # now get the clean and normalize the data
+            supplyName = form.cleaned_data['supplyName']
+            supplyQuantity = form.cleaned_data['supplyQuantity']
+
+            vkml.save()
+
+            if vkml is not None:
+                return redirect('inventory:vankit')
+
+        # if it doesn't work, have them try again
+        return render(request, self.template_name, {'form': form})
+
+
+class VKMasterlistUpdate(LoginRequiredMixin, UpdateView):
+    """This view lets user update vkmasterlist."""
+    model = VanKitMasterlist
+    form_class = VKMasterlistForm
+    template_name = 'inventory/new_supply.html'
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
+    success_url = reverse_lazy('inventory:vankit')
+
+
+class VKMasterlistDelete(LoginRequiredMixin, DeleteView):
+    """Will allow the user to delete a vkml from the database."""
+    model = VanKitMasterlist
+    template_name = 'inventory/confirm_delete.html'
+    success_url = reverse_lazy('inventory:vankit')
     login_url = '/'
     redirect_field_name = 'redirect_to'
 

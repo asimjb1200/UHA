@@ -28,11 +28,16 @@
     </tbody>
     </table>
 
+<a href="{% url 'inventory:add-vkml' %}" class="btn btn-success" role="button">Add item to Van Kit Masterlist</a>
+
+
     <table class="table table-hover table-bordered">
     <thead class="thead-dark">
         <tr>
         <th scope="col">Item Quantity</th>
         <th scope="col">Item Name</th>
+        <th scope="col">Edit Item</th>
+        <th scope="col">Delete Item</th>
         </tr>
     </thead>
     {% for VanKitMasterlist in object_list %}
@@ -40,6 +45,8 @@
         <tr>
         <td>{{ VanKitMasterlist.supplyName }}</td>
         <td>{{ VanKitMasterlist.supplyQuantity }}</td>
+        <td><a href="{% url 'inventory:edit-vkml' VanKitMasterlist.id %}" class="btn btn-warning fas fa-edit" role="button">&nbsp;</a></td>
+        <td><a href="{% url 'inventory:delete-vkml' VanKitMasterlist.id %}" class="btn btn-danger fas fa-trash" role="button">&nbsp;</a></td>
         </tr>
     {% endfor %}
     </tbody>

@@ -104,6 +104,9 @@ class VanKitMasterlist(models.Model):
 
     def __str__(self):
         return self.supplyName
+   
+    def show_qty(self):
+        return self.supplyQuantity
 
 
 class van_kit(models.Model):
