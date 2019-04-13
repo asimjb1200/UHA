@@ -36,4 +36,6 @@ urlpatterns = [
     url(r'^trips/view-trips/trip_details/update/(?P<pk>[0-9]+)/$', views.TripUpdate.as_view(), name='update-trip'),
     url(r'^trips/view-trips/(?P<pk>[0-9]+)/delete/$', views.TripDelete.as_view(), name='delete-trip'),
     url(r'^register/$', views.UserFormView.as_view(), name='register'),
+    url(r'^vankits/$', views.VanKitView.as_view(), name='vankit'),
+
 ]
