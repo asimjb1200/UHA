@@ -37,7 +37,7 @@ urlpatterns = [
     url(r'^vankits/edit-vk/(?P<pk>[0-9]+)/$', views.VanKitUpdate.as_view(), name='edit-vankits'),
     url(r'^vankits/add-vkml/$', views.AddVKMasterlist.as_view(), name='add-vkml'),
     url(r'^vankits/edit-vkml/(?P<pk>[0-9]+)/$', views.VKMasterlistUpdate.as_view(), name='edit-vkml'),
-    url(r'^vankits/delete-vkml/(?P<pk>[0-9]+)/$', views.VKMasterlistUpdate.as_view(), name='delete-vkml'),
+    url(r'^vankits/delete-vkml/(?P<pk>[0-9]+)/$', views.VKMasterlistDelete.as_view(), name='delete-vkml'),
 
 
 ]

@@ -10,6 +10,7 @@ from .forms import SupplyForm, FoodForm, CustomerForm, MenuForm, UserForm, TripF
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 import datetime
+from itertools import chain
 
 
 @login_required
@@ -377,7 +378,14 @@ class VanKitView(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         """Return a list of all vankits in db"""
-        return van_kit.objects.all()
+        queryset = van_kit.objects.all()
+        queryset1 = VanKitMasterlist.objects.all()
+        both = list(chain(queryset, queryset1))
+        return both #, VanKitMasterlist.objects.all()
+
+    #def get_queryset(self):
+     #   """Return a list of vkml items in db"""
+      #  return VanKitMasterlist.objects.all()
 
 
 class AddVanKit(LoginRequiredMixin, View):
