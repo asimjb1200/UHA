@@ -11,12 +11,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 import datetime
 
-
-
 @login_required
 def index(request):
     """Display the landing page of the website."""
     return render(request, 'inventory/index.html')
+
 
 class Customers(LoginRequiredMixin, generic.ListView):
     model = customer
@@ -26,6 +25,7 @@ class Customers(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         """Return a list of all vans in the database."""
         return customer.objects.all()
+
 
 class OtherCompanyInfo(LoginRequiredMixin, generic.ListView):
     model = warehouse
@@ -53,6 +53,7 @@ class CustomerUpdate(LoginRequiredMixin, UpdateView):
     login_url = '/'
     redirect_field_name = 'redirect_to'
     success_url = reverse_lazy('inventory:customers')
+
 
 class NewTrailer(LoginRequiredMixin, View):
     """This view will allow the user to add a trailer"""
@@ -88,6 +89,17 @@ class NewTrailer(LoginRequiredMixin, View):
         return render(request, self.template_name, {'form': form})
 
 
+class TrailerUpdate(LoginRequiredMixin, UpdateView):
+    """This view will allow the user to update customer information."""
+
+    model = trailers
+    form_class = TrailerForm
+    template_name = 'inventory/new_supply.html'
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
+    success_url = reverse_lazy('inventory:other')
+
+
 class NewKayak(LoginRequiredMixin, View):
     """This view will allow the user to add a kayak to the database."""
     
@@ -120,6 +132,17 @@ class NewKayak(LoginRequiredMixin, View):
 
         # if it doesn't work, have them try again
         return render(request, self.template_name, {'form': form})
+
+
+class KayakUpdate(LoginRequiredMixin, UpdateView):
+    """This view will allow the user to update meals."""
+
+    model = kayak
+    form_class = KayakForm
+    template_name = 'inventory/new_supply.html'
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
+    success_url = reverse_lazy('inventory:other')
 
 
 class NewWarehouse(LoginRequiredMixin, View):
@@ -253,6 +276,7 @@ class MealUpdate(LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         """Will allow the user to return to the main food page."""
         return reverse_lazy('inventory:meals', kwargs={'pk': self.kwargs['pk']})
+
 
 class MenuUpdate(LoginRequiredMixin, UpdateView):
     """This view will allow the user to update menus."""

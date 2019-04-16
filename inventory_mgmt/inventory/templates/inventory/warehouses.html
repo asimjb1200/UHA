@@ -38,6 +38,7 @@
                     <th scope="col">Warehouse</th>
                     <th scope="col">Condition</th>
                     <th scope="col">Available</th>
+                    <th scope="col">Edit</th>
                     </tr>
                 </thead>
                 {% for trailer in trailer_list %}
@@ -47,6 +48,7 @@
                         <td>{{ trailer.warehouse }}</td>
                         <td>{{ trailer.condition }}</td>
                         <td>{{ trailer.available }}</td>
+                        <td><a href="{% url 'inventory:edit-trailer' trailer.id %}" class="btn btn-warning fas fa-edit" role="button">&nbsp;</a></td>
                     </tr>
                 {% endfor %}
                 </tbody>
@@ -67,6 +69,7 @@
                     <th scope="col">Warehouse</th>
                     <th scope="col">Condition</th>
                     <th scope="col">Available</th>
+                    <th scope="col">Edit</th>
                     </tr>
                 </thead>
                 {% for kayak in kayak_list %}
@@ -76,6 +79,7 @@
                         <td>{{ kayak.warehouse }}</td>
                         <td>{{ kayak.condition }}</td>
                         <td>{{ kayak.available }}</td>
+                        <td><a href="{% url 'inventory:edit-kayak' kayak.id %}" class="btn btn-warning fas fa-edit" role="button">&nbsp;</a></td>
                     </tr>
                 {% endfor %}
                 </tbody>
