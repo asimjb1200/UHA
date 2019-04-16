@@ -12,6 +12,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 import datetime
 
 
+
 @login_required
 def index(request):
     """Display the landing page of the website."""
@@ -529,7 +530,8 @@ class UserFormView(LoginRequiredMixin, View):
                     return redirect('inventory:index')
                     
         # if it doesn't work, have them try again
-        return render(request, self.template_name, {'form': form})       
+        return render(request, self.template_name, {'form': form})    
+
 class VanKitView(generic.ListView):
     """Display list of VanKits for user"""
 

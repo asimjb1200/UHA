@@ -1,6 +1,7 @@
-
 {% extends 'inventory/base.html' %}
+{% load cache %}
 {% load static %}
+{% cache 100 index %}
 {% block body %}
     
     <div class="card-columns" style="margin: 12px;">
@@ -97,3 +98,4 @@
 </div>
 
 {% endblock body %}
+{% endcache %}
