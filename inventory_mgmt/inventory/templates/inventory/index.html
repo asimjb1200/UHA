@@ -5,6 +5,17 @@
 {% block body %}
     
     <div class="card-columns" style="margin: 12px;">
+
+        <div class="card shadow homePage">
+            <img class="card-img" src="{% static 'images/trips.jpg' %}" alt="Card image cap" >
+            <!--<span class="fas fa-route fa-5x" style="opacity: 0.5; color: Dodgerblue;">&nbsp;</span>-->
+            <div class="card-img-overlay">
+                <h5 class="card-title"><a href="{% url 'inventory:view-trips' %}" class="stretched-link">Trips</a></h5>
+                <div class="middle">
+                    <p class="card-text text">Manage trips</p>
+                </div>
+            </div>
+        </div>
     
         <div class="card shadow homePage" >
            <img class="card-img" src="{% static 'images/cars.jpg' %}" alt="Card image cap" >
@@ -15,7 +26,6 @@
                     <p class="card-text text">Manage company vehicles</p>
                 </div>
             </div>
-    
         </div>
     
         <div class="card shadow homePage" >
@@ -27,14 +37,13 @@
                     <p class="card-text text">Manage the inventory list</p>
                 </div>
             </div>
-        
         </div>
     
         <div class="card shadow homePage">
             <img class="card-img" src="{% static 'images/kit.jpg' %}" alt="Card image cap">
             <!-- <span class="fas fa-toolbox fa-5x" style="opacity: 0.5; color: Dodgerblue;">&nbsp;</span> -->
             <div class="card-img-overlay">
-                <h5 class="card-title"><a href="#"  class="stretched-link">Van Kits</a></h5>
+                <h5 class="card-title"><a href="{% url 'inventory:vankit' %}"  class="stretched-link">Van Kits</a></h5>
                 <div class="middle">
                     <p class="card-text text">Manage van kits</p>
                 </div>
@@ -51,17 +60,6 @@
                 </div>
             </div>
         </div>
-    
-        <div class="card shadow homePage">
-            <img class="card-img" src="{% static 'images/trips.jpg' %}" alt="Card image cap" >
-            <!--<span class="fas fa-route fa-5x" style="opacity: 0.5; color: Dodgerblue;">&nbsp;</span>-->
-            <div class="card-img-overlay">
-                <h5 class="card-title"><a href="{% url 'inventory:view-trips' %}" class="stretched-link">Trips</a></h5>
-                <div class="middle">
-                    <p class="card-text text">Manage trips</p>
-                </div>
-            </div>
-        </div>
 
         <div class="card shadow homePage">
             <img class="card-img" src="{% static 'images/customers.jpg' %}" alt="Card image cap" >
@@ -73,7 +71,7 @@
                 </div>
             </div>
         </div>
-    
+        
         <div class="card shadow homePage">
             <img class="card-img" src="{% static 'images/report.jpg' %}" alt="Card image cap">
             <!-- <span class="fas fa-file-invoice-dollar fa-5x" style="opacity: 0.5; color: Dodgerblue;">&nbsp;</span> -->

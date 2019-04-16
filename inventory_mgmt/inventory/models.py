@@ -117,6 +117,17 @@ class van_kit(models.Model):
    
     def __str__(self):
         return self.van_kit_name
+
+
+class VanKitMasterlist(models.Model):
+    supplyName = models.CharField(max_length=100, blank=False) # over max length, return error
+    supplyQuantity = models.PositiveSmallIntegerField(blank=False) # set up default
+
+    def __str__(self):
+        return self.supplyName
+   
+    def show_qty(self):
+        return self.supplyQuantity
     
 
 class KitSupplies(models.Model):

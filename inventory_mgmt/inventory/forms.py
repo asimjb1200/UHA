@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import trips, warehouse, trailers, customer, supplies, vans, kayak, meal, menu, food, menu_meals, MealItem
+from .models import trips, warehouse, trailers, customer, supplies, vans, kayak, meal, menu, food, menu_meals, MealItem, van_kit, VanKitMasterlist
 
 
 class TripForm(forms.ModelForm):
@@ -115,3 +115,21 @@ class UserForm(forms.ModelForm):
 
         model = User
         fields = ['username', 'email', 'password']
+
+class VanKitForm(forms.ModelForm):
+    """Allow the user to add a new vk to the database."""
+
+    class Meta:
+        """Specify the db and fields that will be used."""
+
+        model = van_kit
+        fields = ['van_kit_name', 'vanName', 'Available', 'comments']
+
+class VKMasterlistForm(forms.ModelForm):
+    """Allow the user to add a new item to the database."""
+
+    class Meta:
+        """Specify the db and fields that will be used."""
+
+        model = VanKitMasterlist
+        fields = ['supplyName', 'supplyQuantity']

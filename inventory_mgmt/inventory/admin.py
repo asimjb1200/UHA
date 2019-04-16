@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import vans, van_kit, supplies, food, trips, KitSupplies, menu, meal, menu_meals, MealItem, kayak, warehouse, employee, customer, trailers, foodWarehouse
+from .models import vans, van_kit, supplies, food, trips, KitSupplies, menu, meal, menu_meals, MealItem, kayak, warehouse, employee, customer, trailers, foodWarehouse, VanKitMasterlist
 # Register your models here so they'll show in the admin page.
 
 class van_kitAdmin(admin.ModelAdmin):
@@ -71,6 +71,7 @@ class warehouseAdmin(admin.ModelAdmin):
 admin.site.register(vans)
 admin.site.register(KitSupplies, KitSuppliesAdmin)
 admin.site.register(van_kit, van_kitAdmin)
+admin.site.register(VanKitMasterlist)
 admin.site.register(supplies, suppliesAdmin)
 admin.site.register(trips, tripsAdmin)
 admin.site.register(food)

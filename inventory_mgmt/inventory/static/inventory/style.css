@@ -107,7 +107,7 @@ h1, h2 {
     background-color: dodgerblue;
   }
 
-  /* ----------- iPhone 6, 6S, 7 and 8 ----------- */
+/* ----------- iPhone 6, 6S, 7 and 8 ----------- */
 
 /* Portrait and Landscape */
 @media only screen 
@@ -131,7 +131,6 @@ and (-webkit-min-device-pixel-ratio: 2) {
   and (-webkit-min-device-pixel-ratio: 3) { 
     .card-columns > .card{
         width: 45%;
-        
         display: inline-block;
         justify-content: space-around; 
     }
