@@ -1,6 +1,11 @@
 {% extends 'inventory/base.html' %}
 {% block title %} <title>Van Kits</title> {% endblock title %}
 {% block body %}
+<br>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-evenly; align-items: center;">
+    <h1>Van Kit Management</h1>
+</div>
+<br>
 <a href="{% url 'inventory:add-vankit' %}" class="btn btn-success" role="button">Add Van Kit</a>
 <div class="table-responsive">
     <table class="table table-hover table-bordered">
@@ -28,7 +33,7 @@
     </tbody>
     </table>
 
-<a href="{% url 'inventory:add-vkml' %}" class="btn btn-success" role="button">Add item to Van Kit Masterlist</a>
+    <a href="{% url 'inventory:add-vkml' %}" class="btn btn-success" role="button">Add item to Van Kit Masterlist</a>
 
 
     <table class="table table-hover table-bordered">
@@ -40,13 +45,13 @@
         <th scope="col">Delete Item</th>
         </tr>
     </thead>
-    {% for VanKitMasterlist in object_list %}
+    {% for item in master_list %}
     <tbody>
         <tr>
-        <td>{{ VanKitMasterlist.supplyName }}</td>
-        <td>{{ VanKitMasterlist.supplyQuantity }}</td>
-        <td><a href="{% url 'inventory:edit-vkml' VanKitMasterlist.id %}" class="btn btn-warning fas fa-edit" role="button">&nbsp;</a></td>
-        <td><a href="{% url 'inventory:delete-vkml' VanKitMasterlist.id %}" class="btn btn-danger fas fa-trash" role="button">&nbsp;</a></td>
+        <td>{{ item.supplyName }}</td>
+        <td>{{ item.supplyQuantity }}</td>
+        <td><a href="{% url 'inventory:edit-vkml' item.id %}" class="btn btn-warning fas fa-edit" role="button">&nbsp;</a></td>
+        <td><a href="{% url 'inventory:delete-vkml' item.id %}" class="btn btn-danger fas fa-trash" role="button">&nbsp;</a></td>
         </tr>
     {% endfor %}
     </tbody>

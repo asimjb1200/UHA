@@ -371,17 +371,24 @@ class VanDelete(LoginRequiredMixin, DeleteView):
 class VanKitView(LoginRequiredMixin, generic.ListView):
     """Display list of VanKits for user"""
 
-    model = van_kit, VanKitMasterlist
+    model = van_kit
     template_name = 'inventory/vankits.html'
     login_url = '/'
-    redirect_field_name = 'redirect_to'    
+    redirect_field_name = 'redirect_to' 
 
-    def get_queryset(self):
-        """Return a list of all vankits in db"""
-        queryset = van_kit.objects.all()
-        queryset1 = VanKitMasterlist.objects.all()
-        both = list(chain(queryset, queryset1))
-        return both #, VanKitMasterlist.objects.all()
+    def get_context_data(self, **kwargs):
+        # call the super parent class and get the context data
+        context = super().get_context_data(**kwargs)
+        # now add in our specific query set
+        context['master_list'] = VanKitMasterlist.objects.all()
+        return context
+
+    #def get_queryset(self):
+    #    """Return a list of all vankits in db"""
+        #queryset = van_kit.objects.all()
+        #queryset1 = VanKitMasterlist.objects.all()
+        #both = list(chain(queryset, queryset1))
+        #return both
 
     #def get_queryset(self):
      #   """Return a list of vkml items in db"""
