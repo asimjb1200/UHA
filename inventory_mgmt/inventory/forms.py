@@ -99,6 +99,10 @@ class VanForm(forms.ModelForm):
         model = vans
         fields = ['vanName', 'condition', 'available',
                   'mileage', 'trailer', 'comments']
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['trailer'].queryset = trailers.objects.filter(available=True)
 
 
 class UserForm(forms.ModelForm):
