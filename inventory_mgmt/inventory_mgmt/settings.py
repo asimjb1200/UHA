@@ -44,19 +44,28 @@ INSTALLED_APPS = [
     'psycopg2',
 ]
 
+CACHES = {
+   'default': {
+      'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+      'LOCATION': 'cache_table',
+   }
+}
+
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 PHONENUMBER_DEFAULT_REGION = 'US'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
+    #'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+CACHE_MIDDLEWARE_SECONDS = 600
+CACHE_MIDDLEWARE_KEY_PREFIX = ''
 ROOT_URLCONF = 'inventory_mgmt.urls'
 
 TEMPLATES = [
@@ -87,7 +96,7 @@ DATABASES = {
         #'NAME': 'os.path.join(BASE_DIR, 'db.sqlite3')',
         'NAME': 'inventory',
         'USER': 'postgres',
-        'PASSWORD': 'devpostgres',
+        'PASSWORD': 'Megabad2',
         'HOST': '127.0.0.1',
         'PORT': '5432'
     }

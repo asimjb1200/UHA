@@ -1,0 +1,86 @@
+{% extends 'inventory/base.html' %}
+{% load static %}
+{% block body %}
+    
+    <div class="card shadow" >
+        <div class="card-body">
+            <a href="{% url 'inventory:add-warehouse' %}" class="btn btn-outline-success" role="button">Add Warehouse</a>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                <caption>Warehouse Locations</caption>
+                <thead>
+                    <tr>
+                    <th scope="col">Storage Location</th>
+                    </tr>
+                </thead>
+                {% for warehouse in object_list %}
+                <tbody>
+                    <tr>
+                        <td>{{ warehouse.location }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="card shadow" >
+        <div class="card-body">
+        <a href="{% url 'inventory:add-trailer' %}" class="btn btn-outline-success" role="button">Add Trailer</a>
+            
+            <div class="table-responsive">
+                <table class="table table-hover">
+                <caption>Trailers</caption>
+                <thead>
+                    <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Warehouse</th>
+                    <th scope="col">Condition</th>
+                    <th scope="col">Available</th>
+                    </tr>
+                </thead>
+                {% for trailer in trailer_list %}
+                <tbody>
+                    <tr>
+                        <td>{{ trailer.trailer_name }}</td>
+                        <td>{{ trailer.warehouse }}</td>
+                        <td>{{ trailer.condition }}</td>
+                        <td>{{ trailer.available }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="card shadow" >
+        <div class="card-body">
+            <a href="{% url 'inventory:add-kayak' %}" class="btn btn-outline-success" role="button">Add Kayak</a>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                <caption>Kayaks</caption>
+                <thead>
+                    <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Warehouse</th>
+                    <th scope="col">Condition</th>
+                    <th scope="col">Available</th>
+                    </tr>
+                </thead>
+                {% for kayak in kayak_list %}
+                <tbody>
+                    <tr>
+                        <td>{{ kayak.kayak_name }}</td>
+                        <td>{{ kayak.warehouse }}</td>
+                        <td>{{ kayak.condition }}</td>
+                        <td>{{ kayak.available }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

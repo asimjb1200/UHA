@@ -3,12 +3,12 @@
 
 {% block body %}
 <div class="row justify-content-center">
-<div class="bg-danger rounded-circle shadow text-center text-truncate mx-auto my-auto" style="color: white; font-family: Oleo Script; margin: 15px; height: 150px; width: 150px;">
-        <h4 style="position: relative; top: 50%; left: 50%; margin-right: -50%; transform: translate(-50%, -50%);"><a href="{% url 'inventory:add-customer' %}" style="color:white;">Add Customer</a></h4>
+<div class="bg-danger rounded-circle shadow text-center text-truncate mx-auto my-auto custContainer">
+        <h4 class="cust"><a href="{% url 'inventory:add-customer' %}">Add Customer</a></h4>
 </div>
 {% for customer in object_list %}
-    <div class="bg-primary rounded-circle shadow text-center text-truncate mx-auto my-auto" style="color: white; font-family: Oleo Script; margin: 15px; height: 150px; width: 150px;">
-        <h4 style="position: relative; top: 50%; left: 50%; margin-right: -50%; transform: translate(-50%, -50%);"><a href="{% url 'inventory:edit-customer' customer.id %}" class="stretched-link" style="color: white;">{{ customer.first_name }} {{  customer.last_name }}</a></h4>
+    <div class="bg-primary rounded-circle shadow text-center text-truncate mx-auto my-auto custContainer">
+        <h4 class="cust"><a href="{% url 'inventory:edit-customer' customer.id %}" class="stretched-link">{{ customer.first_name }} {{  customer.last_name }}</a></h4>
         <small>{{ customer.email }}</small>
     </div>
 {% endfor %}

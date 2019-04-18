@@ -2,7 +2,6 @@
 {% load crispy_forms_tags %}
 {% block body %}
 
-
 <form method="GET">
 <div class="form-group" style="width: 50%;">
 {{ filter.form|crispy }}
@@ -13,8 +12,8 @@
 <a href="{% url 'inventory:add-supply' %}" class="btn btn-success" role="button">Add Supply</a>
 <div class="table-responsive">
 <table class="table table-hover">
-  <thead style="background-color: Dodgerblue;">
-    <tr style="color: white;">
+  <thead>
+    <tr>
       <th scope="col">Item</th>
       <th scope="col">Category</th>
       <th scope="col">Quantity</th>
@@ -37,4 +36,5 @@
 </tbody>
 </table>
 </div>
+
 {% endblock body %}

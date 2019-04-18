@@ -1,0 +1,14 @@
+{% extends 'inventory/base.html' %}
+{% block title %}<title>Reports</title>{% endblock title %}
+{% block body %}
+<h1>Supplies Total Prices</h1>
+<ul>
+{% for supply in supplies %}
+{% if supply.total is not None %}
+<li>{{ supply.supplyName }} - {{ supply.total }}</li>
+{% else %}
+<li>{{ supply.supplyName }} - Price Unavailable</li>
+{% endif %}
+{% endfor %}
+</ul>
+{% endblock %}
