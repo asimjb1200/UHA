@@ -1,7 +1,11 @@
 branch-defaults:
   default:
-    environment: django-env
+    environment: invmgmt
     group_suffix: null
+environment-defaults:
+  invmgmt:
+    branch: null
+    repository: null
 global:
   application_name: inventory_mgmt
   branch: null

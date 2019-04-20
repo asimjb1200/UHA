@@ -25,7 +25,7 @@ SECRET_KEY = 'pg5%z$e($sch(ct6d!9zq6-s8lfsq*$3k0iw83s)%6^=va5vkv'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['invmgmt.ipqbehhmqi.us-west-2.elasticbeanstalk.com',]
 
 
 # Application definition
@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'inventory',
     'phonenumber_field',
-    'django_filters',
+    'phonenumbers',
+    
+    'filters',
     'crispy_forms',
     'psycopg2',
 ]
@@ -94,10 +96,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         #'NAME': 'os.path.join(BASE_DIR, 'db.sqlite3')',
-        'NAME': 'inventory',
-        'USER': 'postgres',
-        'PASSWORD': 'devpostgres', #'Megabad2',
-        'HOST': '127.0.0.1',
+        'NAME': 'ebdb',
+        'USER': 'devpostgres',
+        'PASSWORD': 'Superbad2', #'Megabad2',
+        'HOST': 'aafc7ocl2j68hf.cvdsecoqidto.us-west-2.rds.amazonaws.com',
         'PORT': '5432'
     }
 }
