@@ -23,9 +23,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'pg5%z$e($sch(ct6d!9zq6-s8lfsq*$3k0iw83s)%6^=va5vkv'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ['invmgmt.ipqbehhmqi.us-west-2.elasticbeanstalk.com',]
+ALLOWED_HOSTS = ['invmgmt.ipqbehhmqi.us-west-2.elasticbeanstalk.com', 
+    'localhost', 
+    'ec2-52-40-84-187.us-west-2.compute.amazonaws.com',  
+    ]
 
 
 # Application definition
