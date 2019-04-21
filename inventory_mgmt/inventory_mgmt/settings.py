@@ -96,10 +96,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         #'NAME': 'os.path.join(BASE_DIR, 'db.sqlite3')',
-        'NAME': 'ebdb',
+        'NAME': 'ebdb1',
         'USER': 'devpostgres',
         'PASSWORD': 'Superbad2', #'Megabad2',
-        'HOST': 'aafc7ocl2j68hf.cvdsecoqidto.us-west-2.rds.amazonaws.com',
+        'HOST': 'mydb.cvdsecoqidto.us-west-2.rds.amazonaws.com',
         'PORT': '5432'
     }
 }
