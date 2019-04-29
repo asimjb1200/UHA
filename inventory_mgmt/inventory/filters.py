@@ -1,5 +1,5 @@
 import django_filters
-from .models import supplies
+from .models import supplies, customer
 
 class SupplyFilter(django_filters.FilterSet):
     """Specifying what I want the user to be able to filter the data set for."""
@@ -11,3 +11,13 @@ class SupplyFilter(django_filters.FilterSet):
             'category': ['icontains'],
         }
 
+
+class CustomerFilter(django_filters.FilterSet):
+    """Allow the user to search for a specific customer."""
+
+    class Meta:
+        model = customer
+        fields = {
+            'first_name': ['icontains'],
+            'last_name': ['icontains'],
+        }
