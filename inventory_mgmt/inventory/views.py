@@ -22,7 +22,7 @@ class Customers(LoginRequiredMixin, generic.ListView):
     template_name = 'inventory/customers.html'
     login_url = '/'
     redirect_field_name = 'redirect_to'
-    
+
     def get_queryset(self):
         """Return a list of all customers."""
         return customer.objects.all()
