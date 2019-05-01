@@ -10,6 +10,7 @@ from .forms import SupplyForm, WarehouseForm, KayakForm, TrailerForm, FoodForm, 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 import datetime
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 @login_required
 def index(request):
@@ -52,7 +53,7 @@ class OtherCompanyInfo(LoginRequiredMixin, generic.ListView):
         return context
 
 
-class CustomerUpdate(LoginRequiredMixin, UpdateView):
+class CustomerUpdate(LoginRequiredMixin, UpdateView, PermissionRequiredMixin):
     """This view will allow the user to update customer information."""
 
     model = customer
@@ -63,7 +64,7 @@ class CustomerUpdate(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy('inventory:customers')
 
 
-class NewTrailer(LoginRequiredMixin, View):
+class NewTrailer(LoginRequiredMixin, View, PermissionRequiredMixin):
     """This view will allow the user to add a trailer"""
     
     form_class = TrailerForm
@@ -97,7 +98,7 @@ class NewTrailer(LoginRequiredMixin, View):
         return render(request, self.template_name, {'form': form})
 
 
-class TrailerUpdate(LoginRequiredMixin, UpdateView):
+class TrailerUpdate(LoginRequiredMixin, UpdateView, PermissionRequiredMixin):
     """This view will allow the user to update customer information."""
 
     model = trailers
@@ -108,7 +109,7 @@ class TrailerUpdate(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy('inventory:other')
 
 
-class NewKayak(LoginRequiredMixin, View):
+class NewKayak(LoginRequiredMixin, View, PermissionRequiredMixin):
     """This view will allow the user to add a kayak to the database."""
     
     form_class = KayakForm
@@ -142,7 +143,7 @@ class NewKayak(LoginRequiredMixin, View):
         return render(request, self.template_name, {'form': form})
 
 
-class KayakUpdate(LoginRequiredMixin, UpdateView):
+class KayakUpdate(LoginRequiredMixin, UpdateView, PermissionRequiredMixin):
     """This view will allow the user to update meals."""
 
     model = kayak
@@ -153,7 +154,7 @@ class KayakUpdate(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy('inventory:other')
 
 
-class NewWarehouse(LoginRequiredMixin, View):
+class NewWarehouse(LoginRequiredMixin, View, PermissionRequiredMixin):
     """This view will allow the user to add a warehouse to the database."""
     
     form_class = WarehouseForm
@@ -185,7 +186,7 @@ class NewWarehouse(LoginRequiredMixin, View):
 
 
 
-class NewCustomer(LoginRequiredMixin, View):
+class NewCustomer(LoginRequiredMixin, View, PermissionRequiredMixin):
     """This view will allow the user to add a customer to the database."""
     
     form_class = CustomerForm
@@ -366,7 +367,7 @@ class MealBuilder(LoginRequiredMixin, View):
         return render(request, self.template_name, {'form': form})
 
 
-class FoodDelete(LoginRequiredMixin, DeleteView):
+class FoodDelete(LoginRequiredMixin, DeleteView, PermissionRequiredMixin):
     """Will allow the user to delete food from the database."""
     model = food
     template_name = 'inventory/confirm_delete.html'
@@ -449,7 +450,7 @@ class SupplyUpdate(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy('inventory:supplies')
 
 
-class SupplyDelete(LoginRequiredMixin, DeleteView):
+class SupplyDelete(LoginRequiredMixin, DeleteView, PermissionRequiredMixin):
     """Will allow the user to delete a trip from the database."""
     model = supplies
     template_name = 'inventory/confirm_delete.html'
@@ -517,7 +518,7 @@ class VanUpdate(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy('inventory:vans')
 
 
-class VanDelete(LoginRequiredMixin, DeleteView):
+class VanDelete(LoginRequiredMixin, DeleteView, PermissionRequiredMixin):
     """Will allow the user to delete a trip from the database."""
     model = vans
     template_name = 'inventory/confirm_delete.html'

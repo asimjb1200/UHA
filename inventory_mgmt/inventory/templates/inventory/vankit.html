@@ -13,7 +13,9 @@
         <th scope="col">Available</th>
         <th scope="col">Comments</th>
         <th scope="col">Edit</th>
+        {% if user.is_superuser %}
         <th scope="col">Delete</th>
+        {% endif %}
         </tr>
     </thead>
     {% for van_kit in object_list %}
@@ -24,7 +26,9 @@
         <td>{{ van_kit.Available }}</td>
         <td>{{ van_kit.comments }}</td>
         <td><a href="{% url 'inventory:edit-vankits' van_kit.id %}" class="btn btn-warning fas fa-edit" role="button">&nbsp;</a></td>
+        {% if user.is_superuser %}
         <td><a href="{% url 'inventory:delete-vankits' van_kit.id %}" class="btn btn-danger fas fa-trash" role="button">&nbsp;</a></td>
+        {% endif %}
         </tr>
     {% endfor %}
     </tbody>
@@ -40,7 +44,9 @@
         <th scope="col">Item Name</th>
         <th scope="col">Quantity</th>
         <th scope="col">Edit</th>
+        {% if user.is_superuser %}
         <th scope="col">Delete</th>
+        {% endif %}
         </tr>
     </thead>
     {% for item in master_list %}
@@ -49,7 +55,9 @@
             <td>{{ item.supplyName }}</td>
             <td>{{ item.supplyQuantity }}</td>
             <td><a href="{% url 'inventory:edit-vkml' item.id %}" class="btn btn-warning fas fa-edit" role="button">&nbsp;</a></td>
+            {% if user.is_superuser %}
             <td><a href="{% url 'inventory:delete-vkml' item.id %}" class="btn btn-danger fas fa-trash" role="button">&nbsp;</a></td>
+            {% endif %}
         </tr>
     {% endfor %}
     </tbody>

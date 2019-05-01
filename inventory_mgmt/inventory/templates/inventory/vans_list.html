@@ -13,7 +13,9 @@
         <th scope="col">Trailer</th>
         <th scope="col">Comments</th>
         <th scope="col">Edit</th>
+        {% if user.is_superuser %}
         <th scope="col">Remove</th>
+        {% endif %}
         </tr>
     </thead>
     {% for van in object_list %}
@@ -26,7 +28,9 @@
         <td>{{ van.trailer }}</td>
         <td>{{ van.comments }}</td>
         <td><a href="{% url 'inventory:edit-van' van.id %}" class="btn btn-warning fas fa-edit" role="button">&nbsp;</a></td>
+        {% if user.is_superuser %}
         <td><a href="{% url 'inventory:delete-van' van.id %}" class="btn btn-danger fas fa-trash" role="button">&nbsp;</a></td>
+        {% endif %}
         </tr>
     {% endfor %}
     </tbody>
