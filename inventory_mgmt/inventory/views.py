@@ -600,12 +600,13 @@ class TripBuilder(LoginRequiredMixin, View):
             extra_meals_purchased = form.cleaned_data['extra_meals_purchased']
             extra_food_purchased = form.cleaned_data['extra_food_purchased']
             extra_supplies = form.cleaned_data['extra_supplies']
-
+            if (trip_end < trip_start):
+                return render(request, self.template_name, {'form': form})
             trip.save()
 
             if trip is not None:
                 return redirect('inventory:view-trips')
-
+        
         # if it doesn't work, have them try again
         return render(request, self.template_name, {'form': form})
 

@@ -2,7 +2,7 @@
 {% block title %}<title>Trip Manager</title>{% endblock title %}
 {% block body %}
 
-<div class="card-deck">
+<div class="card-deck" style="font-family: Montserrat">
 <div class="card shadow-lg text-center mb-3 rounded-circle" style="min-width: 15rem; transform: scale(0.8, 0.8);">
   <div class="my-auto">
     <i class="fas fa-user-plus fa-5x" aria-hidden="true" style="color: Dodgerblue;"></i>
@@ -10,7 +10,7 @@
   </div>
 </div>
 {% for customer in object_list  %}
-    <div class="card shadow-lg mb-3 text-center rounded" style="min-width: 15rem; font-family: Arial;">
+    <div class="card shadow-lg mb-3 text-center rounded" style="min-width: 15rem; font-family: Montserrat;">
         <div class="card-header" >{% if customer.trip_end < today %}Trip Concluded {% else %} {{ customer.payment_status }} {% endif %}</div>
         <!--<img class="card-img-top fa fa-address-card fa-5x" src="" alt="Card image">-->
         <span class="fas fa-id-card fa-5x" style="color: Dodgerblue; opacity: 0.5;">&nbsp;</span>
@@ -23,9 +23,11 @@
             {% endif %}
         <h3 class="card-title"><a href="{% url 'inventory:details' customer.id %}">{{ customer.first_name }} {{ customer.last_name }}</a></h3>
         <div class="card-body" style="font-family: Arial;">
-            <p class="card-text">{{ customer.comments }}</p>
+            <p class="card-text" style="font-family: Montserrat">{{ customer.comments }}</p>
             <a class="btn btn-outline-primary fas fa-user-edit" href="{% url 'inventory:update-trip' customer.id %}" role="button">&nbsp;</a>
+            {% if user.is_superuser %}
             <a class="btn btn-outline-primary fas fa-trash" href="{% url 'inventory:delete-trip' customer.id %}" role="button">&nbsp;</a>
+            {% endif %}
         </div> 
         <div class="card-footer text-muted">
             <p class="card-text">{{ customer.trip_start }} - {{ customer.trip_end }}</p>

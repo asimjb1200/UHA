@@ -44,10 +44,15 @@
     padding: 16px 32px;
   }
 
+  tr {
+      font-family: Montserrat;
+  }
+
 
 thead {
     background-color: Dodgerblue;
     color: white;
+    font-family: Montserrat!important;
 }
 
 
