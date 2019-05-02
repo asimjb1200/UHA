@@ -31,15 +31,16 @@
     </table>
 </div>
 <br>
+<h3 class="text-center justify-content-center">The following table represents the items that should be included in each van kit.</h3>
 <div class="table-responsive">
     <a href="{% url 'inventory:add-vkml' %}" class="btn btn-success" role="button">Add item to Van Kit Masterlist</a>
     <table class="table table-hover">
     <thead>
         <tr>
-        <th scope="col">Item Quantity</th>
         <th scope="col">Item Name</th>
-        <th scope="col">Edit Item</th>
-        <th scope="col">Delete Item</th>
+        <th scope="col">Quantity</th>
+        <th scope="col">Edit</th>
+        <th scope="col">Delete</th>
         </tr>
     </thead>
     {% for item in master_list %}

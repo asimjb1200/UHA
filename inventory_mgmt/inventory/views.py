@@ -5,7 +5,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic import View
-from .filters import SupplyFilter # import the filter
+from .filters import SupplyFilter, CustomerFilter
 from .forms import SupplyForm, WarehouseForm, KayakForm, TrailerForm, FoodForm, CustomerForm, MenuForm, UserForm, TripForm, VanForm, MealForm, VanKitForm, VKMasterlistForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -22,9 +22,17 @@ class Customers(LoginRequiredMixin, generic.ListView):
     template_name = 'inventory/customers.html'
     login_url = '/'
     redirect_field_name = 'redirect_to'
+
     def get_queryset(self):
-        """Return a list of all vans in the database."""
+        """Return a list of all customers."""
         return customer.objects.all()
+
+    def get_context_data(self, **kwargs):
+        # get the context data from the generic list view
+        context = super().get_context_data(**kwargs)
+        # add the filter to the context that will go to the template
+        context['filter'] = CustomerFilter(self.request.GET, queryset=self.get_queryset())
+        return context
 
 
 class OtherCompanyInfo(LoginRequiredMixin, generic.ListView):
@@ -659,7 +667,7 @@ class VanKitView(LoginRequiredMixin, generic.ListView):
     """Display list of VanKits for user"""
 
     model = van_kit
-    template_name = 'inventory/vankits.html'
+    template_name = 'inventory/vankit.html'
     login_url = '/'
     redirect_field_name = 'redirect_to' 
 

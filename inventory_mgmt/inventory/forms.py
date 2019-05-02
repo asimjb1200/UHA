@@ -116,6 +116,7 @@ class UserForm(forms.ModelForm):
         model = User
         fields = ['username', 'email', 'password']
 
+
 class VanKitForm(forms.ModelForm):
     """Allow the user to add a new vk to the database."""
 
@@ -124,6 +125,7 @@ class VanKitForm(forms.ModelForm):
 
         model = van_kit
         fields = ['van_kit_name', 'vanName', 'Available', 'comments']
+
 
 class VKMasterlistForm(forms.ModelForm):
     """Allow the user to add a new item to the database."""
