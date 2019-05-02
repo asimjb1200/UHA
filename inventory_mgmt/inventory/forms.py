@@ -1,6 +1,21 @@
 from django import forms
 from django.contrib.auth.models import User
 from .models import trips, warehouse, trailers, customer, supplies, vans, kayak, meal, menu, food, menu_meals, MealItem, van_kit, VanKitMasterlist
+from .models import tripItinerary
+from django.forms import ModelForm, inlineformset_factory, formset_factory
+
+class tripsform(forms.ModelForm):
+    class Meta:
+        model = trips
+        exclude = ('comments', 'payment_status', 'trip_start', 'trip_end', 'van_used', 'kayak_used', 'menu', 'extra_food_purchased', 'extra_meals_purchased', 'extra_supplies')
+
+class itineraryform(forms.ModelForm):
+    class Meta:
+        model = tripItinerary
+        exclude = ()
+    
+ItineraryFormSet = inlineformset_factory(trips, tripItinerary, form=itineraryform, extra=1)
+#ItineraryFormset = formset_factory(itineraryform, extra=1)
 
 
 class TripForm(forms.ModelForm):

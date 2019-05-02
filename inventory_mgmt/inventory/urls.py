@@ -54,4 +54,9 @@ urlpatterns = [
     url(r'^vankits/edit-vkml/(?P<pk>[0-9]+)/$', views.VKMasterlistUpdate.as_view(), name='edit-vkml'),
     url(r'^vankits/delete-vkml/(?P<pk>[0-9]+)/$', views.VKMasterlistDelete.as_view(), name='delete-vkml'),
 
+
+    url(r'^triplist/$', views.TripList.as_view(), name='triplist'),
+    url(r'^trips/view-trips/trip_details/update-itinerary/$', views.createItinerary.as_view(), name='createitinerary'),
+
+
 ]

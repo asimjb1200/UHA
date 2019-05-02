@@ -11,10 +11,54 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 import datetime
 
+from .forms import ItineraryFormSet, tripsform, itineraryform
+from django.db import transaction
+from django.views.generic import ListView
+from .models import tripItinerary
+
 @login_required
 def index(request):
     """Display the landing page of the website."""
     return render(request, 'inventory/index.html')
+
+
+class TripList(ListView):
+    model = trips
+    template_name = 'inventory/triplist.html'
+    success_url = reverse_lazy('triplist')
+    form_class = tripsform
+
+    def get_queryset(self):
+        return trips.objects.all().order_by('trip_start')
+
+class createItinerary(ListView):
+    model = trips
+    #fields = ['first_name']
+    template_name = 'inventory/itinerary-form.html'
+    form_class = itineraryform
+
+    def get_context_data(self, **kwargs):
+        data = super(createItinerary, self).get_context_data(**kwargs)
+        if self.request.POST:
+            data['familymembers'] = ItineraryFormSet(self.request.POST)
+        else:
+            data['familymembers'] = ItineraryFormSet()
+        return data
+    
+    def form_valid(self, form):
+        context = self.get_context_data()
+        familymembers = context['familymembers']
+        with transaction.atomic():
+            self.object = form.save()
+
+            if familymembers.is_valid():
+                familymembers.instance = self.object
+                familymembers.save()
+
+                if familymembers is not None:
+                    return redirect('inventory:details')
+                
+        return super(createItinerary, self).form_valid(form)
 
 
 class Customers(LoginRequiredMixin, generic.ListView):
@@ -625,12 +669,13 @@ class TripDetails(LoginRequiredMixin, generic.DetailView):
     template_name = 'inventory/trip_details.html'
     login_url = '/'
     redirect_field_name = 'redirect_to'
+    form_class = itineraryform
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['today'] = datetime.date.today()
         return context
-
+    
 
 class TripUpdate(LoginRequiredMixin, UpdateView):
     """This view will allow the user to update trip information."""

@@ -1,0 +1,23 @@
+{% extends 'inventory/base.html' %}
+{% block title %}<title>Itinerary</title> {% endblock %}
+
+{% block body %}
+
+    <h2>Here are all trips: </h2>
+    <div>
+        <ul>
+            {% for trips in object_list %}
+                <li>{{ trips.first_name }} {{ trips.last_name }} | <a
+                        href="#">edit</a>
+                    <a href="#">delete</a>
+                </li>
+            {% empty %}
+                <li>No trips yet.</li>
+            {% endfor %}
+
+        </ul>
+        <p>
+            <a href="{% url 'inventory:createitinerary' %}">add an itinerary</a>
+        </p>
+    </div>
+{% endblock %}

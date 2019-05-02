@@ -216,3 +216,9 @@ class trips(models.Model):
     
     def __str__(self):
         return self.first_name + ' ' + self.last_name
+
+class tripItinerary(models.Model):
+    trips = models.ForeignKey('trips', on_delete=models.PROTECT)
+    arrival = models.TimeField()
+    dropoff = models.TimeField()
+    activities = models.CharField(max_length=100)
