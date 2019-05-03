@@ -4,7 +4,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 
 app_name = 'inventory'
 urlpatterns = [
-    url(r'^$', LoginView.as_view(), name="login"),
+    url(r'^$', LoginView.as_view(redirect_authenticated_user=True), name="login"),
     url(r'^register/$', views.UserFormView.as_view(), name='register'),
     url(r'^logout/$', LogoutView.as_view(), name="logout"),
     url(r'^home/$', views.index, name='index'),
