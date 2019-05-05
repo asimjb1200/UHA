@@ -1,5 +1,5 @@
 {% extends 'inventory/base.html' %}
-{% load static %}
+<!--{% load static %}-->
 {% block title %}<title>Trip Details</title>{% endblock title %}
 {% block body %}
 <a class="btn fas fa-arrow-alt-circle-left fa-2x" href="{% url 'inventory:view-trips' %}" role="button" style="color: Dodgerblue;">&nbsp;</a>
@@ -81,14 +81,6 @@
 <div class="card shadow-lg mb-3 text-center rounded">
   <h3 class="card-title">Comments About Trip</h3>
   <p class="card-text">{{ trips.comments }}</p>
-</div>
-<br>
-<div class="card shadow-lg mb-3 text-center rounded">
-  <div id="wrapper1">
-    <div id=left1 class="card-header"> <a href="{% url 'inventory:createitinerary' %}"><strong>Create Itinerary</strong></a></div>
-    <div id=center1 class ="card-header"><a href="{% url 'inventory:update-trip' trips.id %}"><strong>View Itinerary</strong></a></div>
-    <div id=right1 class ="card-header"><a href="{% url 'inventory:update-trip' trips.id %}"><strong>Update Itinerary</strong></a></div>
-  </div>  
 </div>
 
 

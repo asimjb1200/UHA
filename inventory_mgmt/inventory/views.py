@@ -22,17 +22,14 @@ def index(request):
     return render(request, 'inventory/index.html')
 
 
-class TripList(ListView):
+class ItineraryList(ListView):
     model = trips
-    template_name = 'inventory/triplist.html'
-    success_url = reverse_lazy('triplist')
-    form_class = tripsform
+    template_name = 'inventory/view-itinerary.html'
+    success_url = reverse_lazy('index')
+    fields = ['first_name', 'last_name']
 
-    def get_queryset(self):
-        return trips.objects.all().order_by('trip_start')
-
-class createItinerary(ListView):
-    model = trips
+class createItinerary(CreateView):
+    model = tripItinerary
     #fields = ['first_name']
     template_name = 'inventory/itinerary-form.html'
     form_class = itineraryform
@@ -55,10 +52,42 @@ class createItinerary(ListView):
                 familymembers.instance = self.object
                 familymembers.save()
 
-                if familymembers is not None:
-                    return redirect('inventory:details')
+                #if familymembers is not None:
+                #    return redirect('inventory:index')
                 
         return super(createItinerary, self).form_valid(form)
+
+
+    
+
+class ItineraryUpdate(UpdateView):
+    model = trips
+    template_name = 'inventory/itinerary-form.html'
+    form_class = itineraryform
+    success_url = reverse_lazy('viewitinerary')
+
+    def get_context_data(self, **kwargs):
+        data = super(ItineraryUpdate, self).get_context_data(**kwargs)
+        if self.request.POST:
+            data['familymembers'] = ItineraryFormSet(self.request.POST, instance=self.object)
+        else:
+            data['familymembers'] = ItineraryFormSet(instance=self.object)
+        return data
+    
+    def form_valid(self, form):
+        context = self.get_context_data()
+        familymembers = context['familymembers']
+        with transaction.atomic():
+            self.object = form.save()
+
+            if familymembers.is_valid():
+                familymembers.instance = self.object
+                familymembers.save()
+
+                #if familymembers is not None:
+                #    return redirect('inventory:viewitinerary')
+                
+        return super(ItineraryUpdate, self).form_valid(form)
 
 
 class Customers(LoginRequiredMixin, generic.ListView):
@@ -225,7 +254,7 @@ class NewCustomer(LoginRequiredMixin, View):
     """This view will allow the user to add a customer to the database."""
     
     form_class = CustomerForm
-    template_name = 'inventory/new_supply.html'
+    template_name = 'inventory/new-customer.html'
     login_url = '/'
     redirect_field_name = 'redirect_to'
 
@@ -339,7 +368,7 @@ class MenuBuilder(LoginRequiredMixin, View):
     """This view will allow the user to build a trip through a form."""
     
     form_class = MenuForm
-    template_name = 'inventory/new_supply.html'
+    template_name = 'inventory/new-menu.html'
     login_url = '/'
     redirect_field_name = 'redirect_to'
 
@@ -669,7 +698,7 @@ class TripDetails(LoginRequiredMixin, generic.DetailView):
     template_name = 'inventory/trip_details.html'
     login_url = '/'
     redirect_field_name = 'redirect_to'
-    form_class = itineraryform
+    #form_class = itineraryform
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
