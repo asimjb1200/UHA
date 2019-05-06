@@ -1,0 +1,25 @@
+{% extends 'inventory/base.html' %}
+{% block title %}<title>New Menu</title> {% endblock %}
+
+{% block body %}
+    
+<a class="btn fas fa-arrow-alt-circle-left fa-2x" href="{% url 'inventory:meals' %}" role="button" style="color: Dodgerblue;">Back to Menus&nbsp;</a>
+
+    <div class="card text-white bg-secondary mb-3" >
+        <div class="card-header">
+            <strong>Menu Builder</strong>
+        </div>
+            <div class='card-body'>
+                <!-- enctype allows your form to handle what ever data type is passed into it-->
+                <form class='form-horizontal' action='' method='post' enctype='multipart/form-data'>
+                    {% csrf_token %}
+                    {% include 'inventory/form-template.html' %}<!-- this will be our generic form template-->
+                    <div class='form-group'>
+                        <div class='col-sm-offset-2 col-sm-10'>
+                            <button type='submit' class='btn btn-primary'>Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+    </div>
+{% endblock %}

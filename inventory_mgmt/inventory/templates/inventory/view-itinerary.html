@@ -1,0 +1,26 @@
+{% extends 'inventory/base.html' %}
+{% block title %}<title>Itinerary</title> {% endblock %}
+
+{% block body %}
+
+<a class="btn fas fa-arrow-alt-circle-left fa-2x" href="{% url 'inventory:index' %}" role="button" style="color: Dodgerblue;">&nbsp;Back To Home</a>
+<br>
+<br>   
+
+    <h2>Trip List: </h2>
+    <div>
+        <ul>
+            {% for trips in object_list %}
+                <li>{{ trips.first_name }} {{ trips.last_name }} | 
+                    <a href="{% url 'inventory:updateitinerary' trips.pk %}">edit</a>
+                    <a href="{% url 'inventory:createitinerary' %}">create</a>
+                </li>
+            {% empty %}
+                <li>No trips yet.</li>
+            {% endfor %}
+
+        </ul>
+        <p>
+        </p>
+    </div>
+{% endblock %}

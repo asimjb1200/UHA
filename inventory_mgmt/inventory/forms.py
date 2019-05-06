@@ -1,6 +1,24 @@
 from django import forms
 from django.contrib.auth.models import User
 from .models import trips, warehouse, trailers, customer, supplies, vans, kayak, meal, menu, food, menu_meals, MealItem, van_kit, VanKitMasterlist
+from .models import tripItinerary
+from django.forms import ModelForm, modelformset_factory, inlineformset_factory, formset_factory
+
+class tripsform(forms.ModelForm):
+    class Meta:
+        model = trips
+        exclude = ('comments', 'payment_status', 'trip_start', 'trip_end', 'van_used', 'kayak_used', 'menu', 'extra_food_purchased', 'extra_meals_purchased', 'extra_supplies')
+
+class itineraryform(forms.ModelForm):
+    class Meta:
+        model = tripItinerary
+        exclude = ('trips', )
+    
+#ItineraryFormSet = inlineformset_factory(trips, tripItinerary, 
+#    fields=['arrival','dropoff','activities'],
+#    form=itineraryform, extra=1)
+#ItineraryFormSet = formset_factory(itineraryform, extra=1)
+ItineraryFormSet = modelformset_factory(tripItinerary, extra=1, fields=['arrival','dropoff','activities',])
 
 
 class TripForm(forms.ModelForm):
@@ -10,7 +28,17 @@ class TripForm(forms.ModelForm):
         """Specifying the database and fields to use."""
         model = trips
         fields = ['first_name', 'last_name','comments', 'payment_status', 'trip_start', 'trip_end',
-                  'van_used', 'kayak_used', 'menu', 'extra_meals_purchased', 'extra_food_purchased', 'extra_supplies']
+                  'van_used', 'kayak_used', 'menu', 'extra_meals_purchased', 'extra_supplies']
+                #'extra_food_purchased',
+
+        widgets = {
+            'first_name': forms.Textarea(attrs={'placeholder': "Enter primary contact's first name here", 'rows':1}),
+            'last_name': forms.Textarea(attrs={'placeholder': "Enter primary contact's last name here", 'rows':1}),
+            'comments': forms.Textarea(attrs={'placeholder': 'Place any extra comments here', 'rows':8}),
+            'trip_start': forms.DateInput(attrs={'placeholder': "Start date. Format: mm/dd/yyyy"}),
+            'trip_end': forms.DateInput(attrs={'placeholder': "End date. Format: mm/dd/yyyy"}),
+            
+            }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -19,7 +47,7 @@ class TripForm(forms.ModelForm):
         self.fields["kayak_used"].widget = forms.widgets.CheckboxSelectMultiple()
         self.fields["kayak_used"].queryset = kayak.objects.filter(available=True)
         self.fields["extra_meals_purchased"].widget = forms.widgets.CheckboxSelectMultiple()
-        self.fields["extra_food_purchased"].widget = forms.widgets.CheckboxSelectMultiple()
+        #self.fields["extra_food_purchased"].widget = forms.widgets.CheckboxSelectMultiple()
         self.fields["extra_supplies"].widget = forms.widgets.CheckboxSelectMultiple()
 
 
