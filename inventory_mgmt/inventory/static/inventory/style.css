@@ -34,11 +34,11 @@
 }
 
 .homePage a:hover {
-    color: rgb(40, 167, 69);
+    color: rgb(51, 64, 102);
 }
 
 .text {
-    background-color: rgb(40, 167, 69);
+    background-color: rgb(51, 64, 102);
     color: white;
     font-size: 16px;
     padding: 16px 32px;
@@ -52,7 +52,11 @@ thead {
 
 
 h1, h2 {
+    font-family: 'Roboto', sans-serif;
+    /*
     font-family: Oleo Script;
+    */
+
 }
 
 .food {

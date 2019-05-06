@@ -662,7 +662,7 @@ class TripBuilder(LoginRequiredMixin, View):
             kayak_used = form.cleaned_data['kayak_used']
             menu = form.cleaned_data['menu']
             extra_meals_purchased = form.cleaned_data['extra_meals_purchased']
-            extra_food_purchased = form.cleaned_data['extra_food_purchased']
+            #extra_food_purchased = form.cleaned_data['extra_food_purchased']
             extra_supplies = form.cleaned_data['extra_supplies']
 
             trip.save()
