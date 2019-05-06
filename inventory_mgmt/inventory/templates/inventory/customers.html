@@ -1,21 +1,48 @@
 {% extends 'inventory/base.html' %}
+{% load crispy_forms_tags %}
 {% block title %}<title>Customers</title> {% endblock %}
 
 {% block body %}
-<a class="btn fas fa-arrow-alt-circle-left fa-2x" href="{% url 'inventory:index' %}"role="button" style="color: Dodgerblue;">Back to Home&nbsp;</a>
-<br><br><br><br><br>
-<div class="row justify-content-center">
-<div class="bg-danger rounded-circle shadow text-center text-truncate mx-auto my-auto custContainer">
-        <h4 class="cust"><a href="{% url 'inventory:add-customer' %}">Add Customer</a></h4>
-</div>
-{% for customer in object_list %}
-    <div class="bg-primary rounded-circle shadow text-center text-truncate mx-auto my-auto custContainer">
-        <h4 class="cust"><a href="{% url 'inventory:edit-customer' customer.id %}" class="stretched-link">{{ customer.first_name }} {{  customer.last_name }}</a></h4>
-        <small>{{ customer.email }}</small>
+<a class="btn fas fa-arrow-alt-circle-left fa-2x" href="{% url 'inventory:index' %}"role="button" style="color: Dodgerblue;">&nbsp;</a>
+<br><br>
+<a href="{% url 'inventory:add-customer' %}" class="btn btn-dark" role="button">Add Customer</a>
+&nbsp;
+<a href="{% url 'inventory:trip-builder' %}"role="button" class="btn btn-dark">Create Trip&nbsp;</a>
+
+<form method="GET">
+    <div class="form-group" style="width: 50%;">
+    {{ filter.form|crispy }}
     </div>
-{% endfor %}
+    </form>
+    <div class="table-responsive">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">First name</th>
+          <th scope="col">Last name</th>
+          <th scope="col">Phone number</th>
+          <th scope="col">Email</th>
+          <th scope="col">Group size</th>
+          <th scope="col">Edit</th>
+        </tr>
+      </thead>
+    {% for customer in object_list %}
+    <tbody>
+        <tr>
+          <td>{{ customer.first_name }}</td>
+          <td>{{ customer.last_name}}</td>
+          <td>{{ customer.phone_number }}</td>
+          <td>{{ customer.email }}</td>
+          <td>{{ customer.group_size }}</td>
+          <td><a href="{% url 'inventory:edit-customer' customer.id %}" class="btn btn-warning fas fa-edit" role="button">&nbsp;</a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+    </div>
 </div>
-<br><br><br><br><br>
-<a href="{% url 'inventory:trip-builder' %}"role="button" style="color: Dodgerblue;"><font size="+2">Create Trip</font>&nbsp;</a>
+<br><br>
+
+
 
 {% endblock %}

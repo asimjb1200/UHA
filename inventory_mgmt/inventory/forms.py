@@ -14,11 +14,11 @@ class itineraryform(forms.ModelForm):
         model = tripItinerary
         exclude = ('trips', )
     
-#ItineraryFormSet = inlineformset_factory(trips, tripItinerary, 
-#    fields=['arrival','dropoff','activities'],
-#    form=itineraryform, extra=1)
+ItineraryFormSet = inlineformset_factory(trips, tripItinerary, 
+    fields=['arrival','dropoff','activities'],
+    form=itineraryform, extra=1)
 #ItineraryFormSet = formset_factory(itineraryform, extra=1)
-ItineraryFormSet = modelformset_factory(tripItinerary, extra=1, fields=['arrival','dropoff','activities',])
+#ItineraryFormSet = modelformset_factory(tripItinerary, extra=1, fields=['arrival','dropoff','activities',])
 
 
 class TripForm(forms.ModelForm):
