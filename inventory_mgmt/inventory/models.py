@@ -222,7 +222,7 @@ class trips(models.Model):
         return self.first_name + ' ' + self.last_name
 
 class tripItinerary(models.Model):
-    trips = models.ForeignKey('trips', on_delete=models.CASCADE)
+    #trips = models.ForeignKey('trips', on_delete=models.CASCADE)
     arrival = models.TimeField()
     dropoff = models.TimeField()
     activities = models.CharField(max_length=100)

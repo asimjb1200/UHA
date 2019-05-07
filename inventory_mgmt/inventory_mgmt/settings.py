@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'pg5%z$e($sch(ct6d!9zq6-s8lfsq*$3k0iw83s)%6^=va5vkv'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['invmgmt.ipqbehhmqi.us-west-2.elasticbeanstalk.com', 
     'localhost', 
@@ -145,6 +145,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = 'static'
 LOGIN_URL = '/'
 LOGIN_REDIRECT_URL = '/home/'
 LOGOUT_REDIRECT_URL = 'inventory:login'

@@ -12,7 +12,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 import datetime
 from django.contrib.auth.mixins import PermissionRequiredMixin
 
-from .forms import ItineraryFormSet, tripsform, itineraryform
+from .forms import tripsform, itineraryform #ItineraryFormSet, 
 from django.db import transaction
 from django.views.generic import ListView
 from .models import tripItinerary
@@ -30,65 +30,104 @@ class ItineraryList(ListView):
     fields = ['first_name', 'last_name']
 
 class createItinerary(CreateView):
-    model = tripItinerary
-    #fields = ['first_name']
-    template_name = 'inventory/itinerary-form.html'
-    form_class = itineraryform
-
-    def get_context_data(self, **kwargs):
-        data = super(createItinerary, self).get_context_data(**kwargs)
-        if self.request.POST:
-            data['familymembers'] = ItineraryFormSet(self.request.POST)
-        else:
-            data['familymembers'] = ItineraryFormSet()
-        return data
     
-    def form_valid(self, form):
-        context = self.get_context_data()
-        familymembers = context['familymembers']
-        with transaction.atomic():
-            self.object = form.save()
+    form_class = itineraryform
+    template_name = 'inventory/itinerary-form.html'
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
 
-            if familymembers.is_valid():
-                familymembers.instance = self.object
-                familymembers.save()
+    def get(self, request):
+        """Return a blank form to the user to be filled out."""
+        form = self.form_class(None)
+        return render(request, self.template_name, {'form': form})
 
-                #if familymembers is not None:
-                #    return redirect('inventory:index')
+    def post(self, request):
+        """Take in user data, clean it, and then post it to the database."""
+        form = self.form_class(request.POST) # pass in the user's data to that was submitted in form 
+
+        if form.is_valid():
+            schedule = form.save(commit=False) 
+
+            arrival = form.cleaned_data['arrival']
+            dropoff = form.cleaned_data['dropoff']
+            activities = form.cleaned_data['activities']
+            
+            schedule.save()
+
+            if schedule is not None:
+                return redirect('inventory:index')
+
+        # if it doesn't work, have them try again
+        return render(request, self.template_name, {'form': form})
+    
+    
+    # model = tripItinerary
+    # #fields = ['first_name']
+    # template_name = 'inventory/itinerary-form.html'
+    # form_class = itineraryform
+
+    # def get_context_data(self, **kwargs):
+    #     data = super(createItinerary, self).get_context_data(**kwargs)
+    #     if self.request.POST:
+    #         data['familymembers'] = ItineraryFormSet(self.request.POST)
+    #     else:
+    #         data['familymembers'] = ItineraryFormSet()
+    #     return data
+    
+    # def form_valid(self, form):
+    #     context = self.get_context_data()
+    #     familymembers = context['familymembers']
+    #     with transaction.atomic():
+    #         self.object = form.save()
+
+    #         if familymembers.is_valid():
+    #             familymembers.instance = self.object
+    #             familymembers.save()
+
+    #             #if familymembers is not None:
+    #             #    return redirect('inventory:index')
                 
-        return super(createItinerary, self).form_valid(form)
+    #     return super(createItinerary, self).form_valid(form)
 
 
     
 
 class ItineraryUpdate(UpdateView):
-    model = trips
-    template_name = 'inventory/itinerary-form.html'
-    form_class = itineraryform
-    success_url = reverse_lazy('viewitinerary')
-
-    def get_context_data(self, **kwargs):
-        data = super(ItineraryUpdate, self).get_context_data(**kwargs)
-        if self.request.POST:
-            data['familymembers'] = ItineraryFormSet(self.request.POST, instance=self.object)
-        else:
-            data['familymembers'] = ItineraryFormSet(instance=self.object)
-        return data
     
-    def form_valid(self, form):
-        context = self.get_context_data()
-        familymembers = context['familymembers']
-        with transaction.atomic():
-            self.object = form.save()
+    model = tripItinerary
+    form_class = itineraryform
+    template_name = 'inventory/itinerary-form.html'
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
+    success_url = reverse_lazy('inventory:index')
+    
+    # model = trips
+    # template_name = 'inventory/itinerary-form.html'
+    # form_class = itineraryform
+    # success_url = reverse_lazy('viewitinerary')
 
-            if familymembers.is_valid():
-                familymembers.instance = self.object
-                familymembers.save()
+    # def get_context_data(self, **kwargs):
+    #     data = super(ItineraryUpdate, self).get_context_data(**kwargs)
+    #     if self.request.POST:
+    #         data['familymembers'] = ItineraryFormSet(self.request.POST, instance=self.object)
+    #     else:
+    #         data['familymembers'] = ItineraryFormSet(instance=self.object)
+    #     return data
+    
+    # def form_valid(self, form):
+    #     context = self.get_context_data()
+    #     familymembers = context['familymembers']
+    #     with transaction.atomic():
+    #         self.object = form.save()
 
-                #if familymembers is not None:
-                #    return redirect('inventory:viewitinerary')
+    #         if familymembers.is_valid():
+    #             familymembers.instance = self.object
+    #             familymembers.save()
+
+    #             #if familymembers is not None:
+    #             #    return redirect('inventory:viewitinerary')
                 
-        return super(ItineraryUpdate, self).form_valid(form)
+    #     return super(ItineraryUpdate, self).form_valid(form)
 
 
 class Customers(LoginRequiredMixin, generic.ListView):
