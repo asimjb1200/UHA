@@ -2,12 +2,21 @@
 {% block title %}<title>Login</title>{% endblock title %}
 
 {% block body %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <script>
+  $(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+  });
+  </script>
+
+
     <div class="card shadow-lg mb-3">
         <div class="card-header rounded">
         Login
         </div>
         <div class="card-body text-dark">
-            <h5 class="card-title">Welcome to Ultimate High Adventures</h5>
+            <h5 class="card-title">Welcome to Ultimate High Adventures &nbsp;<a href="#" data-toggle="tooltip" data-placement="right" title="1- Input username issued to you or you created. 2- Then, will need to insert your password in the password field. 3- After that, hit the login button to enter the web and go to the home page." >[Help]</a></h5>
             {% if next %}
                 <p class="card-title"><strong>You have to log in first</strong></p>
             {% endif %}

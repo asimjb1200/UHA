@@ -93,6 +93,17 @@
                 </div>
             </div>
         </div>
+
+        <div class="card shadow homePage">
+            <img class="card-img" src="{% static 'images/storage.jpg' %}" alt="Card image cap">
+            <!-- <span class="fas fa-building fa-5x" style="opacity: 0.5; color: Dodgerblue;">&nbsp;</span> -->
+            <div class="card-img-overlay">
+                <h5 class="card-title"><a href="{% url 'inventory:viewitinerary'%}" class="stretched-link">Trip Itinerary</a></h5>
+                <div class="middle">
+                    <p class="card-text text">Create an itinerary for a trip</p>
+                </div>
+            </div>
+        </div>
 </div>
 
 {% endblock body %}

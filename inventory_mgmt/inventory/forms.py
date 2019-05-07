@@ -13,13 +13,14 @@ class itineraryform(forms.ModelForm):
     class Meta:
         model = tripItinerary
         #exclude = ('trips', )
-        fields=['arrival', 'dropoff', 'activities', ]
+        fields = ['arrival','dropoff','activities']
+        #fields = ['trips','arrival','dropoff','activities']
     
-#ItineraryFormSet = inlineformset_factory(trips, tripItinerary, 
-#    fields=['arrival','dropoff','activities'],
-#    form=itineraryform, extra=1)
-#ItineraryFormSet = formset_factory(itineraryform, extra=1)
-#ItineraryFormSet = modelformset_factory(tripItinerary, extra=1, fields=['arrival','dropoff','activities',])
+        # ItineraryFormSet = inlineformset_factory(trips, tripItinerary, 
+        #     fields=['arrival','dropoff','activities'],
+        #     form=itineraryform, extra=1)
+        #ItineraryFormSet = formset_factory(itineraryform, extra=1)
+        #ItineraryFormSet = modelformset_factory(tripItinerary, extra=1, fields=['arrival','dropoff','activities',])
 
 
 class TripForm(forms.ModelForm):
@@ -31,6 +32,10 @@ class TripForm(forms.ModelForm):
         fields = ['first_name', 'last_name','comments', 'payment_status', 'trip_start', 'trip_end',
                   'van_used', 'kayak_used', 'menu', 'extra_meals_purchased', 'extra_supplies']
                 #'extra_food_purchased',
+
+        help_texts = {
+            'first_name': "Enter the client's First Name here",
+        }
 
         widgets = {
             'first_name': forms.Textarea(attrs={'placeholder': "Enter primary contact's first name here", 'rows':1}),

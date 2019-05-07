@@ -1,21 +1,21 @@
 from django.views import generic
 from django.shortcuts import render, redirect
-from .models import supplies, van_kit, vans, trips, meal, menu, food, customer, warehouse, trailers, kayak, VanKitMasterlist
+from .models import tripItinerary, supplies, van_kit, vans, trips, meal, menu, food, customer, warehouse, trailers, kayak, VanKitMasterlist
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic import View
-from .filters import SupplyFilter, CustomerFilter
-from .forms import SupplyForm, WarehouseForm, KayakForm, TrailerForm, FoodForm, CustomerForm, MenuForm, UserForm, TripForm, VanForm, MealForm, VanKitForm, VKMasterlistForm
+from .filters import SupplyFilter # import the filter
+from .forms import  tripsform, itineraryform, SupplyForm, WarehouseForm, KayakForm, TrailerForm, FoodForm, CustomerForm, MenuForm, UserForm, TripForm, VanForm, MealForm, VanKitForm, VKMasterlistForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 import datetime
 from django.contrib.auth.mixins import PermissionRequiredMixin
 
-from .forms import tripsform, itineraryform #ItineraryFormSet, 
+#from .forms import 
 from django.db import transaction
 from django.views.generic import ListView
-from .models import tripItinerary
+#from .models import 
 
 @login_required
 def index(request):
@@ -29,11 +29,12 @@ class ItineraryList(ListView):
     success_url = reverse_lazy('index')
     fields = ['first_name', 'last_name']
 
-class createItinerary(CreateView):
-    
-    form_class = itineraryform
+class createItinerary(LoginRequiredMixin, View):#CreateView
+    #model = tripItinerary
+    #fields = ['first_name']
     template_name = 'inventory/itinerary-form.html'
-    login_url = '/'
+    form_class = itineraryform
+    login_url ='/'
     redirect_field_name = 'redirect_to'
 
     def get(self, request):
@@ -48,23 +49,18 @@ class createItinerary(CreateView):
         if form.is_valid():
             schedule = form.save(commit=False) 
 
+            #trips = form.cleaned_data['trips']
             arrival = form.cleaned_data['arrival']
             dropoff = form.cleaned_data['dropoff']
             activities = form.cleaned_data['activities']
-            
+
             schedule.save()
 
             if schedule is not None:
-                return redirect('inventory:index')
+                return redirect('inventory:viewitinerary')
 
         # if it doesn't work, have them try again
         return render(request, self.template_name, {'form': form})
-    
-    
-    # model = tripItinerary
-    # #fields = ['first_name']
-    # template_name = 'inventory/itinerary-form.html'
-    # form_class = itineraryform
 
     # def get_context_data(self, **kwargs):
     #     data = super(createItinerary, self).get_context_data(**kwargs)
@@ -92,19 +88,13 @@ class createItinerary(CreateView):
 
     
 
-class ItineraryUpdate(UpdateView):
-    
+class ItineraryUpdate(LoginRequiredMixin, UpdateView):
     model = tripItinerary
-    form_class = itineraryform
     template_name = 'inventory/itinerary-form.html'
+    form_class = itineraryform
+    success_url = reverse_lazy('inventory:viewitinerary')
     login_url = '/'
     redirect_field_name = 'redirect_to'
-    success_url = reverse_lazy('inventory:index')
-    
-    # model = trips
-    # template_name = 'inventory/itinerary-form.html'
-    # form_class = itineraryform
-    # success_url = reverse_lazy('viewitinerary')
 
     # def get_context_data(self, **kwargs):
     #     data = super(ItineraryUpdate, self).get_context_data(**kwargs)
