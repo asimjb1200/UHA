@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import trips, warehouse, trailers, customer, supplies, vans, kayak, meal, menu, food, menu_meals, MealItem, van_kit, VanKitMasterlist
+from .models import trips, warehouse, trailers, customer, supplies, vans, kayak, meal, menu, food, van_kit, VanKitMasterlist
 
 
 class TripForm(forms.ModelForm):
@@ -65,7 +65,6 @@ class MealForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['items'].widget = forms.widgets.CheckboxSelectMultiple()
         self.fields["items"].queryset = food.objects.all()
 
 
@@ -76,7 +75,6 @@ class MenuForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['meal_name'].widget = forms.widgets.CheckboxSelectMultiple()
         self.fields['meal_name'].queryset = meal.objects.all()
 
 
