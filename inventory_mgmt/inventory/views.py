@@ -5,7 +5,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic import View
-from .filters import SupplyFilter # import the filter
+from .filters import SupplyFilter, CustomerFilter
 from .forms import  tripsform, itineraryform, SupplyForm, WarehouseForm, KayakForm, TrailerForm, FoodForm, CustomerForm, MenuForm, UserForm, TripForm, VanForm, MealForm, VanKitForm, VKMasterlistForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
