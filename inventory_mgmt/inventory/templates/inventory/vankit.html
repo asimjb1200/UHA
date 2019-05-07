@@ -3,8 +3,8 @@
 {% load static %}
 {% block body %}
 <br>
-<a href="{% url 'inventory:add-vankit' %}" class="btn btn-success" role="button">Add Van Kit</a>
-<div class="table-responsive">
+<a href="{% url 'inventory:add-vankit' %}" class="btn btn-success" role="button" style="font-family: Montserrat">Add Van Kit</a>
+<div class="table-responsive" style="font-family: Montserrat">
     <table class="table table-hover">
     <thead>
         <tr>
@@ -13,7 +13,9 @@
         <th scope="col">Available</th>
         <th scope="col">Comments</th>
         <th scope="col">Edit</th>
+        {% if user.is_superuser %}
         <th scope="col">Delete</th>
+        {% endif %}
         </tr>
     </thead>
     {% for van_kit in object_list %}
@@ -24,23 +26,27 @@
         <td>{{ van_kit.Available }}</td>
         <td>{{ van_kit.comments }}</td>
         <td><a href="{% url 'inventory:edit-vankits' van_kit.id %}" class="btn btn-warning fas fa-edit" role="button">&nbsp;</a></td>
+        {% if user.is_superuser %}
         <td><a href="{% url 'inventory:delete-vankits' van_kit.id %}" class="btn btn-danger fas fa-trash" role="button">&nbsp;</a></td>
+        {% endif %}
         </tr>
     {% endfor %}
     </tbody>
     </table>
 </div>
 <br>
-<h3 class="text-center justify-content-center">The following table represents the items that should be included in each van kit.</h3>
-<div class="table-responsive">
-    <a href="{% url 'inventory:add-vkml' %}" class="btn btn-success" role="button">Add item to Van Kit Masterlist</a>
+<h3 class="text-center justify-content-center" style="font-family: Montserrat">The following table represents the items that should be included in each van kit.</h3>
+<div class="table-responsive" style="font-family: Montserrat">
+    <a href="{% url 'inventory:add-vkml' %}" class="btn btn-success" role="button" style="font-family: Montserrat">Add item to Van Kit Masterlist</a>
     <table class="table table-hover">
     <thead>
         <tr>
         <th scope="col">Item Name</th>
         <th scope="col">Quantity</th>
         <th scope="col">Edit</th>
+        {% if user.is_superuser %}
         <th scope="col">Delete</th>
+        {% endif %}
         </tr>
     </thead>
     {% for item in master_list %}
@@ -49,7 +55,9 @@
             <td>{{ item.supplyName }}</td>
             <td>{{ item.supplyQuantity }}</td>
             <td><a href="{% url 'inventory:edit-vkml' item.id %}" class="btn btn-warning fas fa-edit" role="button">&nbsp;</a></td>
+            {% if user.is_superuser %}
             <td><a href="{% url 'inventory:delete-vkml' item.id %}" class="btn btn-danger fas fa-trash" role="button">&nbsp;</a></td>
+            {% endif %}
         </tr>
     {% endfor %}
     </tbody>

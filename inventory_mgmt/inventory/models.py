@@ -75,7 +75,7 @@ class vans(models.Model):
     available = models.BooleanField(default=True, blank=False)
     mileage = models.PositiveIntegerField()
     trailer = models.ForeignKey(trailers, on_delete=models.CASCADE, blank=True, null=True)
-    comments = models.TextField(blank=True, null=True)
+    comments = models.TextField(blank=True, null=True, max_length=150)
    
     # set up how the vans will be referenced in the admin page
     def __str__(self):
@@ -113,7 +113,7 @@ class van_kit(models.Model):
     van_kit_name = models.CharField(max_length=100)
     vanName = models.OneToOneField(vans, on_delete=models.CASCADE)
     Available = models.BooleanField(default=True, blank=False)
-    comments = models.TextField(blank=True, null=True)
+    comments = models.TextField(blank=True, null=True, max_length=150)
    
     def __str__(self):
         return self.van_kit_name
@@ -153,6 +153,10 @@ class food(models.Model):
     def __str__(self):
         return self.food_name
 
+    def _get_total(self):
+        return self.quantity * self.price
+
+    total = property(_get_total)
 
 class foodWarehouse(models.Model):
     food_name = models.ForeignKey(food, on_delete=models.CASCADE)
@@ -176,7 +180,7 @@ class MealItem(models.Model):
 
 
 class menu(models.Model):
-    menu_name = models.CharField(max_length=50)
+    menu_name = models.CharField(max_length=50, unique=True)
     meal_name = models.ManyToManyField(meal, related_name="meals", through="menu_meals", through_fields=("menu_name", "meal_name"))
   
     def __str__(self):
@@ -203,10 +207,10 @@ class trips(models.Model):
 
     first_name = models.CharField(max_length=100, blank=False)
     last_name = models.CharField(max_length=100, blank=False)
-    comments = models.TextField(blank=True, null=True)
+    comments = models.TextField(blank=True, null=True, max_length=300)
     payment_status = models.CharField(max_length=150, choices = choices, null=True)
-    trip_start = models.DateField(blank=True)
-    trip_end = models.DateField(blank=True)
+    trip_start = models.DateField(blank=True, null=True)
+    trip_end = models.DateField(blank=True, null=True)
     van_used = models.ManyToManyField(vans, blank=True)
     kayak_used = models.ManyToManyField(kayak, related_name="kayak", blank=True)
     menu = models.ForeignKey(menu, on_delete=models.CASCADE, related_name="trip_menu", null=True)
