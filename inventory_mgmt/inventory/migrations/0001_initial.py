@@ -69,35 +69,16 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('meal_name', models.CharField(max_length=30, unique=True)),
                 ('description', models.TextField(max_length=200)),
-            ],
-        ),
-        migrations.CreateModel(
-            name='MealItem',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('quantity', models.PositiveSmallIntegerField()),
-                ('foodName', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='inventory.food')),
-                ('mealName', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='inventory.meal')),
+                ('items', models.ManyToManyField(to='inventory.food')),
             ],
         ),
         migrations.CreateModel(
             name='menu',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('menu_name', models.CharField(max_length=50)),
+                ('menu_name', models.CharField(max_length=50, unique=True)),
+                ('meal_name', models.ManyToManyField(to='inventory.meal')),
             ],
-        ),
-        migrations.CreateModel(
-            name='menu_meals',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('meal_qty', models.PositiveSmallIntegerField()),
-                ('meal_name', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='inventory.meal')),
-                ('menu_name', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='inventory.menu')),
-            ],
-            options={
-                'verbose_name_plural': 'menu meals',
-            },
         ),
         migrations.CreateModel(
             name='supplies',
@@ -139,7 +120,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('first_name', models.CharField(max_length=100)),
                 ('last_name', models.CharField(max_length=100)),
-                ('comments', models.TextField(blank=True, null=True)),
+                ('comments', models.TextField(blank=True, max_length=300, null=True)),
                 ('payment_status', models.CharField(choices=[('Outreach', 'customer contacted'), ('Deposit Made', 'payment secured'), ('Trip Started', 'Trip ready')], max_length=150, null=True)),
                 ('trip_start', models.DateField(blank=True)),
                 ('trip_end', models.DateField(blank=True)),
@@ -158,7 +139,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('van_kit_name', models.CharField(max_length=100)),
                 ('Available', models.BooleanField(default=True)),
-                ('comments', models.TextField(blank=True, null=True)),
+                ('comments', models.TextField(blank=True, max_length=150, null=True)),
                 ('supply_name', models.ManyToManyField(related_name='supplies', through='inventory.KitSupplies', to='inventory.supplies')),
             ],
         ),
@@ -178,7 +159,7 @@ class Migration(migrations.Migration):
                 ('condition', models.CharField(choices=[('Ready', 'No Issues'), ('Work Needed', 'Issues identified'), ('Off-Limits', 'Not usable for treks')], max_length=50)),
                 ('available', models.BooleanField(default=True)),
                 ('mileage', models.PositiveIntegerField()),
-                ('comments', models.TextField(blank=True, null=True)),
+                ('comments', models.TextField(blank=True, max_length=150, null=True)),
                 ('trailer', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='inventory.trailers')),
             ],
             options={
@@ -214,16 +195,6 @@ class Migration(migrations.Migration):
             model_name='trailers',
             name='warehouse',
             field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='inventory.warehouse'),
-        ),
-        migrations.AddField(
-            model_name='menu',
-            name='meal_name',
-            field=models.ManyToManyField(related_name='meals', through='inventory.menu_meals', to='inventory.meal'),
-        ),
-        migrations.AddField(
-            model_name='meal',
-            name='items',
-            field=models.ManyToManyField(related_name='meal_items', through='inventory.MealItem', to='inventory.food'),
         ),
         migrations.AddField(
             model_name='kitsupplies',

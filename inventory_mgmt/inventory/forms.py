@@ -99,7 +99,6 @@ class MealForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['items'].widget = forms.widgets.CheckboxSelectMultiple()
         self.fields["items"].queryset = food.objects.all()
 
 
@@ -110,7 +109,6 @@ class MenuForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['meal_name'].widget = forms.widgets.CheckboxSelectMultiple()
         self.fields['meal_name'].queryset = meal.objects.all()
 
 

@@ -1,14 +1,12 @@
 {% extends 'inventory/base.html' %}
-{% load cache %}
 {% load static %}
-{% cache 500 index %}
 {% block body %}
     
     <div class="card-columns" style="margin: 12px;">
 
-        <div class="card shadow homePage">
-            <img class="card-img" src="{% static 'images/trips.jpg' %}" alt="Card image cap" >
-            <!--<span class="fas fa-route fa-5x" style="opacity: 0.5; color: Dodgerblue;">&nbsp;</span>-->
+        <div class="card shadow homePage" >
+            <!--<img class="card-img" src="{% static 'images/trips.jpg' %}" alt="Card image cap" >-->
+            <span class="fas fa-route fa-5x card-img" style="opacity: 0.5; color: Dodgerblue; text-align: center;">&nbsp;</span>
             <div class="card-img-overlay">
                 <h5 class="card-title"><a href="{% url 'inventory:view-trips' %}" class="stretched-link">Trips</a></h5>
                 <div class="middle">
@@ -17,9 +15,9 @@
             </div>
         </div>
     
-        <div class="card shadow homePage" >
-           <img class="card-img" src="{% static 'images/cars.jpg' %}" alt="Card image cap" >
-           <!--<span class="fas fa-shuttle-van fa-5x" style="opacity: 0.5; color: Dodgerblue;">&nbsp;</span>-->
+        <div class="card shadow homePage">
+           <!--<img class="card-img" src="{% static 'images/cars.jpg' %}" alt="Card image cap" >-->
+           <span class="fas fa-shuttle-van fa-5x card-img" style="opacity: 0.5; color: Dodgerblue; text-align: center;">&nbsp;</span>
             <div class="card-img-overlay">
                 <h5 class="card-title"><a href="{% url 'inventory:vans'%}" class="stretched-link">Vehicles</a></h5>
                 <div class="middle">
@@ -28,9 +26,9 @@
             </div>
         </div>
     
-        <div class="card shadow homePage" >
-            <img class="card-img" src="{% static 'images/inventory.jpg' %}" alt="Card image cap" >
-            <!-- <span class="fas fa-box-open fa-5x" style="opacity: 0.5; color: Dodgerblue;">&nbsp;</span> -->
+        <div class="card shadow homePage">
+            <!-- <img class="card-img" src="{% static 'images/inventory.jpg' %}" alt="Card image cap" > -->
+            <span class="fas fa-box-open fa-5x card-img" style="opacity: 0.5; color: Dodgerblue; text-align: center;">&nbsp;</span>
             <div class="card-img-overlay">
                 <h5 class="card-title"><a href="{% url 'inventory:supplies'%}"  class="stretched-link">Inventory</a></h5>
                 <div class="middle">
@@ -40,8 +38,8 @@
         </div>
     
         <div class="card shadow homePage">
-            <img class="card-img" src="{% static 'images/kit.jpg' %}" alt="Card image cap">
-            <!-- <span class="fas fa-toolbox fa-5x" style="opacity: 0.5; color: Dodgerblue;">&nbsp;</span> -->
+            <!-- <img class="card-img" src="{% static 'images/kit.jpg' %}" alt="Card image cap"> -->
+            <span class="fas fa-toolbox fa-5x card-img" style="opacity: 0.5; color: Dodgerblue; text-align: center;">&nbsp;</span>
             <div class="card-img-overlay">
                 <h5 class="card-title"><a href="{% url 'inventory:vankit' %}"  class="stretched-link">Van Kits</a></h5>
                 <div class="middle">
@@ -51,8 +49,8 @@
         </div>
     
         <div class="card shadow homePage">
-            <img class="card-img" src="{% static 'images/food.jpg' %}" alt="Card image cap" >
-            <!-- <span class="fas fa-drumstick-bite fa-5x" style="opacity: 0.5; color: Dodgerblue;">&nbsp;</span> -->
+            <!-- <img class="card-img" src="{% static 'images/food.jpg' %}" alt="Card image cap" > -->
+            <span class="fas fa-drumstick-bite fa-5x card-img" style="opacity: 0.5; color: Dodgerblue; text-align: center;">&nbsp;</span>
             <div class="card-img-overlay">
                 <h5 class="card-title"><a href="{% url 'inventory:meals' %}" class="stretched-link">Food and Meals</a></h5>
                 <div class="middle">
@@ -62,8 +60,8 @@
         </div>
 
         <div class="card shadow homePage">
-            <img class="card-img" src="{% static 'images/customers.jpg' %}" alt="Card image cap" >
-            <!-- <span class="fas fa-address-book fa-5x" style="opacity: 0.5; color: Dodgerblue;">&nbsp;</span> -->
+            <!-- <img class="card-img" src="{% static 'images/customers.jpg' %}" alt="Card image cap" > -->
+            <span class="fas fa-address-book fa-5x card-img" style="opacity: 0.5; color: Dodgerblue; text-align: center;">&nbsp;</span>
             <div class="card-img-overlay">
                 <h5 class="card-title"><a href="{% url 'inventory:customers' %}" class="stretched-link">Customers</a></h5>
                 <div class="middle">
@@ -73,8 +71,8 @@
         </div>
         
         <div class="card shadow homePage">
-            <img class="card-img" src="{% static 'images/report.jpg' %}" alt="Card image cap">
-            <!-- <span class="fas fa-file-invoice-dollar fa-5x" style="opacity: 0.5; color: Dodgerblue;">&nbsp;</span> -->
+            <!-- <img class="card-img" src="{% static 'images/report.jpg' %}" alt="Card image cap"> -->
+            <span class="fas fa-file-invoice-dollar fa-5x" style="opacity: 0.5; color: Dodgerblue; text-align: center;">&nbsp;</span>
             <div class="card-img-overlay">
                 <h5 class="card-title"><a href="{% url 'inventory:reports'%}" class="stretched-link">Financial Reports</a></h5>
                 <div class="middle">
@@ -84,8 +82,8 @@
         </div>
 
         <div class="card shadow homePage">
-           <img class="card-img" src="{% static 'images/storage.jpg' %}" alt="Card image cap">
-           <!-- <span class="fas fa-building fa-5x" style="opacity: 0.5; color: Dodgerblue;">&nbsp;</span> -->
+           <!-- <img class="card-img" src="{% static 'images/storage.jpg' %}" alt="Card image cap"> -->
+           <span class="fas fa-building fa-5x card-img" style="opacity: 0.5; color: Dodgerblue; text-align: center;">&nbsp;</span>
             <div class="card-img-overlay">
                 <h5 class="card-title"><a href="{% url 'inventory:other'%}" class="stretched-link">Storage & Large Equipment</a></h5>
                 <div class="middle">
@@ -107,4 +105,3 @@
 </div>
 
 {% endblock body %}
-{% endcache %}

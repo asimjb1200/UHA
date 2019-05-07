@@ -1,5 +1,10 @@
 .homePage {
     font-weight: bold;
+    height: 150px;
+}
+
+.height {
+    height: 150px;
 }
 
 .homePage > img{

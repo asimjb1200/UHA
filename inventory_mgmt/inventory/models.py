@@ -166,33 +166,33 @@ class foodWarehouse(models.Model):
 
 class meal(models.Model):
     meal_name = models.CharField(max_length=30, unique=True, blank=False)
-    items = models.ManyToManyField(food, related_name="meal_items", through="MealItem", through_fields=("mealName", "foodName"))
+    items = models.ManyToManyField(food)#, through="MealItem", through_fields=("mealName", "foodName")
     description = models.TextField(max_length=200)
 
     def __str__(self):
         return self.meal_name
 
 
-class MealItem(models.Model):
-    mealName = models.ForeignKey(meal, on_delete=models.CASCADE)
-    foodName = models.ForeignKey(food, on_delete=models.CASCADE)
-    quantity = models.PositiveSmallIntegerField()
+# class MealItem(models.Model):
+#     mealName = models.ForeignKey(meal, on_delete=models.CASCADE)
+#     foodName = models.ForeignKey(food, on_delete=models.CASCADE)
+#     quantity = models.PositiveSmallIntegerField()
 
 
 class menu(models.Model):
     menu_name = models.CharField(max_length=50, unique=True)
-    meal_name = models.ManyToManyField(meal, related_name="meals", through="menu_meals", through_fields=("menu_name", "meal_name"))
+    meal_name = models.ManyToManyField(meal)#, through="menu_meals", through_fields=("menu_name", "meal_name")
   
     def __str__(self):
         return self.menu_name
 
 
-class menu_meals(models.Model):
-    class Meta:
-        verbose_name_plural = "menu meals"
-    menu_name = models.ForeignKey(menu, on_delete=models.CASCADE)
-    meal_name = models.ForeignKey(meal, on_delete=models.CASCADE)
-    meal_qty = models.PositiveSmallIntegerField()
+# class menu_meals(models.Model):
+#     class Meta:
+#         verbose_name_plural = "menu meals"
+#     menu_name = models.ForeignKey(menu, on_delete=models.CASCADE)
+#     meal_name = models.ForeignKey(meal, on_delete=models.CASCADE)
+#     meal_qty = models.PositiveSmallIntegerField(null=True)
 
 
 class trips(models.Model):

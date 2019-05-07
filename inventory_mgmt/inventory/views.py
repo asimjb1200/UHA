@@ -383,10 +383,7 @@ class MealUpdate(LoginRequiredMixin, UpdateView):
     template_name = 'inventory/new_supply.html'
     login_url = '/'
     redirect_field_name = 'redirect_to'
-
-    def get_success_url(self):
-        """Will allow the user to return to the main food page."""
-        return reverse_lazy('inventory:meals', kwargs={'pk': self.kwargs['pk']})
+    success_url = reverse_lazy('inventory:meals')
 
 
 class MenuUpdate(LoginRequiredMixin, UpdateView):
@@ -397,10 +394,7 @@ class MenuUpdate(LoginRequiredMixin, UpdateView):
     template_name = 'inventory/new_supply.html'
     login_url = '/'
     redirect_field_name = 'redirect_to'
-
-    def get_success_url(self):
-        """Will allow the user to return to the main food page."""
-        return reverse_lazy('inventory:meals', kwargs={'pk': self.kwargs['pk']})
+    success_url = reverse_lazy('inventory:meals')
 
 class MenuBuilder(LoginRequiredMixin, View):
     """This view will allow the user to build a trip through a form."""
@@ -425,8 +419,11 @@ class MenuBuilder(LoginRequiredMixin, View):
 
             menu_name = form.cleaned_data['menu_name']
             meal_name = form.cleaned_data['meal_name']
-
+            
             newMenu.save()
+            
+
+            
 
             if newMenu is not None:
                 return redirect('inventory:meals')

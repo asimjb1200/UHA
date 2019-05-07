@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import vans, van_kit, supplies, food, trips, KitSupplies, menu, meal, menu_meals, MealItem, kayak, warehouse, employee, customer, trailers, foodWarehouse, VanKitMasterlist
+from .models import vans, van_kit, supplies, food, trips, KitSupplies, menu, meal, kayak, warehouse, employee, customer, trailers, foodWarehouse, VanKitMasterlist
 # Register your models here so they'll show in the admin page.
 
 class van_kitAdmin(admin.ModelAdmin):
@@ -41,17 +41,17 @@ class kayakAdmin(admin.ModelAdmin):
     list_display = ('kayak_name', 'warehouse','condition')
     search_fields = ['kayak_name']
 
-class menu_mealsAdmin(admin.ModelAdmin):
-    """Configure how I want the database to look in the admin page. Also making it searchable."""
+# class menu_mealsAdmin(admin.ModelAdmin):
+#     """Configure how I want the database to look in the admin page. Also making it searchable."""
     
-    list_display = ('meal_name', 'meal_qty', 'menu_name')
-    search_fields = ['meal_name__meal_name', 'menu_name__menu_name']
+#     list_display = ('meal_name', 'meal_qty', 'menu_name')
+#     search_fields = ['meal_name__meal_name', 'menu_name__menu_name']
 
-class MealItemAdmin(admin.ModelAdmin):
-    """Configure how I want the database to look in the admin page. Also making it searchable."""
+# class MealItemAdmin(admin.ModelAdmin):
+#     """Configure how I want the database to look in the admin page. Also making it searchable."""
     
-    list_display = ('foodName', 'mealName', 'quantity')
-    search_fields = ['mealName__meal_name', 'foodName__food_name']
+#     list_display = ('foodName', 'mealName', 'quantity')
+#     search_fields = ['mealName__meal_name', 'foodName__food_name']
 
 class suppliesAdmin(admin.ModelAdmin):
     """Configure how I want the database to look in the admin page. Also making it searchable."""
@@ -82,7 +82,7 @@ admin.site.register(employee)
 admin.site.register(kayak, kayakAdmin)
 admin.site.register(menu)
 admin.site.register(meal)
-admin.site.register(MealItem, MealItemAdmin)
-admin.site.register(menu_meals, menu_mealsAdmin)
+# admin.site.register(MealItem, MealItemAdmin)
+# admin.site.register(menu_meals, menu_mealsAdmin)
 admin.site.register(warehouse, warehouseAdmin)
 admin.site.register(foodWarehouse, foodWarehouseAdmin)
