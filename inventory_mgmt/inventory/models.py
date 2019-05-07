@@ -192,7 +192,7 @@ class menu_meals(models.Model):
         verbose_name_plural = "menu meals"
     menu_name = models.ForeignKey(menu, on_delete=models.CASCADE)
     meal_name = models.ForeignKey(meal, on_delete=models.CASCADE)
-    meal_qty = models.PositiveSmallIntegerField()
+    meal_qty = models.PositiveSmallIntegerField(null=True)
 
 
 class trips(models.Model):

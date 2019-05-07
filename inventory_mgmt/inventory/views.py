@@ -323,8 +323,11 @@ class MenuBuilder(LoginRequiredMixin, View):
 
             menu_name = form.cleaned_data['menu_name']
             meal_name = form.cleaned_data['meal_name']
-
+            
             newMenu.save()
+            
+
+            
 
             if newMenu is not None:
                 return redirect('inventory:meals')
