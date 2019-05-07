@@ -3,10 +3,39 @@
 
 {% block body %}
 <br>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+<div class="container">
+    <h3>Tooltip Example</h3>
+    <p>The data-placement attribute specifies the tooltip position.</p>
+    <ul class="list-inline">
+      <li><a href="#" data-toggle="tooltip" data-placement="top" title="Hooray!">Top</a></li>
+      <li><a href="#" data-toggle="tooltip" data-placement="bottom" title="Hooray!">Bottom</a></li>
+      <li><a href="#" data-toggle="tooltip" data-placement="left" title="Hooray!">Left</a></li>
+      <li><a href="#" data-toggle="tooltip" data-placement="right" title="Hooray!">Right</a></li>
+    </ul>
+  </div>
+  
+  <script>
+  $(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+  });
+  </script>
+
 <div class='row'>
     <div class='col-sm-12 col-md-7'>
         <div class='panel-body'>
             <h3>Create New Account</h3>
+            
+                <ul class="list-inline">
+                    <li><a href="#" data-toggle="tooltip" data-placement="top" title="Hooray!">Top</a></li>
+                    <li><a href="#" data-toggle="tooltip" data-placement="bottom" title="Hooray!">Bottom</a></li>
+                    <li><a href="#" data-toggle="tooltip" data-placement="left" title="Hooray!">Left</a></li>
+                    <li><a href="#" data-toggle="tooltip" data-placement="right" title="Hooray!">Right</a></li>
+                </ul>
+            
                 <!-- enctype allows your form to handle what ever data type is passed into it-->
                 <form class='form-horizontal' action='' method='post' enctype='multipart/form-data'>
                     {% csrf_token %}

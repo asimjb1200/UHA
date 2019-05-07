@@ -31,6 +31,10 @@ class TripForm(forms.ModelForm):
                   'van_used', 'kayak_used', 'menu', 'extra_meals_purchased', 'extra_supplies']
                 #'extra_food_purchased',
 
+        help_texts = {
+            'first_name': "Enter the client's First Name here",
+        }
+
         widgets = {
             'first_name': forms.Textarea(attrs={'placeholder': "Enter primary contact's first name here", 'rows':1}),
             'last_name': forms.Textarea(attrs={'placeholder': "Enter primary contact's last name here", 'rows':1}),
