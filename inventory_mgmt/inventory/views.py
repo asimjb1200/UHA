@@ -48,7 +48,7 @@ class createItinerary(LoginRequiredMixin, View):#CreateView
         if form.is_valid():
             schedule = form.save(commit=False) 
 
-            trips = form.cleaned_data['trips']
+            #trips = form.cleaned_data['trips']
             arrival = form.cleaned_data['arrival']
             dropoff = form.cleaned_data['dropoff']
             activities = form.cleaned_data['activities']

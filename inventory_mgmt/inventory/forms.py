@@ -13,7 +13,8 @@ class itineraryform(forms.ModelForm):
     class Meta:
         model = tripItinerary
         #exclude = ('trips', )
-        fields = ['trips','arrival','dropoff','activities']
+        fields = ['arrival','dropoff','activities']
+        #fields = ['trips','arrival','dropoff','activities']
     
         # ItineraryFormSet = inlineformset_factory(trips, tripItinerary, 
         #     fields=['arrival','dropoff','activities'],
