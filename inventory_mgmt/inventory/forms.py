@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import trips, warehouse, trailers, customer, supplies, vans, kayak, meal, menu, food, menu_meals, MealItem, van_kit, VanKitMasterlist
+from .models import trips, warehouse, trailers, customer, supplies, vans, kayak, meal, menu, food, van_kit, VanKitMasterlist #menu_meals, #MealItem,
 from .models import tripItinerary
 from django.forms import ModelForm, modelformset_factory, inlineformset_factory, formset_factory
 

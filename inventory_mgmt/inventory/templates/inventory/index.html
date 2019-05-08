@@ -72,7 +72,7 @@
         
         <div class="card shadow homePage">
             <!-- <img class="card-img" src="{% static 'images/report.jpg' %}" alt="Card image cap"> -->
-            <span class="fas fa-file-invoice-dollar fa-5x" style="opacity: 0.5; color: Dodgerblue; text-align: center;">&nbsp;</span>
+            <span class="fas fa-file-invoice-dollar fa-5x card-img" style="opacity: 0.5; color: Dodgerblue; text-align: center;">&nbsp;</span>
             <div class="card-img-overlay">
                 <h5 class="card-title"><a href="{% url 'inventory:reports'%}" class="stretched-link">Financial Reports</a></h5>
                 <div class="middle">
@@ -93,15 +93,15 @@
         </div>
 
         <div class="card shadow homePage">
-            <img class="card-img" src="{% static 'images/storage.jpg' %}" alt="Card image cap">
-            <!-- <span class="fas fa-building fa-5x" style="opacity: 0.5; color: Dodgerblue;">&nbsp;</span> -->
-            <div class="card-img-overlay">
-                <h5 class="card-title"><a href="{% url 'inventory:viewitinerary'%}" class="stretched-link">Trip Itinerary</a></h5>
-                <div class="middle">
-                    <p class="card-text text">Create an itinerary for a trip</p>
-                </div>
-            </div>
-        </div>
+            <!-- <img class="card-img" src="{% static 'images/storage.jpg' %}" alt="Card image cap"> -->
+            <span class="fas fa-building fa-5x card-img" style="opacity: 0.5; color: Dodgerblue; text-align: center;">&nbsp;</span>
+             <div class="card-img-overlay">
+                 <h5 class="card-title"><a href="{% url 'inventory:viewitinerary'%}" class="stretched-link">Trip Itinerary</a></h5>
+                 <div class="middle">
+                     <p class="card-text text">Create an itinerary for a trip</p>
+                 </div>
+             </div>
+         </div>
 </div>
 
 {% endblock body %}
