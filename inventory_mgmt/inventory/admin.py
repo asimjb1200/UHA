@@ -14,7 +14,7 @@ class tripsAdmin(admin.ModelAdmin):
 
     list_display = ('first_name', 'last_name', 'payment_status')# display all trips in the db by the customer name
     search_fields = ['last_name', 'trip_start', 'payment_status'] # able to search through trips by customer name
-    filter_horizontal = ('extra_food_purchased','extra_supplies','kayak_used','extra_meals_purchased', 'van_used')
+    filter_horizontal = ('extra_food_purchased','extra_supplies','kayak_used','extra_meals_purchased')
 
 class KitSuppliesAdmin(admin.ModelAdmin):
     """Configure how I want the database to look in the admin page. Also making it searchable."""

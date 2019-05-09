@@ -97,7 +97,7 @@ DATABASES = {
         'NAME': 'inventory',
         'USER': 'postgres',
         'PASSWORD': 'Megabad2',
-        'HOST': '127.0.0.1',
+        'HOST': 'localhost',
         'PORT': '5432'
     }
 }

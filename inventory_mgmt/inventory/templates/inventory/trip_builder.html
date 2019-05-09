@@ -2,11 +2,21 @@
 {% block title %}<title>Build Trip</title> {% endblock %}
 
 {% block body %}
+
+<a href={% url 'inventory:view-trips' %} class="btn btn-warning">Cancel</a>
+
     <div class="card text-white bg-secondary mb-3" >
         <div class="card-header">
             <strong>Build Trip</strong>
         </div>
             <div class='card-body'>
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                    <li class="{{ message.tags }}"><h2 style="background-color: red; color: white;">{{ message }}</h2></li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
                 <!-- enctype allows your form to handle what ever data type is passed into it-->
                 <form class='form-horizontal' action='' method='post' enctype='multipart/form-data'>
                     {% csrf_token %}

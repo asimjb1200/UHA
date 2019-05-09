@@ -11,6 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 import datetime
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib import messages
 
 @login_required
 def index(request):
@@ -319,7 +320,7 @@ class MenuBuilder(LoginRequiredMixin, View):
             meal_name = form.cleaned_data['meal_name']
             
             newMenu.save()
-            
+            form.save_m2m()
 
             
 
@@ -356,6 +357,7 @@ class MealBuilder(LoginRequiredMixin, View):
             description = form.cleaned_data['description']
 
             newMeal.save()
+            form.save_m2m()
 
             if newMeal is not None:
                 return redirect('inventory:meals')
@@ -579,7 +581,7 @@ class TripBuilder(LoginRequiredMixin, View):
     
     def post(self, request):
         """Take in user data, clean it, and then post it to the database."""
-        form = self.form_class(request.POST) # pass in the user's data to that was submitted in form 
+        form = self.form_class(request.POST) # pass in the user's that was submitted in form 
 
         if form.is_valid():
             trip = form.save(commit=False) # create an object so we can clean the data before saving it
@@ -596,17 +598,26 @@ class TripBuilder(LoginRequiredMixin, View):
             menu = form.cleaned_data['menu']
             extra_meals_purchased = form.cleaned_data['extra_meals_purchased']
             extra_food_purchased = form.cleaned_data['extra_food_purchased']
-            extra_supplies = form.cleaned_data['extra_supplies']
+            extra_supplies = form.cleaned_data['extra_supplies']     
+
+            if trips.objects.filter(van_used = form.cleaned_data['van_used']).exists():
+                messages.warning(request, van_used.vanName + ' is currently in use. Pick another vehicle.' )
+                return render(request, self.template_name, {'form': form})
+                
+
             if (trip_end is None and trip_start is None):
                 trip.save()
+                form.save_m2m()
             elif (trip_end < trip_start):
                 return render(request, self.template_name, {'form': form})
             
-
             trip.save()
+            form.save_m2m()
 
             if trip is not None:
                 return redirect('inventory:view-trips')
+            
+    
         
         # if it doesn't work, have them try again
         return render(request, self.template_name, {'form': form})
@@ -641,6 +652,7 @@ class TripDetails(LoginRequiredMixin, generic.DetailView):
         context = super().get_context_data(**kwargs)
         context['today'] = datetime.date.today()
         return context
+
 
 
 class TripUpdate(LoginRequiredMixin, UpdateView):

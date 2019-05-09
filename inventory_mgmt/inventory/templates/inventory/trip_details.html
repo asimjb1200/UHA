@@ -10,6 +10,8 @@
             <h5 class="card-title text-warning">Upcoming Trip</h5>
             {% elif trips.trip_start < today and trips.trip_end > today %}
             <h5 class="card-title text-success">Trip Ongoing</h5>
+            {% elif trips.trip_start is None %}
+            <h5 class="card-title text-success">Prospective Client</h5>
             {% else %}
             <h5 class="card-title text-danger">Trip Ended</h5>
             {% endif %}
@@ -24,9 +26,9 @@
       <div id="left1">
         <h4>Van Used</h4>
         <ul>
-        {% for van in trips.van_used.all  %}
-          <li>{{ van }}</li>
-        {% endfor %}
+        
+          <li>{{ trips.van_used }}</li>
+       
         </ul>
       </div>
       <div id="center1" >
@@ -40,9 +42,7 @@
       <div id="right1">
         <h4>Menu</h4>
         <ul>
-        {% for menu in trips.menu.all  %}
-          <li>{{ menu }}</li>
-        {% endfor %}
+          <li>{{ trips.menu }}</li>
         </ul>
       </div>
   </div>
