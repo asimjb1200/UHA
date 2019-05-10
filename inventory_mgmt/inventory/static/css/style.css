@@ -7,6 +7,10 @@
     height: 150px;
 }
 
+.homepage span {
+    margin-top: 20px;
+}
+
 .homePage > img{
     opacity: 0.5;
     transition: .5s ease;
@@ -43,8 +47,8 @@
 }
 
 .text {
-    background-color:dodgerblue;
-    color: white;
+    background-color:rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
     font-size: 16px;
     padding: 16px 32px;
   }

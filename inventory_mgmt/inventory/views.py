@@ -582,6 +582,10 @@ class TripBuilder(LoginRequiredMixin, View):
     def post(self, request):
         """Take in user data, clean it, and then post it to the database."""
         form = self.form_class(request.POST) # pass in the user's that was submitted in form 
+        
+        def toggleAvailable(self, car):
+                van1 = vans.objects.filter(vanName = car.vanName)
+                van1.update(available=False)
 
         if form.is_valid():
             trip = form.save(commit=False) # create an object so we can clean the data before saving it
@@ -600,10 +604,13 @@ class TripBuilder(LoginRequiredMixin, View):
             extra_food_purchased = form.cleaned_data['extra_food_purchased']
             extra_supplies = form.cleaned_data['extra_supplies']     
 
+            
+
             if trips.objects.filter(van_used = form.cleaned_data['van_used']).exists():
+                #if trips.objects.filter(van_used = form.cleaned_data['van_used']).trip_start < datetime.date.today() and trips.objects.filter()
                 messages.warning(request, van_used.vanName + ' is currently in use. Pick another vehicle.' )
                 return render(request, self.template_name, {'form': form})
-                
+
 
             if (trip_end is None and trip_start is None):
                 trip.save()
@@ -613,6 +620,7 @@ class TripBuilder(LoginRequiredMixin, View):
             
             trip.save()
             form.save_m2m()
+            toggleAvailable(self, van_used)
 
             if trip is not None:
                 return redirect('inventory:view-trips')
