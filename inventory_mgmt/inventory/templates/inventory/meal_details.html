@@ -1,0 +1,24 @@
+{% extends 'inventory/base.html' %}
+<!--{% load static %}-->
+{% block title %}<title>Meal Details</title>{% endblock title %}
+{% block body %}
+<a class="btn fas fa-arrow-alt-circle-left fa-2x" href="{% url 'inventory:meals' %}" role="button" style="color: Dodgerblue;">&nbsp;</a>
+<br>
+
+
+<div class="card shadow" style="font-family: Roboto;">
+        <h5 class="card-title text-center">{{ meal.meal_name}}</h5>
+        <h5 class="card-text text-center">{{meal.description}}</h5>
+            <p class="card-text" >
+                {% for item in meal.items.all %}
+
+                <li style="padding-left: 5px;">{{item}}</li>
+                
+                {% endfor %}
+            </p>
+        <div class="card-body">
+            <p class="card-text"></h1>
+        </div>
+</div>
+
+{% endblock body %}

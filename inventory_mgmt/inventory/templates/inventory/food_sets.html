@@ -4,12 +4,12 @@
 
 <h1 class="text-center">Meals</h1>
 <div class="row justify-content-center">
-    <h2><a href="{% url 'inventory:meal-builder' %}" class="btn btn-success border text-center rounded-circle shadow-lg food" role="button">Build Meal</a></h2>
+    <h2><a href="{% url 'inventory:meal-builder' %}" class="btn btn-success border text-center rounded-square shadow-lg food" role="button">Build Meal</a></h2>
     {% for meal in object_list  %}
-        <div class="btn btn-danger border text-center rounded-circle shadow-lg food">
-        <a href="{% url 'inventory:edit-meal' meal.id %}" class="fas fa-pencil-alt text-white" role="button">&nbsp;</a>
-        <h4>{{ meal.meal_name }}</h4>
-        <a href="#" class="fas fa-trash text-white" role="button">&nbsp;</a>
+        <div class="btn btn-dark border text-center rounded-square shadow-lg food">
+        <h4><a href="{% url 'inventory:meal_details' meal.id %}" class="text-white">{{ meal.meal_name }}</a></h4>
+        <a href="#" class="fas fa-trash text-danger" role="button">&nbsp;</a><a href="{% url 'inventory:edit-meal' meal.id %}" class="fas fa-pencil-alt text-warning" role="button" style="padding-left: 20px;">&nbsp;</a>
+
         </div>
 
     {% endfor %}
@@ -17,9 +17,12 @@
 <br>
 <h1 class="text-center" style="font-family: Oleo Script;">Menus</h1>
 <div class="row justify-content-center">
-    <h2><a href="{% url 'inventory:menu-builder' %}" class="btn btn-success border text-center rounded-circle shadow-lg food" role="button">Build Menu</a></h2>
+    <h2><a href="{% url 'inventory:menu-builder' %}" class="btn btn-success border text-center rounded-square shadow-lg food" role="button">Build Menu</a></h2>
     {% for menu in menu_list  %}
-        <h2 class="btn btn-primary border text-center rounded-circle shadow-lg food" role="button">{{ menu.menu_name }}<a href="{% url 'inventory:edit-menu' menu.id %}" class="fas fa-pencil-alt text-white">&nbsp;</a></h2>
+        <div class="btn btn-dark border text-center rounded-square shadow-lg food">
+        <h4><a href="{% url 'inventory:menu_details' menu.id %}" class="text-white">{{ menu.menu_name }}</a></h4>
+        <a href="#" class="fas fa-trash text-danger" role="button">&nbsp;</a><a href="{% url 'inventory:edit-menu' menu.id %}" class="fas fa-pencil-alt text-warning" role="button" style="padding-left: 20px">&nbsp;</a>
+        </div>
     {% endfor %}
 </div>
 <a href="{% url 'inventory:add-food' %}" class="btn btn-success" role="button">Add Food</a>

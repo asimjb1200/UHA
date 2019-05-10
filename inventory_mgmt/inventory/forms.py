@@ -50,6 +50,7 @@ class TripForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields["van_used"].queryset = vans.objects.filter(available=True)
         self.fields["kayak_used"].queryset = kayak.objects.filter(available=True)
+        self.fields["extra_supplies"].queryset = trips.objects.filter().values('extra_supplies')
     
 
 class FoodForm(forms.ModelForm):

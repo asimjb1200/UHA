@@ -397,6 +397,25 @@ class MenuUpdate(LoginRequiredMixin, UpdateView):
     redirect_field_name = 'redirect_to'
     success_url = reverse_lazy('inventory:meals')
 
+class MenuDetails(LoginRequiredMixin, generic.DetailView):
+    """This view will be used to display the details of a trip from the view trips page."""
+    
+    model = menu
+    template_name = 'inventory/menu_details.html'
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
+
+
+class MealDetails(LoginRequiredMixin, generic.DetailView):
+    """This view will be used to display the details of a trip from the view trips page."""
+    
+    model = meal
+    template_name = 'inventory/meal_details.html'
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
+    #form_class = itineraryform
+
+
 class MenuBuilder(LoginRequiredMixin, View):
     """This view will allow the user to build a trip through a form."""
     

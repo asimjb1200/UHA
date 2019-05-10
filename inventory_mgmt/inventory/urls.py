@@ -24,6 +24,8 @@ urlpatterns = [
 
     url(r'^food/$', views.MealsView.as_view(), name='meals'),
     url(r'^food/build_meal/$', views.MealBuilder.as_view(), name='meal-builder'),
+    url(r'^food/meal-detail/(?P<pk>[0-9]+)/$', views.MealDetails.as_view(), name='meal_details'),
+    url(r'^food/menu-detail/(?P<pk>[0-9]+)/$', views.MenuDetails.as_view(), name='menu_details'),
     url(r'^food/build_menu/$', views.MenuBuilder.as_view(), name='menu-builder'),
     url(r'^food/edit-meal/(?P<pk>[0-9]+)/$', views.MealUpdate.as_view(), name='edit-meal'),
     url(r'^food/edit-menu/(?P<pk>[0-9]+)/$', views.MenuUpdate.as_view(), name='edit-menu'),

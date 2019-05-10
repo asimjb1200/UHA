@@ -28,6 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['invmgmt.ipqbehhmqi.us-west-2.elasticbeanstalk.com', 
     'localhost', 
     'ec2-52-40-84-187.us-west-2.compute.amazonaws.com',  
+    '127.0.0.1',
     ]
 
 
