@@ -100,10 +100,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         #'NAME': 'os.path.join(BASE_DIR, 'db.sqlite3')',
-        'NAME': 'inventory',
-        'USER': 'postgres',
-        'PASSWORD': 'devpostgres', #'Megabad2',
-        'HOST': 'localhost',
+        'NAME': 'ebdb1',
+        'USER': 'devpostgres',
+        'PASSWORD': 'Superbad2', #'Megabad2',
+        'HOST': 'mydb.cvdsecoqidto.us-west-2.rds.amazonaws.com',
         'PORT': '5432'
     }
 }
