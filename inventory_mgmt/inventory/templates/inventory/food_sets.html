@@ -6,7 +6,12 @@
 <div class="row justify-content-center">
     <h2><a href="{% url 'inventory:meal-builder' %}" class="btn btn-success border text-center rounded-circle shadow-lg food" role="button">Build Meal</a></h2>
     {% for meal in object_list  %}
-        <h2 class="btn btn-danger border text-center rounded-circle shadow-lg food" role="button" >{{ meal.meal_name }}<a href="{% url 'inventory:edit-meal' meal.id %}" class="fas fa-pencil-alt text-white">&nbsp;</a></h2>
+        <div class="btn btn-danger border text-center rounded-circle shadow-lg food">
+        <a href="{% url 'inventory:edit-meal' meal.id %}" class="fas fa-pencil-alt text-white" role="button">&nbsp;</a>
+        <h4>{{ meal.meal_name }}</h4>
+        <a href="#" class="fas fa-trash text-white" role="button">&nbsp;</a>
+        </div>
+
     {% endfor %}
 </div>
 <br>

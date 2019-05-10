@@ -48,14 +48,9 @@ class TripForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields["van_used"].widget = forms.widgets.CheckboxSelectMultiple()
         self.fields["van_used"].queryset = vans.objects.filter(available=True)
-        self.fields["kayak_used"].widget = forms.widgets.CheckboxSelectMultiple()
         self.fields["kayak_used"].queryset = kayak.objects.filter(available=True)
-        self.fields["extra_meals_purchased"].widget = forms.widgets.CheckboxSelectMultiple()
-        #self.fields["extra_food_purchased"].widget = forms.widgets.CheckboxSelectMultiple()
-        self.fields["extra_supplies"].widget = forms.widgets.CheckboxSelectMultiple()
-
+    
 
 class FoodForm(forms.ModelForm):
     class Meta:

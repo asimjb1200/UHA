@@ -189,7 +189,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='trips',
             name='van_used',
-            field=models.ManyToManyField(blank=True, to='inventory.vans'),
+            field=models.ForeignKey(blank=True, on_delete=django.db.models.deletion.CASCADE, to='inventory.vans'),
         ),
         migrations.AddField(
             model_name='trailers',

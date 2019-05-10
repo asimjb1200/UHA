@@ -13,5 +13,6 @@
     {% csrf_token %}
     <h1>Are you sure you want to delete "{{ object }}"? &nbsp;<a href="#" data-toggle="tooltip" data-placement="right" title="Clicking the delete button will take the user to the page above, and they will need to confirm if they want to delete the item">[Help]</a></h1>
     <input class="btn btn-danger" type="submit" value="Delete">
+    <a href={% url 'inventory:view-trips' %} class="btn btn-warning">Cancel</a>
 </form>
 {% endblock body %}

@@ -10,11 +10,20 @@
   });
   </script>
 
+<a href={% url 'inventory:view-trips' %} class="btn btn-warning">Cancel</a>
+
     <div class="card text-white bg-secondary mb-3" >
         <div class="card-header">
             <strong>Build Trip &nbsp;<a href="#" data-toggle="tooltip" data-placement="right" title="The user will add first name, last name, and comments for the trip. Also, the user will choose the payment status, start date, end date, which van is going to be used for the trip and which kayaks. The user will also going to add menu for the trip, and choose the extra meals purchased if there are. After that, the user can hit the green button to go to the top of the page or hit submit to build the trip. The user will be taken back to the trip page after hitting submit." >[Help]</a></strong>
         </div>
             <div class='card-body'>
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                    <li class="{{ message.tags }}"><h2 style="background-color: red; color: white;">{{ message }}</h2></li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
                 <!-- enctype allows your form to handle what ever data type is passed into it-->
                 <form class='form-horizontal' action='' method='post' enctype='multipart/form-data'>
                     {% csrf_token %}
