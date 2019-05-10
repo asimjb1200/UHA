@@ -220,10 +220,17 @@ class trips(models.Model):
     trip_end = models.DateField(blank=True, null=True)
     van_used = models.ForeignKey(vans, on_delete=models.CASCADE, blank=True)
     kayak_used = models.ManyToManyField(kayak, related_name="kayak", blank=True)
-    menu = models.ForeignKey(menu, on_delete=models.CASCADE, related_name="trip_menu", null=True)
+    menu = models.ForeignKey(menu, on_delete=models.CASCADE, related_name="trip_menu", null=True, blank=True)
     extra_meals_purchased = models.ManyToManyField(meal, related_name="trip_meals", blank=True)
     extra_food_purchased = models.ManyToManyField(food, related_name='food_used', blank=True)
     extra_supplies = models.ManyToManyField(supplies, related_name='trip_extras', blank=True)
 
     def __str__(self):
         return self.first_name + ' ' + self.last_name
+
+    def delete(self, *args, **kwargs):
+        """When a trip is deleted, mark the van that it used as available."""
+        
+        if vans.objects.filter(vanName=self.van_used).exists():
+            vans.objects.filter(vanName=self.van_used).update(available=True)
+        super(trips, self).delete(*args, **kwargs)

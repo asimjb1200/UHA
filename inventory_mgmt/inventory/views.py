@@ -604,13 +604,10 @@ class TripBuilder(LoginRequiredMixin, View):
             extra_food_purchased = form.cleaned_data['extra_food_purchased']
             extra_supplies = form.cleaned_data['extra_supplies']     
 
-            
-
             if trips.objects.filter(van_used = form.cleaned_data['van_used']).exists():
                 #if trips.objects.filter(van_used = form.cleaned_data['van_used']).trip_start < datetime.date.today() and trips.objects.filter()
                 messages.warning(request, van_used.vanName + ' is currently in use. Pick another vehicle.' )
                 return render(request, self.template_name, {'form': form})
-
 
             if (trip_end is None and trip_start is None):
                 trip.save()
@@ -624,9 +621,7 @@ class TripBuilder(LoginRequiredMixin, View):
 
             if trip is not None:
                 return redirect('inventory:view-trips')
-            
-    
-        
+
         # if it doesn't work, have them try again
         return render(request, self.template_name, {'form': form})
 
@@ -684,6 +679,7 @@ class TripDelete(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('inventory:view-trips')
     login_url = '/'
     redirect_field_name = 'redirect_to'
+
 
 
 class VanKitView(LoginRequiredMixin, generic.ListView):
