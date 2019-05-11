@@ -5,20 +5,22 @@
 <div class="card-deck" style="font-family: Montserrat">
 <div class="card shadow-lg text-center mb-3 rounded-circle" style="min-width: 15rem; transform: scale(0.8, 0.8);">
   <div class="my-auto">
-    <i class="fas fa-user-plus fa-5x" aria-hidden="true" style="color: Dodgerblue;"></i>
-    <p class="card-title"><a href="{% url 'inventory:trip-builder' %}" class="stretched-link"><strong>Build A New Trip</strong></a></p>
+    <i class="fas fa-user-plus fa-5x" aria-hidden="true" style="color: black;"></i>
+    <p class="card-title"><a href="{% url 'inventory:trip-builder' %}" class="stretched-link" style="color: black;"><strong>Build A New Trip</strong></a></p>
   </div>
 </div>
 {% for customer in object_list  %}
     <div class="card shadow-lg mb-3 text-center rounded bg-dark text-white" style="min-width: 15rem; font-family: Montserrat;">
-        <div class="card-header" >{% if customer.trip_end < today %}Trip Concluded {% else %} {{ customer.payment_status }} {% endif %}</div>
+        <div class="card-header" >{% if customer.trip_end < today or customer.trip_end == today %}Trip Concluded {% else %} {{ customer.payment_status }} {% endif %}</div>
         <!--<img class="card-img-top fa fa-address-card fa-5x" src="" alt="Card image">-->
-        <span class="fas fa-id-card fa-5x" style="color: Dodgerblue; opacity: 0.5;">&nbsp;</span>
+        <span class="fas fa-id-card fa-5x" style="color: white;">&nbsp;</span>
             {% if customer.trip_start > today  %}
             <h5 class="card-title bg-warning text-dark">Upcoming Trip</h5>
             {% elif customer.trip_start < today and customer.trip_end > today %}
             <h5 class="card-title bg-success">Trip Ongoing</h5>
             {% elif customer.trip_end < today %}
+            <h5 class="card-title bg-danger">Trip Over</h5>
+            {% elif customer.trip_end == today %}
             <h5 class="card-title bg-danger">Trip Over</h5>
             {% else %}
             <h5 class="card-title bg-warning text-dark">Prospective Client</h5>
@@ -26,9 +28,9 @@
         <h3 class="card-title"><a class="text-white" href="{% url 'inventory:details' customer.id %}">{{ customer.first_name }} {{ customer.last_name }}</a></h3>
         <div class="card-body" style="font-family: Arial;">
             <p class="card-text" style="font-family: Montserrat; height: 40px; overflow: hidden; white-space:nowrap; text-overflow: ellipsis;">{{ customer.comments }}</p>
-            <a class="btn btn-outline-primary fas fa-user-edit" href="{% url 'inventory:update-trip' customer.id %}" role="button">&nbsp;</a>
+            <a class="btn btn-outline-primary fas fa-user-edit" href="{% url 'inventory:update-trip' customer.id %}" role="button" style="color: white;">&nbsp;</a>
             {% if user.is_superuser %}
-            <a class="btn btn-outline-primary fas fa-trash" href="{% url 'inventory:delete-trip' customer.id %}" role="button">&nbsp;</a>
+            <a class="btn btn-outline-primary fas fa-trash" href="{% url 'inventory:delete-trip' customer.id %}" role="button" style="color: white;">&nbsp;</a>
             {% endif %}
         </div> 
         <div class="card-footer text-white">

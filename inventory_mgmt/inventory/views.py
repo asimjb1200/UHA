@@ -1,3 +1,5 @@
+# Designed by Asim J. Brown for use by Alaska Ultimate High Adventure employees.
+# Circa 2019
 from django.views import generic
 from django.shortcuts import render, redirect
 from .models import supplies, van_kit, vans, trips, meal, menu, food, customer, warehouse, trailers, kayak, VanKitMasterlist
@@ -12,6 +14,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 import datetime
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib import messages
+
 
 @login_required
 def index(request):
@@ -618,7 +621,7 @@ class TripBuilder(LoginRequiredMixin, View):
             trip.save()
             form.save_m2m()
             toggleAvailable(self, van_used)
-
+            
             if trip is not None:
                 return redirect('inventory:view-trips')
 

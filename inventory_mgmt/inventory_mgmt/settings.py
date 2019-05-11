@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'django_filters',
     'crispy_forms',
     'psycopg2',
+    'background_task',
 ]
 
 CACHES = {
