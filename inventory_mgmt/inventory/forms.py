@@ -30,7 +30,7 @@ class TripForm(forms.ModelForm):
         """Specifying the database and fields to use."""
         model = trips
         fields = ['first_name', 'last_name','comments', 'payment_status', 'trip_start', 'trip_end',
-                  'van_used', 'kayak_used', 'menu', 'extra_meals_purchased', 'extra_supplies']
+                  'van_used', 'kayak_used', 'menu', 'extra_meals_purchased', 'extra_supplies', 'trip_Itinerary']
                 #'extra_food_purchased',
 
         help_texts = {
@@ -51,6 +51,7 @@ class TripForm(forms.ModelForm):
         self.fields["van_used"].queryset = vans.objects.filter(available=True)
         self.fields["kayak_used"].queryset = kayak.objects.filter(available=True)
         self.fields["extra_supplies"].queryset = trips.objects.filter().values('extra_supplies')
+        self.fields["trip_Itinerary"].queryset = tripItinerary.objects.all()
     
 
 class FoodForm(forms.ModelForm):

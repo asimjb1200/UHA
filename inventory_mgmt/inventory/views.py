@@ -69,7 +69,7 @@ class createItinerary(LoginRequiredMixin, View):#CreateView
 
             #trips = form.cleaned_data['trips']
             itinerary = form.cleaned_data['itinerary']
-            it_title = form.cleaned_data['it_title']
+            Itinerary_title = form.cleaned_data['Itinerary_title']
 
             schedule.save()
 
@@ -751,7 +751,8 @@ class TripBuilder(LoginRequiredMixin, View):
             menu = form.cleaned_data['menu']
             extra_meals_purchased = form.cleaned_data['extra_meals_purchased']
             #extra_food_purchased = form.cleaned_data['extra_food_purchased']
-            extra_supplies = form.cleaned_data['extra_supplies']     
+            extra_supplies = form.cleaned_data['extra_supplies']
+            trip_Itinerary = form.cleaned_data['trip_Itinerary']     
 
             
 
