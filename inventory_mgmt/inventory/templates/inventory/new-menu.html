@@ -2,12 +2,22 @@
 {% block title %}<title>New Menu</title> {% endblock %}
 
 {% block body %}
-    
-<a class="btn fas fa-arrow-alt-circle-left fa-2x" href="{% url 'inventory:meals' %}" role="button" style="color: Dodgerblue;">Back to Menus&nbsp;</a>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <script>
+  $(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+  });
+  </script> 
+
+
+
+
+<a class="btn fas fa-arrow-alt-circle-left fa-2x" href="{% url 'inventory:meals' %}" role="button" style="color: Dodgerblue;">&nbsp;</a><hr/>
 
     <div class="card text-white bg-secondary mb-3" >
         <div class="card-header">
-            <strong>Menu Builder</strong>
+            <strong>Menu Builder</strong> <a href="#" data-toggle="tooltip" data-placement="right" class='text-white' style="padding-left: 5px;" title="This is the menu builder page. Build a menu by inputting a menu name and then selecting the meals you want to include. You can select multiple meals by ctrl+clicking multiple items. Click 'Submit' to add the menu, or click the back arrow to return to the food page without adding the menu.">[Help]</a>
         </div>
             <div class='card-body'>
                 <!-- enctype allows your form to handle what ever data type is passed into it-->

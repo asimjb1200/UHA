@@ -1,7 +1,21 @@
 {% extends 'inventory/base.html' %}
 {% block title %} <title>Vans</title> {% endblock title %}
 {% block body %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <script>
+  $(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+  });
+  </script>
+
+
+
+
+<a class="btn fas fa-arrow-alt-circle-left fa-2x" href="{% url 'inventory:index' %}" role="button" style="color: Dodgerblue;">&nbsp;</a>
+<hr/>
 <a href="{% url 'inventory:add-van' %}" class="btn btn-success" role="button">Add Vehicle</a>
+<a href="#" data-toggle="tooltip" data-placement="right" style="padding-left: 5px;" title="This page displays all the vans currently in the system. You can add a van to the system by clicking the 'Add Vehicle' button. Given the appropriate permissions, you can edit and delete each van individually by clicking on the Edit (yellow) and Delete (red) buttons">[Help]</a>
 <div class="table-responsive">
     <table class="table table-hover table-bordered" style="font-family: Montserrat">
     <thead>

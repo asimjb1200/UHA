@@ -3,8 +3,19 @@
 {% block title %}<title>Customers</title> {% endblock %}
 {% load crispy_forms_tags %}
 {% block body %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <script>
+  $(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+  });
+  </script>
+
+
+
+
 <a class="btn fas fa-arrow-alt-circle-left fa-2x" href="{% url 'inventory:index' %}"role="button" style="color: Dodgerblue;">&nbsp;</a>
-<br><br>
+<hr/>
 <a href="{% url 'inventory:add-customer' %}" class="btn btn-dark" role="button">Add Customer</a>
 &nbsp;
 <a href="{% url 'inventory:trip-builder' %}"role="button" class="btn btn-dark">Create Trip&nbsp;</a>
@@ -12,7 +23,7 @@
 <form method="GET">
     <div class="form-group" style="width: 50%;">
     {{ filter.form|crispy }}
-    <button type="submit" class="btn btn-success fa fa-search">&nbsp;</button>
+    <button type="submit" class="btn btn-success fa fa-search">&nbsp;</button><a href="#" data-toggle="tooltip" data-placement="right" style="padding-left: 5px;" title="This page displays current customers in the system along with their related information. You can search through the list using a customer's First Name or Last Name. You can edit current customer information by clicking the small yellow button and add new customers using the Add Customer button.">[Help]</a>
     </div>
     </form>
     <div class="table-responsive">

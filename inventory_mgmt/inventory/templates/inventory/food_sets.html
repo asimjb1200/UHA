@@ -1,6 +1,19 @@
 {% extends 'inventory/base.html' %}
 {% block title %} <title>Food</title> {% endblock title %}
 {% block body %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <script>
+  $(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+  });
+  </script>
+
+
+
+<a class="btn fas fa-arrow-alt-circle-left fa-2x" href="{% url 'inventory:index' %}" role="button" style="color: Dodgerblue;">&nbsp;</a>
+<hr/>
+<a href="#" data-toggle="tooltip" data-placement="right" style="padding-left: 5px;" title="This page displays meals and menus currently in the system. You may view a menu or meal by clicking on its name (white). You can also edit a menu or meal by clicking on the pencil icon (yellow) and delete by clicking on the trashcan icon (red). Below the Menu and Meals, the food items currently stored in the system are listed. These are used to populate the Meals and Menus.">[Help]</a>
 
 <h1 class="text-center">Meals</h1>
 <div class="row justify-content-center">
@@ -25,6 +38,7 @@
         </div>
     {% endfor %}
 </div>
+<hr/>
 <a href="{% url 'inventory:add-food' %}" class="btn btn-success" role="button">Add Food</a>
 <div class="table-responsive">
 <table class="table table-hover">
