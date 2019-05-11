@@ -6,17 +6,17 @@ from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic import View
 from .filters import SupplyFilter, CustomerFilter
-from .forms import  tripsform, itineraryform, SupplyForm, WarehouseForm, KayakForm, TrailerForm, FoodForm, CustomerForm, MenuForm, UserForm, TripForm, VanForm, MealForm, VanKitForm, VKMasterlistForm
+from .forms import  itineraryform, SupplyForm, WarehouseForm, KayakForm, TrailerForm, FoodForm, CustomerForm, MenuForm, UserForm, TripForm, VanForm, MealForm, VanKitForm, VKMasterlistForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 import datetime
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib import messages
 
-#from .forms import 
-from django.db import transaction
-from django.views.generic import ListView
-#from .models import 
+#from .forms import tripsform, itineraryform,
+# from django.db import transaction
+# from django.views.generic import ListView
+#from .models import itineraryDays, tripItinerary, 
 
 @login_required
 def index(request):
@@ -24,14 +24,31 @@ def index(request):
     return render(request, 'inventory/index.html')
 
 
-class ItineraryList(ListView):
-    model = trips
+class itineraryView(LoginRequiredMixin, generic.ListView):
+    model = tripItinerary
     template_name = 'inventory/view-itinerary.html'
-    success_url = reverse_lazy('index')
-    fields = ['first_name', 'last_name']
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
+
+    def get_queryset(self):
+        """Return a list of all customers."""
+        return tripItinerary.objects.all()
+
+    # def get_context_data(self, **kwargs):
+    #     # get the context data from the generic list view
+    #     context = super().get_context_data(**kwargs)
+    #     # add the filter to the context that will go to the template
+    #     context['filter'] = ItineraryFilter(self.request.GET, queryset=self.get_queryset())
+    #     return context
+
+# class ItineraryList(ListView):
+#     model = tripItinerary
+#     template_name = 'inventory/view-itinerary.html'
+#     success_url = reverse_lazy('index')
+#     fields = ['name']
 
 class createItinerary(LoginRequiredMixin, View):#CreateView
-    #model = tripItinerary
+    model = tripItinerary
     #fields = ['first_name']
     template_name = 'inventory/itinerary-form.html'
     form_class = itineraryform
@@ -51,9 +68,8 @@ class createItinerary(LoginRequiredMixin, View):#CreateView
             schedule = form.save(commit=False) 
 
             #trips = form.cleaned_data['trips']
-            arrival = form.cleaned_data['arrival']
-            dropoff = form.cleaned_data['dropoff']
-            activities = form.cleaned_data['activities']
+            itinerary = form.cleaned_data['itinerary']
+            it_title = form.cleaned_data['it_title']
 
             schedule.save()
 
@@ -62,6 +78,18 @@ class createItinerary(LoginRequiredMixin, View):#CreateView
 
         # if it doesn't work, have them try again
         return render(request, self.template_name, {'form': form})
+
+
+class ItineraryUpdate(LoginRequiredMixin, UpdateView):
+    """This view will allow the user to update customer information."""
+
+    model = tripItinerary
+    form_class = itineraryform
+    template_name = 'inventory/itinerary-form.html'
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
+    success_url = reverse_lazy('inventory:index')
+    
 
     # def get_context_data(self, **kwargs):
     #     data = super(createItinerary, self).get_context_data(**kwargs)
@@ -89,13 +117,13 @@ class createItinerary(LoginRequiredMixin, View):#CreateView
 
     
 
-class ItineraryUpdate(LoginRequiredMixin, UpdateView):
-    model = tripItinerary
-    template_name = 'inventory/itinerary-form.html'
-    form_class = itineraryform
-    success_url = reverse_lazy('inventory:viewitinerary')
-    login_url = '/'
-    redirect_field_name = 'redirect_to'
+# class ItineraryUpdate(LoginRequiredMixin, UpdateView):
+#     model = tripItinerary
+#     template_name = 'inventory/itinerary-form.html'
+#     form_class = itineraryform
+#     success_url = reverse_lazy('inventory:viewitinerary')
+#     login_url = '/'
+#     redirect_field_name = 'redirect_to'
 
     # def get_context_data(self, **kwargs):
     #     data = super(ItineraryUpdate, self).get_context_data(**kwargs)

@@ -1,5 +1,6 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
+from ckeditor.fields import RichTextField
 
 
 class customer(models.Model):
@@ -229,7 +230,11 @@ class trips(models.Model):
         return self.first_name + ' ' + self.last_name
 
 class tripItinerary(models.Model):
-    #trips = models.ForeignKey(trips, on_delete=models.CASCADE, db_column='first_name')
-    arrival = models.TimeField()
-    dropoff = models.TimeField()
-    activities = models.CharField(max_length=100)
+    Itinerary_title = models.CharField(max_length=50, blank=False)
+    itinerary = RichTextField(blank=True, null=True)
+
+# class itineraryDays(models.Model):
+#     tripItinerary = models.ForeignKey(tripItinerary, on_delete=models.CASCADE, blank=True)
+#     arrival = models.TimeField()
+#     dropoff = models.TimeField
+#     activities = models.CharField(max_length=225)

@@ -7,20 +7,34 @@
 <br>
 <br>   
 
-    <h2>Trip List: </h2>
+    <h2>Itinerary List: </h2>
     <div>
-        <ul>
-            {% for trips in object_list %}
-                <li>{{ trips.first_name }} {{ trips.last_name }} | 
-                    <a href="{% url 'inventory:updateitinerary' trips.pk %}">edit</a>
-                    <a href="{% url 'inventory:createitinerary' %}">create</a>
-                </li>
-            {% empty %}
-                <li>No trips yet.</li>
-            {% endfor %}
+        {% for tripItinerary in object_list %}
+            <li>
+                {{ tripItinerary.it_title }}
+                <a href="#">edit</a>
+            </li>
+        {% empty %}
+            <li>No Itineraries yet</li>
+        {% endfor %}
+    </div>
+    <div>
+        <a href="{% url 'inventory:createitinerary' %}" class="btn btn-dark" role="button">Create New Itinerary</a>
 
-        </ul>
         <p>
         </p>
     </div>
+
+
+    <ul>
+        {% for tripItinerary in object_list %}
+            <li>{{ tripItinerary.name }} | 
+                <a href="#">edit</a>
+                <a href="{% url 'inventory:createitinerary' %}">create</a>
+            </li>
+        {% empty %}
+            <li>No Itineraries yet.</li>
+        {% endfor %}
+
+    </ul>
 {% endblock %}

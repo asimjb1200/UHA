@@ -44,10 +44,10 @@ INSTALLED_APPS = [
     'inventory',
     'phonenumber_field',
     'phonenumbers',
-    
     'filters',
     'crispy_forms',
     'psycopg2',
+    'ckeditor',
 ]
 
 CACHES = {

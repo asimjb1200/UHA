@@ -1,26 +1,26 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import trips, warehouse, trailers, customer, supplies, vans, kayak, meal, menu, food, van_kit, VanKitMasterlist #menu_meals, #MealItem,
-from .models import tripItinerary
+from .models import tripItinerary, trips, warehouse, trailers, customer, supplies, vans, kayak, meal, menu, food, van_kit, VanKitMasterlist #menu_meals, #MealItem,
+# from .models import tripItinerary, itineraryDays
 from django.forms import ModelForm, modelformset_factory, inlineformset_factory, formset_factory
 
-class tripsform(forms.ModelForm):
-    class Meta:
-        model = trips
-        exclude = ('comments', 'payment_status', 'trip_start', 'trip_end', 'van_used', 'kayak_used', 'menu', 'extra_food_purchased', 'extra_meals_purchased', 'extra_supplies')
+# class tripsform(forms.ModelForm):
+#     class Meta:
+#         model = trips
+#         exclude = ('comments', 'payment_status', 'trip_start', 'trip_end', 'van_used', 'kayak_used', 'menu', 'extra_food_purchased', 'extra_meals_purchased', 'extra_supplies')
 
 class itineraryform(forms.ModelForm):
     class Meta:
         model = tripItinerary
-        #exclude = ('trips', )
-        fields = ['arrival','dropoff','activities']
-        #fields = ['trips','arrival','dropoff','activities']
+        #exclude = ('tripItinerary', )
+        fields = ['Itinerary_title', 'itinerary']
+        #fields = ['name']
     
-        # ItineraryFormSet = inlineformset_factory(trips, tripItinerary, 
-        #     fields=['arrival','dropoff','activities'],
-        #     form=itineraryform, extra=1)
-        #ItineraryFormSet = formset_factory(itineraryform, extra=1)
-        #ItineraryFormSet = modelformset_factory(tripItinerary, extra=1, fields=['arrival','dropoff','activities',])
+# ItineraryFormSet = inlineformset_factory(tripItinerary, itineraryDays, 
+#     fields=['arrival','dropoff','activities'],
+#     form=itineraryform, extra=1)
+#         #ItineraryFormSet = formset_factory(itineraryform, extra=1)
+#         #ItineraryFormSet = modelformset_factory(tripItinerary, extra=1, fields=['arrival','dropoff','activities',])
 
 
 class TripForm(forms.ModelForm):
