@@ -1,8 +1,8 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 import datetime
-from background_task import background
-from background_task.models import Task
+# from background_task import background
+# from background_task.models import Task
 
 class customer(models.Model):
     first_name = models.CharField(max_length=100, blank=False)
@@ -230,17 +230,17 @@ class trips(models.Model):
     def __str__(self):
         return self.first_name + ' ' + self.last_name
 
-    @background(schedule=5)
-    def date_check(self):
-        """Will be used as a background task to make sure trips that have ended don't hog van availability."""
-        today = datetime.date.today()
-        name = self.van_used
-        if today > self.trip_start and today > self.trip_end:
-            vans.objects.filter(vanName = name).update(available = True)
     
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-        self.date_check(repeat=Task.DAILY)
+    # def date_check(self):
+    #      """Will be used as a background task to make sure trips that have ended don't hog van availability."""
+    #      today = datetime.date.today()
+    #      name = self.van_used
+    #      if today > self.trip_start and today > self.trip_end:
+    #         vans.objects.filter(vanName = name).update(available = True)
+    
+    # def save(self, *args, **kwargs):
+    #     super().save(*args, **kwargs)
+    #     self.date_check(self.van_used, self.trip_start, self.trip_end, repeat=Task.DAILY)
 
     def delete(self, *args, **kwargs):
         """When a trip is deleted, mark the van that it used as available."""

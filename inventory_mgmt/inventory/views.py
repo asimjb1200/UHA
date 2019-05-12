@@ -36,7 +36,8 @@ class Customers(LoginRequiredMixin, generic.ListView):
         # get the context data from the generic list view
         context = super().get_context_data(**kwargs)
         # add the filter to the context that will go to the template
-        context['filter'] = CustomerFilter(self.request.GET, queryset=self.get_queryset())
+        context['filter'] = CustomerFilter(
+            self.request.GET, queryset=self.get_queryset())
         return context
 
 
@@ -44,7 +45,8 @@ class OtherCompanyInfo(LoginRequiredMixin, generic.ListView):
     model = warehouse
     template_name = 'inventory/warehouses.html'
     login_url = '/'
-    redirect_field_name ='redirect_to'
+    redirect_field_name = 'redirect_to'
+
     def get_queryset(self):
         return warehouse.objects.all()
 
@@ -70,7 +72,7 @@ class CustomerUpdate(LoginRequiredMixin, UpdateView, PermissionRequiredMixin):
 
 class NewTrailer(LoginRequiredMixin, View, PermissionRequiredMixin):
     """This view will allow the user to add a trailer"""
-    
+
     form_class = TrailerForm
     template_name = 'inventory/new_supply.html'
     login_url = '/'
@@ -83,10 +85,11 @@ class NewTrailer(LoginRequiredMixin, View, PermissionRequiredMixin):
 
     def post(self, request):
         """Take in user data, clean it, and then post it to the database."""
-        form = self.form_class(request.POST) # pass in the user's data to that was submitted in form 
+        form = self.form_class(
+            request.POST)  # pass in the user's data to that was submitted in form
 
         if form.is_valid():
-            trailer = form.save(commit=False) 
+            trailer = form.save(commit=False)
 
             trailer_name = form.cleaned_data['trailer_name']
             warehouse = form.cleaned_data['warehouse']
@@ -115,7 +118,7 @@ class TrailerUpdate(LoginRequiredMixin, UpdateView, PermissionRequiredMixin):
 
 class NewKayak(LoginRequiredMixin, View, PermissionRequiredMixin):
     """This view will allow the user to add a kayak to the database."""
-    
+
     form_class = KayakForm
     template_name = 'inventory/new_supply.html'
     login_url = '/'
@@ -128,10 +131,11 @@ class NewKayak(LoginRequiredMixin, View, PermissionRequiredMixin):
 
     def post(self, request):
         """Take in user data, clean it, and then post it to the database."""
-        form = self.form_class(request.POST) # pass in the user's data to that was submitted in form 
+        form = self.form_class(
+            request.POST)  # pass in the user's data to that was submitted in form
 
         if form.is_valid():
-            kayak = form.save(commit=False) 
+            kayak = form.save(commit=False)
 
             kayak_name = form.cleaned_data['kayak_name']
             warehouse = form.cleaned_data['warehouse']
@@ -160,7 +164,7 @@ class KayakUpdate(LoginRequiredMixin, UpdateView, PermissionRequiredMixin):
 
 class NewWarehouse(LoginRequiredMixin, View, PermissionRequiredMixin):
     """This view will allow the user to add a warehouse to the database."""
-    
+
     form_class = WarehouseForm
     template_name = 'inventory/new_supply.html'
     login_url = '/'
@@ -173,10 +177,11 @@ class NewWarehouse(LoginRequiredMixin, View, PermissionRequiredMixin):
 
     def post(self, request):
         """Take in user data, clean it, and then post it to the database."""
-        form = self.form_class(request.POST) # pass in the user's data to that was submitted in form 
+        form = self.form_class(
+            request.POST)  # pass in the user's data to that was submitted in form
 
         if form.is_valid():
-            storage = form.save(commit=False) 
+            storage = form.save(commit=False)
             location = form.cleaned_data['location']
             storage.save()
 
@@ -189,7 +194,7 @@ class NewWarehouse(LoginRequiredMixin, View, PermissionRequiredMixin):
 
 class NewCustomer(LoginRequiredMixin, View, PermissionRequiredMixin):
     """This view will allow the user to add a customer to the database."""
-    
+
     form_class = CustomerForm
     template_name = 'inventory/new_supply.html'
     login_url = '/'
@@ -202,10 +207,11 @@ class NewCustomer(LoginRequiredMixin, View, PermissionRequiredMixin):
 
     def post(self, request):
         """Take in user data, clean it, and then post it to the database."""
-        form = self.form_class(request.POST) # pass in the user's data to that was submitted in form 
+        form = self.form_class(
+            request.POST)  # pass in the user's data to that was submitted in form
 
         if form.is_valid():
-            newCust = form.save(commit=False) 
+            newCust = form.save(commit=False)
 
             first_name = form.cleaned_data['first_name']
             last_name = form.cleaned_data['last_name']
@@ -229,7 +235,7 @@ class MealsView(LoginRequiredMixin, generic.ListView):
     template_name = 'inventory/food_sets.html'
     login_url = '/'
     redirect_field_name = 'redirect_to'
-    
+
     def get_context_data(self, **kwargs):
         """Add the menu list to the context."""
         # Call the base implementation first to get a context
@@ -242,7 +248,7 @@ class MealsView(LoginRequiredMixin, generic.ListView):
 
 class NewFood(LoginRequiredMixin, View):
     """This view will allow the user to build a trip through a form."""
-    
+
     form_class = FoodForm
     template_name = 'inventory/new_supply.html'
     login_url = '/'
@@ -255,10 +261,11 @@ class NewFood(LoginRequiredMixin, View):
 
     def post(self, request):
         """Take in user data, clean it, and then post it to the database."""
-        form = self.form_class(request.POST) # pass in the user's data to that was submitted in form 
+        form = self.form_class(
+            request.POST)  # pass in the user's data to that was submitted in form
 
         if form.is_valid():
-            newFood = form.save(commit=False) 
+            newFood = form.save(commit=False)
 
             food_name = form.cleaned_data['food_name']
             price = form.cleaned_data['price']
@@ -295,9 +302,10 @@ class MenuUpdate(LoginRequiredMixin, UpdateView):
     redirect_field_name = 'redirect_to'
     success_url = reverse_lazy('inventory:meals')
 
+
 class MenuBuilder(LoginRequiredMixin, View):
     """This view will allow the user to build a trip through a form."""
-    
+
     form_class = MenuForm
     template_name = 'inventory/new_supply.html'
     login_url = '/'
@@ -308,17 +316,17 @@ class MenuBuilder(LoginRequiredMixin, View):
         form = self.form_class(None)
         return render(request, self.template_name, {'form': form})
 
-    
     def post(self, request):
         """Take in user data, clean it, and then post it to the database."""
-        form = self.form_class(request.POST) # pass in the user's data to that was submitted in form 
+        form = self.form_class(
+            request.POST)  # pass in the user's data to that was submitted in form
 
         if form.is_valid():
-            newMenu = form.save(commit=False) 
+            newMenu = form.save(commit=False)
 
             menu_name = form.cleaned_data['menu_name']
             meal_name = form.cleaned_data['meal_name']
-            
+
             newMenu.save()
             form.save_m2m()
 
@@ -331,7 +339,7 @@ class MenuBuilder(LoginRequiredMixin, View):
 
 class MealBuilder(LoginRequiredMixin, View):
     """This view will allow the user to build a trip through a form."""
-    
+
     form_class = MealForm
     template_name = 'inventory/new_supply.html'
     login_url = '/'
@@ -342,13 +350,13 @@ class MealBuilder(LoginRequiredMixin, View):
         form = self.form_class(None)
         return render(request, self.template_name, {'form': form})
 
-    
     def post(self, request):
         """Take in user data, clean it, and then post it to the database."""
-        form = self.form_class(request.POST) # pass in the user's data to that was submitted in form 
+        form = self.form_class(
+            request.POST)  # pass in the user's data to that was submitted in form
 
         if form.is_valid():
-            newMeal = form.save(commit=False) 
+            newMeal = form.save(commit=False)
 
             meal_name = form.cleaned_data['meal_name']
             items = form.cleaned_data['items']
@@ -380,7 +388,7 @@ class SuppliesView(LoginRequiredMixin, generic.ListView):
     template_name = 'inventory/supplies_list.html'
     login_url = '/'
     redirect_field_name = 'redirect_to'
-    
+
     def get_queryset(self):
         return supplies.objects.all()
 
@@ -388,9 +396,10 @@ class SuppliesView(LoginRequiredMixin, generic.ListView):
         # get the context data from the generic list view
         context = super().get_context_data(**kwargs)
         # add the filter to the context that will go to the template
-        context['filter'] = SupplyFilter(self.request.GET, queryset=self.get_queryset())
+        context['filter'] = SupplyFilter(
+            self.request.GET, queryset=self.get_queryset())
         return context
-    
+
 
 class AddSupply(LoginRequiredMixin, View):
     # allow an item to be added to the table/database
@@ -406,17 +415,19 @@ class AddSupply(LoginRequiredMixin, View):
 
     def post(self, request):
         """Take in user data, clean it, and then post it to the database."""
-        form = self.form_class(request.POST) # pass in the user's data to that was submitted in form 
+        form = self.form_class(
+            request.POST)  # pass in the user's data to that was submitted in form
 
         if form.is_valid():
-            supply = form.save(commit=False) # create an object so we can clean the data before saving it
+            # create an object so we can clean the data before saving it
+            supply = form.save(commit=False)
 
             # now get the clean and normalize the data
             supplyName = form.cleaned_data['supplyName']
             category = form.cleaned_data['category']
             quantity = form.cleaned_data['quantity']
             price = form.cleaned_data['price']
-            
+
             supply.save()
 
             if supply is not None:
@@ -429,13 +440,46 @@ class AddSupply(LoginRequiredMixin, View):
 class FinancialListView(LoginRequiredMixin, generic.ListView):
     model = supplies
     template_name = "inventory/reports.html"
-    
+
+
     def get_context_data(self, **kwargs):
+        supplyTotal = 0
+        foodTotal = 0
+        cgTotal = 0
+        bcTotal = 0
+        conTotal = 0
+        grandTotal = 0
+
+        for cg in supplies.objects.all():
+            if cg.category == "CREW-GEAR":
+                cgTotal += int(cg.total)
+
+        for bc in supplies.objects.all():
+            if bc.category == "BACK-COUNTRY":
+                bcTotal += int(bc.total)
+
+        for consumable in supplies.objects.all():
+            if consumable.category == "CONSUMABLE":
+                conTotal += int(consumable.total)
+        
+        for supply in supplies.objects.all():
+            supplyTotal += int(supply.total)
+        
+        for item in food.objects.all():
+            foodTotal += int(item.total)
+
         context = super().get_context_data(**kwargs)
         context["supplies"] = supplies.objects.all()
+        context["supplyTotal"] = supplyTotal
         context["food"] = food.objects.all()
+        context["foodTotal"] = foodTotal
+        context["cgTotal"] = cgTotal
+        context["bcTotal"] = bcTotal
+        context["conTotal"] = conTotal
+        context["grandTotal"] = foodTotal + supplyTotal
+
         return context
-    
+
 
 class SupplyUpdate(LoginRequiredMixin, UpdateView):
     """This will allow the user to update an item."""
@@ -455,7 +499,7 @@ class SupplyDelete(LoginRequiredMixin, DeleteView, PermissionRequiredMixin):
     login_url = '/'
     redirect_field_name = 'redirect_to'
 
-      
+
 class VansView(LoginRequiredMixin, generic.ListView):
     """Display a list of the vans for the user."""
 
@@ -483,10 +527,12 @@ class AddVan(LoginRequiredMixin, View):
 
     def post(self, request):
         """Take in user data, clean it, and then post it to the database."""
-        form = self.form_class(request.POST) # pass in the user's data to that was submitted in form 
+        form = self.form_class(
+            request.POST)  # pass in the user's data to that was submitted in form
 
         if form.is_valid():
-            van = form.save(commit=False) # create an object so we can clean the data before saving it
+            # create an object so we can clean the data before saving it
+            van = form.save(commit=False)
 
             # now get the clean and normalize the data
             vanName = form.cleaned_data['vanName']
@@ -495,7 +541,7 @@ class AddVan(LoginRequiredMixin, View):
             mileage = form.cleaned_data['mileage']
             trailer = form.cleaned_data['trailer']
             comments = form.cleaned_data['comments']
-            
+
             van.save()
 
             if van is not None:
@@ -503,6 +549,7 @@ class AddVan(LoginRequiredMixin, View):
 
         # if it doesn't work, have them try again
         return render(request, self.template_name, {'form': form})
+
 
 class VanUpdate(LoginRequiredMixin, UpdateView):
     """This view will allow the user to update van information."""
@@ -533,21 +580,23 @@ class UserFormView(LoginRequiredMixin, View):
 
     # whenever the user calls the form it's a get request, go here and display a blank form
     def get(self, request):
-        form = self.form_class(None)# no data by default in the blank form
+        form = self.form_class(None)  # no data by default in the blank form
         return render(request, self.template_name, {'form': form})
-    
+
     # process form data
     def post(self, request):
-        form = self.form_class(request.POST) # pass in the user's data to that was submitted in form 
+        # pass in the user's data to that was submitted in form
+        form = self.form_class(request.POST)
 
         if form.is_valid():
-            user = form.save(commit=False) # create an object from the form, but don't save the form's data to the database yet
+            # create an object from the form, but don't save the form's data to the database yet
+            user = form.save(commit=False)
 
             # cleaned (normalized) data
             username = form.cleaned_data['username']
             password = form.cleaned_data['password']
             user.set_password(password)
-            user.save()# now save them to the database
+            user.save()  # now save them to the database
 
             # returns User onjects if credentials are correct
             user = authenticate(username=username, password=password)
@@ -558,14 +607,14 @@ class UserFormView(LoginRequiredMixin, View):
                     # request.user.username
                     # now redirect them to a page after login
                     return redirect('inventory:index')
-                    
+
         # if it doesn't work, have them try again
-        return render(request, self.template_name, {'form': form})    
+        return render(request, self.template_name, {'form': form})
 
 
 class TripBuilder(LoginRequiredMixin, View):
     """This view will allow the user to build a trip through a form."""
-    
+
     form_class = TripForm
     template_name = 'inventory/trip_builder.html'
     login_url = '/'
@@ -578,15 +627,22 @@ class TripBuilder(LoginRequiredMixin, View):
 
     def post(self, request):
         """Take in user data, clean it, and then post it to the database."""
-        form = self.form_class(request.POST) # pass in the user's that was submitted in form 
-        
+        form = self.form_class(
+            request.POST)  # pass in the user's that was submitted in form
+
         def toggleAvailable(self, car):
-                van1 = vans.objects.filter(vanName = car.vanName)
-                van1.update(available=False)
+            van1 = vans.objects.filter(vanName=car.vanName)
+            van1.update(available=False)
+
+        # def date_check(self, trip_end, car):
+        #     van1 = vans.objects.filter(vanName = car.vanName)
+        #     if
 
         if form.is_valid():
-            trip = form.save(commit=False) # create an object so we can clean the data before saving it
-            
+            # create an object so we can clean the data before saving it
+            trip = form.save(commit=False)
+            today = datetime.date.today()
+
             # now get the clean and normalize the data
             first_name = form.cleaned_data['first_name']
             last_name = form.cleaned_data['last_name']
@@ -599,29 +655,28 @@ class TripBuilder(LoginRequiredMixin, View):
             menu = form.cleaned_data['menu']
             extra_meals_purchased = form.cleaned_data['extra_meals_purchased']
             extra_food_purchased = form.cleaned_data['extra_food_purchased']
-            extra_supplies = form.cleaned_data['extra_supplies']     
+            extra_supplies = form.cleaned_data['extra_supplies']
 
-            # if trips.objects.filter(van_used = form.cleaned_data['van_used']).exists():
-            #     #if trips.objects.filter(van_used = form.cleaned_data['van_used']).trip_start < datetime.date.today() and trips.objects.filter()
-            #     messages.warning(request, van_used.vanName + ' is currently in use. Pick another vehicle.' )
-            #     return render(request, self.template_name, {'form': form})
+            if trips.objects.filter(van_used=form.cleaned_data['van_used']).exists():
+                messages.warning(request, van_used.vanName + ' is currently in use. Pick another vehicle.')
+                return render(request, self.template_name, {'form': form})
 
             if (trip_end is None and trip_start is None):
                 trip.save()
                 form.save_m2m()
             elif (trip_end < trip_start):
                 return render(request, self.template_name, {'form': form})
-            
+
             trip.save()
             form.save_m2m()
             toggleAvailable(self, van_used)
-            
-            
+
             if trip is not None:
                 return redirect('inventory:view-trips')
 
         # if it doesn't work, have them try again
         return render(request, self.template_name, {'form': form})
+
 
 class TripManager(LoginRequiredMixin, generic.ListView):
     """This view will display the trips in the db in card fashion."""
@@ -640,10 +695,9 @@ class TripManager(LoginRequiredMixin, generic.ListView):
         return context
 
 
-
 class TripDetails(LoginRequiredMixin, generic.DetailView):
     """This view will be used to display the details of a trip from the view trips page."""
-    
+
     model = trips
     template_name = 'inventory/trip_details.html'
     login_url = '/'
@@ -653,7 +707,6 @@ class TripDetails(LoginRequiredMixin, generic.DetailView):
         context = super().get_context_data(**kwargs)
         context['today'] = datetime.date.today()
         return context
-
 
 
 class TripUpdate(LoginRequiredMixin, UpdateView):
@@ -679,14 +732,13 @@ class TripDelete(LoginRequiredMixin, DeleteView):
     redirect_field_name = 'redirect_to'
 
 
-
 class VanKitView(LoginRequiredMixin, generic.ListView):
     """Display list of VanKits for user"""
 
     model = van_kit
     template_name = 'inventory/vankit.html'
     login_url = '/'
-    redirect_field_name = 'redirect_to' 
+    redirect_field_name = 'redirect_to'
 
     def get_context_data(self, **kwargs):
         # call the super parent class and get the context data
@@ -710,17 +762,19 @@ class AddVanKit(LoginRequiredMixin, View):
 
     def post(self, request):
         """Take in user data, clean it, and then post it to the database."""
-        form = self.form_class(request.POST) # pass in the user's data to that was submitted in form 
+        form = self.form_class(
+            request.POST)  # pass in the user's data to that was submitted in form
 
         if form.is_valid():
-            vankit = form.save(commit=False) # create an object so we can clean the data before saving it
+            # create an object so we can clean the data before saving it
+            vankit = form.save(commit=False)
 
             # now get the clean and normalize the data
             van_kit_name = form.cleaned_data['van_kit_name']
             vanName = form.cleaned_data['vanName']
             Available = form.cleaned_data['Available']
             comments = form.cleaned_data['comments']
-            
+
             vankit.save()
 
             if vankit is not None:
@@ -764,10 +818,12 @@ class AddVKMasterlist(LoginRequiredMixin, View):
 
     def post(self, request):
         """Take in user data, clean it, and then post it to the database."""
-        form = self.form_class(request.POST) # pass in the user's data to that was submitted in form 
+        form = self.form_class(
+            request.POST)  # pass in the user's data to that was submitted in form
 
         if form.is_valid():
-            vkml = form.save(commit=False) # create an object so we can clean the data before saving it
+            # create an object so we can clean the data before saving it
+            vkml = form.save(commit=False)
 
             # now get the clean and normalize the data
             supplyName = form.cleaned_data['supplyName']
