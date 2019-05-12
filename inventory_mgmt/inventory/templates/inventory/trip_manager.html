@@ -10,7 +10,7 @@
   </div>
 </div>
 {% for customer in object_list  %}
-    <div class="card shadow-lg mb-3 text-center rounded bg-dark text-white" style="min-width: 15rem; font-family: Montserrat;">
+    <div class="card shadow-lg mb-3 text-center rounded bg-dark text-white" style="min-width: 15rem; font-family: Montserrat; max-width: 25%;">
         <div class="card-header" >{% if customer.trip_end < today or customer.trip_end == today %}Trip Concluded {% else %} {{ customer.payment_status }} {% endif %}</div>
         <!--<img class="card-img-top fa fa-address-card fa-5x" src="" alt="Card image">-->
         <span class="fas fa-id-card fa-5x" style="color: white;">&nbsp;</span>

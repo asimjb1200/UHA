@@ -177,9 +177,7 @@ class NewWarehouse(LoginRequiredMixin, View, PermissionRequiredMixin):
 
         if form.is_valid():
             storage = form.save(commit=False) 
-
             location = form.cleaned_data['location']
-
             storage.save()
 
             if storage is not None:
@@ -187,7 +185,6 @@ class NewWarehouse(LoginRequiredMixin, View, PermissionRequiredMixin):
 
         # if it doesn't work, have them try again
         return render(request, self.template_name, {'form': form})
-
 
 
 class NewCustomer(LoginRequiredMixin, View, PermissionRequiredMixin):
@@ -325,8 +322,6 @@ class MenuBuilder(LoginRequiredMixin, View):
             newMenu.save()
             form.save_m2m()
 
-            
-
             if newMenu is not None:
                 return redirect('inventory:meals')
 
@@ -440,7 +435,6 @@ class FinancialListView(LoginRequiredMixin, generic.ListView):
         context["supplies"] = supplies.objects.all()
         return context
     
-
 
 class SupplyUpdate(LoginRequiredMixin, UpdateView):
     """This will allow the user to update an item."""
@@ -581,7 +575,6 @@ class TripBuilder(LoginRequiredMixin, View):
         form = self.form_class(None)
         return render(request, self.template_name, {'form': form})
 
-    
     def post(self, request):
         """Take in user data, clean it, and then post it to the database."""
         form = self.form_class(request.POST) # pass in the user's that was submitted in form 

@@ -85,7 +85,7 @@ class vans(models.Model):
 
 class supplies(models.Model):
     class Meta:
-        verbose_name_plural = "supplies"
+        verbose_name_plural = "inventory"
     # limit the user to selecting a pre-set category
     choices = (
         ('CREW-GEAR', 'CREW-GEAR'),

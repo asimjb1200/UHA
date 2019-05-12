@@ -149,3 +149,15 @@ and (-webkit-min-device-pixel-ratio: 2) {
         justify-content: space-around; 
     }
 }
+
+
+span > span h2 {
+    font-family: 'Raleway';
+}
+
+
+.reports button {
+    font-family: 'Raleway';
+    font-weight: bold;
+    color: black;
+}
