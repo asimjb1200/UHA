@@ -26,9 +26,7 @@
       <div id="left1">
         <h4>Van Used</h4>
         <ul>
-        
           <li>{{ trips.van_used }}</li>
-       
         </ul>
       </div>
       <div id="center1" >
@@ -38,12 +36,16 @@
           <li>{{ kayak }}</li>
         {% endfor %}
         </ul>
+        <h4>Trailer Used</h4>
+        <ul>
+          <li>{{trips.van_used.trailer}}</li>
+        </ul>
       </div>
       <div id="right1">
         <h4>Menu</h4>
-        <ul>
-          <li>{{ trips.menu }}</li>
-        </ul>
+          <ul>
+            <li>{{ trips.menu }}</li>
+          </ul>
       </div>
   </div>
 </div>
