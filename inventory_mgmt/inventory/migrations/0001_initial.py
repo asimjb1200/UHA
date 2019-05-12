@@ -37,14 +37,6 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
-            name='foodWarehouse',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('qty', models.PositiveSmallIntegerField()),
-                ('food_name', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='inventory.food')),
-            ],
-        ),
-        migrations.CreateModel(
             name='kayak',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
@@ -90,7 +82,7 @@ class Migration(migrations.Migration):
                 ('price', models.DecimalField(blank=True, decimal_places=2, max_digits=5, null=True)),
             ],
             options={
-                'verbose_name_plural': 'supplies',
+                'verbose_name_plural': 'inventory',
             },
         ),
         migrations.CreateModel(
@@ -125,7 +117,7 @@ class Migration(migrations.Migration):
                 ('extra_meals_purchased', models.ManyToManyField(blank=True, related_name='trip_meals', to='inventory.meal')),
                 ('extra_supplies', models.ManyToManyField(blank=True, related_name='trip_extras', to='inventory.supplies')),
                 ('kayak_used', models.ManyToManyField(blank=True, related_name='kayak', to='inventory.kayak')),
-                ('menu', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, related_name='trip_menu', to='inventory.menu')),
+                ('menu', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, related_name='trip_menu', to='inventory.menu')),
             ],
             options={
                 'verbose_name_plural': 'trips',
@@ -187,7 +179,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='trips',
             name='van_used',
-            field=models.ForeignKey(blank=True, on_delete=django.db.models.deletion.CASCADE, to='inventory.vans'),
+            field=models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='inventory.vans'),
         ),
         migrations.AddField(
             model_name='trailers',
@@ -210,13 +202,8 @@ class Migration(migrations.Migration):
             field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='inventory.warehouse'),
         ),
         migrations.AddField(
-            model_name='foodwarehouse',
-            name='warehouse',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='inventory.warehouse'),
-        ),
-        migrations.AddField(
             model_name='food',
             name='warehouse',
-            field=models.ManyToManyField(related_name='warehouse', through='inventory.foodWarehouse', to='inventory.warehouse'),
+            field=models.ManyToManyField(to='inventory.warehouse'),
         ),
     ]

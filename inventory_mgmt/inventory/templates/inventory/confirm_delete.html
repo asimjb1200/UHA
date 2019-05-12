@@ -13,6 +13,6 @@
     {% csrf_token %}
     <h1>Are you sure you want to delete "{{ object }}"? &nbsp;<a href="#" data-toggle="tooltip" data-placement="right" title="This is the confirm delete page. This page shows up when you have clicked a button to delete an item. The item will not be removed from the system until you click on the red 'Delete' button">[Help]</a></h1>
     <input class="btn btn-danger" type="submit" value="Delete">
-    <a href={% url 'inventory:view-trips' %} class="btn btn-warning">Cancel</a>
+    <button onclick="window.history.back();" class="btn btn-warning" type="button">Cancel</button>
 </form>
 {% endblock body %}

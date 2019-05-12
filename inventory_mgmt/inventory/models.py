@@ -2,6 +2,9 @@ from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 from ckeditor.fields import RichTextField
 
+import datetime
+# from background_task import background
+# from background_task.models import Task
 
 class customer(models.Model):
     first_name = models.CharField(max_length=100, blank=False)
@@ -85,7 +88,7 @@ class vans(models.Model):
 
 class supplies(models.Model):
     class Meta:
-        verbose_name_plural = "supplies"
+        verbose_name_plural = "inventory"
     # limit the user to selecting a pre-set category
     choices = (
         ('CREW-GEAR', 'CREW-GEAR'),
@@ -153,7 +156,7 @@ class food(models.Model):
     # inputting price is optional
     price = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
     quantity = models.PositiveSmallIntegerField(blank=False)
-    warehouse = models.ManyToManyField(warehouse, related_name='warehouse', through='foodWarehouse', through_fields=('food_name', 'warehouse'))
+    warehouse = models.ManyToManyField(warehouse)
 
     def __str__(self):
         return self.food_name
@@ -164,10 +167,10 @@ class food(models.Model):
     total = property(_get_total)
 
 
-class foodWarehouse(models.Model):
-    food_name = models.ForeignKey(food, on_delete=models.CASCADE)
-    warehouse = models.ForeignKey(warehouse, on_delete=models.CASCADE)
-    qty = models.PositiveSmallIntegerField(blank=False)
+# class foodWarehouse(models.Model):
+#     food_name = models.ForeignKey(food, on_delete=models.CASCADE)
+#     warehouse = models.ForeignKey(warehouse, on_delete=models.CASCADE)
+#     qty = models.PositiveSmallIntegerField(blank=False)
 
 
 class meal(models.Model):
@@ -227,9 +230,9 @@ class trips(models.Model):
     payment_status = models.CharField(max_length=150, choices=choices, null=True)
     trip_start = models.DateField(blank=True, null=True)
     trip_end = models.DateField(blank=True, null=True)
-    van_used = models.ForeignKey(vans, on_delete=models.CASCADE, blank=True)
+    van_used = models.ForeignKey(vans, on_delete=models.CASCADE, blank=True, null=True)
     kayak_used = models.ManyToManyField(kayak, related_name="kayak", blank=True)
-    menu = models.ForeignKey(menu, on_delete=models.CASCADE, related_name="trip_menu", null=True)
+    menu = models.ForeignKey(menu, on_delete=models.CASCADE, related_name="trip_menu", null=True, blank=True)
     extra_meals_purchased = models.ManyToManyField(meal, related_name="trip_meals", blank=True)
     #extra_food_purchased = models.ManyToManyField(food, related_name='food_used', blank=True)
     extra_supplies = models.ManyToManyField(supplies, related_name='trip_extras', blank=True)
@@ -238,8 +241,21 @@ class trips(models.Model):
     def __str__(self):
         return self.first_name + ' ' + self.last_name
 
-# class itineraryDays(models.Model):
-#     tripItinerary = models.ForeignKey(tripItinerary, on_delete=models.CASCADE, blank=True)
-#     arrival = models.TimeField()
-#     dropoff = models.TimeField
-#     activities = models.CharField(max_length=225)
+    
+    # def date_check(self):
+    #      """Will be used as a background task to make sure trips that have ended don't hog van availability."""
+    #      today = datetime.date.today()
+    #      name = self.van_used
+    #      if today > self.trip_start and today > self.trip_end:
+    #         vans.objects.filter(vanName = name).update(available = True)
+    
+    # def save(self, *args, **kwargs):
+    #     super().save(*args, **kwargs)
+    #     self.date_check(self.van_used, self.trip_start, self.trip_end, repeat=Task.DAILY)
+
+    def delete(self, *args, **kwargs):
+        """When a trip is deleted, mark the van that it used as available."""
+        
+        if vans.objects.filter(vanName=self.van_used).exists():
+            vans.objects.filter(vanName=self.van_used).update(available=True)
+        super(trips, self).delete(*args, **kwargs)
