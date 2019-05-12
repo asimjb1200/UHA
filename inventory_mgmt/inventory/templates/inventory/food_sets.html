@@ -31,6 +31,7 @@
       <th scope="col">Quantity</th>
       <th scope="col">Warehouse</th>
       <th scope="col">Price</th>
+      <th scope="col">Edit</th>
       <th scope="col">Remove</th>
     </tr>
   </thead>
@@ -41,6 +42,7 @@
       <td>{{ item.quantity}}</td>
       <td>{{ item.warehouse }}</td>
       <td>{{ item.price }}</td>
+      <td><a href="{% url 'inventory:update-food' item.id %}" class="btn btn-warning fas fa-edit" role="button">&nbsp;</a></td>
       <td><a href="{% url 'inventory:delete-food' item.id %}" class="btn btn-danger fas fa-trash" role="button">&nbsp;</a></td>
     </tr>
 {% endfor %}

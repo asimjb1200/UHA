@@ -261,8 +261,7 @@ class NewFood(LoginRequiredMixin, View):
 
     def post(self, request):
         """Take in user data, clean it, and then post it to the database."""
-        form = self.form_class(
-            request.POST)  # pass in the user's data to that was submitted in form
+        form = self.form_class(request.POST)  # pass in the user's data to that was submitted in form
 
         if form.is_valid():
             newFood = form.save(commit=False)
@@ -279,6 +278,16 @@ class NewFood(LoginRequiredMixin, View):
 
         # if it doesn't work, have them try again
         return render(request, self.template_name, {'form': form})
+
+class FoodUpdate(LoginRequiredMixin, UpdateView):
+    """This view will allow the user to update meals."""
+
+    model = food
+    form_class = FoodForm
+    template_name = 'inventory/new_supply.html'
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
+    success_url = reverse_lazy('inventory:meals')
 
 
 class MealUpdate(LoginRequiredMixin, UpdateView):

@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'psycopg2',
     'background_task',
+    'import_export',
 ]
 
 CACHES = {
