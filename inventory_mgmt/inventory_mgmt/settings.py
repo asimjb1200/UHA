@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'psycopg2',
     'ckeditor',
+    'django_icons',
 ]
 
 CACHES = {
