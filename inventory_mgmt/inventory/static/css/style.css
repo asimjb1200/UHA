@@ -156,8 +156,12 @@ span > span h2 {
 }
 
 
-.reports button {
+.reports button h2 {
     font-family: 'Raleway';
     font-weight: bold;
     color: black;
+}
+
+.reports li {
+    font-size: 1.3rem;
 }

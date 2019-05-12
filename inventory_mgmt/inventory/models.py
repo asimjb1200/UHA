@@ -2,6 +2,7 @@ from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 import datetime
 from background_task import background
+from background_task.models import Task
 
 class customer(models.Model):
     first_name = models.CharField(max_length=100, blank=False)
@@ -153,7 +154,7 @@ class food(models.Model):
     # inputting price is optional
     price = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
     quantity = models.PositiveSmallIntegerField(blank=False)
-    warehouse = models.ManyToManyField(warehouse, related_name='warehouse', through='foodWarehouse', through_fields=('food_name', 'warehouse'))
+    warehouse = models.ManyToManyField(warehouse)
 
     def __str__(self):
         return self.food_name
@@ -164,10 +165,10 @@ class food(models.Model):
     total = property(_get_total)
 
 
-class foodWarehouse(models.Model):
-    food_name = models.ForeignKey(food, on_delete=models.CASCADE)
-    warehouse = models.ForeignKey(warehouse, on_delete=models.CASCADE)
-    qty = models.PositiveSmallIntegerField(blank=False)
+# class foodWarehouse(models.Model):
+#     food_name = models.ForeignKey(food, on_delete=models.CASCADE)
+#     warehouse = models.ForeignKey(warehouse, on_delete=models.CASCADE)
+#     qty = models.PositiveSmallIntegerField(blank=False)
 
 
 class meal(models.Model):
@@ -239,7 +240,7 @@ class trips(models.Model):
     
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
-        self.date_check(repeat=86400)
+        self.date_check(repeat=Task.DAILY)
 
     def delete(self, *args, **kwargs):
         """When a trip is deleted, mark the van that it used as available."""

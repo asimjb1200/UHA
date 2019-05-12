@@ -4,16 +4,18 @@
 <h1>Supplies Total Prices</h1>
 <br>
 <div class="reports">
- <div id="accordion">
+ <div class="w-75 mx-auto" id="accordion">
+
   <div class="card">
-    <div class="card-header" id="headingOne">
+    <div class="card-header text-center" id="headingOne">
       <h5 class="mb-0">
         <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-          Backcountry
-          <span style="margin-left: 200px;"><span class="badge badge-dark badge-pill"><h2>$14</h2></span></span>
+          <h2 style="float: left;">Backcountry</h2>
+          <h4 style="float: right;"><span class="badge badge-dark badge-pill" >$1212.06</span></h4>
         </button>
       </h5>
     </div>
+
     <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
       <div class="card-body">
         <ul>
@@ -30,15 +32,17 @@
       </div>
     </div>
   </div>
+
   <div class="card">
-    <div class="card-header" id="headingTwo">
+    <div class="card-header text-center" id="headingTwo">
       <h5 class="mb-0">
         <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-          Crew Gear
-          <span style="margin-left: 200px;"><span class="badge badge-dark badge-pill"><h2>$14</h2></span></span>
+          <h2 style="float: left;">Crew Gear</h2>
+          <h4 style="float: right"><span class="badge badge-dark badge-pill">$2000</span></h4>
         </button>
       </h5>
     </div>
+
     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
       <div class="card-body">
         {% for supply in supplies %}
@@ -53,15 +57,17 @@
       </div>
     </div>
   </div>
+
   <div class="card">
-    <div class="card-header" id="headingThree">
+    <div class="card-header text-center" id="headingThree" >
       <h5 class="mb-0">
         <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-          Consumables
-          <span style="margin-left: 200px;"><span class="badge badge-dark badge-pill"><h2>$14</h2></span></span>
+          <h2 style="float: left;">Consumables</h2>
+          <h4 style="float: right"><span class="badge badge-dark badge-pill">$1400</span></h4>
         </button>
       </h5>
     </div>
+
     <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
       <div class="card-body">
             {% for supply in supplies %}
@@ -76,6 +82,30 @@
       </div>
     </div>
   </div>
+
+    <div class="card">
+        <div class="card-header text-center" id="headingThree" >
+        <h5 class="mb-0">
+            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseThree">
+                <h2 style="float: left;">Food</h2>
+                <h4 style="float: right"><span class="badge badge-dark badge-pill">$1150.06</span></h4>
+            </button>
+      </h5>
+    </div>
+
+    <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
+      <div class="card-body">
+            {% for item in food %}
+                    {% if item.total is not None %}
+                        <li>{{ item.food_name }} - {{ item.total }}</li>
+                        {% else %}
+                        <li>{{ item.food_name }} - Price Unavailable</li>
+                    {% endif %}
+            {% endfor %}
+      </div>
+    </div>
+  </div>
+
 </div> 
 </div>
 {% endblock %}

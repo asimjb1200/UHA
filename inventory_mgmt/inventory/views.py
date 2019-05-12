@@ -433,6 +433,7 @@ class FinancialListView(LoginRequiredMixin, generic.ListView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["supplies"] = supplies.objects.all()
+        context["food"] = food.objects.all()
         return context
     
 
@@ -585,7 +586,7 @@ class TripBuilder(LoginRequiredMixin, View):
 
         if form.is_valid():
             trip = form.save(commit=False) # create an object so we can clean the data before saving it
-
+            
             # now get the clean and normalize the data
             first_name = form.cleaned_data['first_name']
             last_name = form.cleaned_data['last_name']
@@ -600,10 +601,10 @@ class TripBuilder(LoginRequiredMixin, View):
             extra_food_purchased = form.cleaned_data['extra_food_purchased']
             extra_supplies = form.cleaned_data['extra_supplies']     
 
-            if trips.objects.filter(van_used = form.cleaned_data['van_used']).exists():
-                #if trips.objects.filter(van_used = form.cleaned_data['van_used']).trip_start < datetime.date.today() and trips.objects.filter()
-                messages.warning(request, van_used.vanName + ' is currently in use. Pick another vehicle.' )
-                return render(request, self.template_name, {'form': form})
+            # if trips.objects.filter(van_used = form.cleaned_data['van_used']).exists():
+            #     #if trips.objects.filter(van_used = form.cleaned_data['van_used']).trip_start < datetime.date.today() and trips.objects.filter()
+            #     messages.warning(request, van_used.vanName + ' is currently in use. Pick another vehicle.' )
+            #     return render(request, self.template_name, {'form': form})
 
             if (trip_end is None and trip_start is None):
                 trip.save()
@@ -614,6 +615,7 @@ class TripBuilder(LoginRequiredMixin, View):
             trip.save()
             form.save_m2m()
             toggleAvailable(self, van_used)
+            
             
             if trip is not None:
                 return redirect('inventory:view-trips')
