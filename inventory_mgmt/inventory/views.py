@@ -12,6 +12,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 import datetime
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib import messages
+from django.views.generic.base import TemplateView
+
 
 #from .forms import tripsform, itineraryform,
 # from django.db import transaction
@@ -22,6 +24,40 @@ from django.contrib import messages
 def index(request):
     """Display the landing page of the website."""
     return render(request, 'inventory/index.html')
+
+
+class usermanual(LoginRequiredMixin, TemplateView):
+    """This view will be used to display the details of a trip from the view trips page."""
+    
+    template_name = 'inventory/user-manual.html'
+    # login_url = '/'
+    # redirect_field_name = 'redirect_to'
+
+    def get(self, request):
+        #do something with 'GET' method
+        return render(request, 'inventory/user-manual.html')
+
+    # def post(self, request):
+    #     #do something with 'POST' method
+    #     return Response("some data")
+
+
+class itineraryDetails(LoginRequiredMixin, generic.DetailView):
+    """This view will be used to display the details of a trip from the view trips page."""
+    
+    model = tripItinerary
+    template_name = 'inventory/it-details.html'
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
+
+
+class itineraryDelete(LoginRequiredMixin, DeleteView, PermissionRequiredMixin):
+    """Will allow the user to delete food from the database."""
+    model = tripItinerary
+    template_name = 'inventory/confirm_delete.html'
+    success_url = reverse_lazy('inventory:viewitinerary')
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
 
 
 class itineraryView(LoginRequiredMixin, generic.ListView):
@@ -88,7 +124,7 @@ class ItineraryUpdate(LoginRequiredMixin, UpdateView):
     template_name = 'inventory/itinerary-form.html'
     login_url = '/'
     redirect_field_name = 'redirect_to'
-    success_url = reverse_lazy('inventory:index')
+    success_url = reverse_lazy('inventory:viewitinerary')
     
 
     # def get_context_data(self, **kwargs):
@@ -368,6 +404,24 @@ class MealsView(LoginRequiredMixin, generic.ListView):
         context['menu_list'] = menu.objects.all()
         context['food_list'] = food.objects.all()
         return context
+
+
+class menuDelete(LoginRequiredMixin, DeleteView, PermissionRequiredMixin):
+    """Will allow the user to delete food from the database."""
+    model = menu
+    template_name = 'inventory/confirm_delete.html'
+    success_url = reverse_lazy('inventory:meals')
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
+
+
+class mealDelete(LoginRequiredMixin, DeleteView, PermissionRequiredMixin):
+    """Will allow the user to delete food from the database."""
+    model = meal
+    template_name = 'inventory/confirm_delete.html'
+    success_url = reverse_lazy('inventory:meals')
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
 
 
 class NewFood(LoginRequiredMixin, View):

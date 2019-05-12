@@ -21,7 +21,7 @@
     {% for meal in object_list  %}
         <div class="btn btn-dark border text-center rounded-square shadow-lg food">
         <h4><a href="{% url 'inventory:meal_details' meal.id %}" class="text-white">{{ meal.meal_name }}</a></h4>
-        <a href="#" class="fas fa-trash text-danger" role="button">&nbsp;</a><a href="{% url 'inventory:edit-meal' meal.id %}" class="fas fa-pencil-alt text-warning" role="button" style="padding-left: 20px;">&nbsp;</a>
+        <a href="{% url 'inventory:delete-meal' meal.id %}" class="fas fa-trash text-danger" role="button">&nbsp;</a><a href="{% url 'inventory:edit-meal' meal.id %}" class="fas fa-pencil-alt text-warning" role="button" style="padding-left: 20px;">&nbsp;</a>
 
         </div>
 
@@ -34,7 +34,7 @@
     {% for menu in menu_list  %}
         <div class="btn btn-dark border text-center rounded-square shadow-lg food">
         <h4><a href="{% url 'inventory:menu_details' menu.id %}" class="text-white">{{ menu.menu_name }}</a></h4>
-        <a href="#" class="fas fa-trash text-danger" role="button">&nbsp;</a><a href="{% url 'inventory:edit-menu' menu.id %}" class="fas fa-pencil-alt text-warning" role="button" style="padding-left: 20px">&nbsp;</a>
+        <a href="{% url 'inventory:delete-menu' menu.id %}" class="fas fa-trash text-danger" role="button">&nbsp;</a><a href="{% url 'inventory:edit-menu' menu.id %}" class="fas fa-pencil-alt text-warning" role="button" style="padding-left: 20px">&nbsp;</a>
         </div>
     {% endfor %}
 </div>

@@ -35,13 +35,13 @@ ALLOWED_HOSTS = ['invmgmt.ipqbehhmqi.us-west-2.elasticbeanstalk.com',
 # Application definition
 
 INSTALLED_APPS = [
+    'inventory',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'inventory',
     'phonenumber_field',
     'phonenumbers',
     'filters',

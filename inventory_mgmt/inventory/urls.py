@@ -1,6 +1,7 @@
 from django.conf.urls import url
 from . import views
 from django.contrib.auth.views import LoginView, LogoutView
+from django.views.generic import TemplateView
 
 app_name = 'inventory'
 urlpatterns = [
@@ -31,6 +32,9 @@ urlpatterns = [
     url(r'^food/edit-menu/(?P<pk>[0-9]+)/$', views.MenuUpdate.as_view(), name='edit-menu'),
     url(r'^food/add/$', views.NewFood.as_view(), name='add-food'),
     url(r'^food/(?P<pk>[0-9]+)/delete/$', views.FoodDelete.as_view(), name='delete-food'),
+    url(r'^food/delete-menu/(?P<pk>[0-9]+)/$', views.menuDelete.as_view(), name='delete-menu'),
+    url(r'^food/delete-meal/(?P<pk>[0-9]+)/$', views.mealDelete.as_view(), name='delete-meal'),
+
 
     url(r'^supplies/$', views.SuppliesView.as_view(), name='supplies'),
     url(r'^supplies/add/$', views.AddSupply.as_view(), name='add-supply'),
@@ -57,9 +61,17 @@ urlpatterns = [
     url(r'^vankits/delete-vkml/(?P<pk>[0-9]+)/$', views.VKMasterlistDelete.as_view(), name='delete-vkml'),
 
 
-    url(r'^triplist/$', views.itineraryView.as_view(), name='viewitinerary'),
-    url(r'^triplist/itinerary/add-itinerary/$', views.createItinerary.as_view(), name='createitinerary'),
-    url(r'^triplist/itinerary/(?P<pk>[0-9]+)/$', views.ItineraryUpdate.as_view(), name='updateitinerary'),
+    url(r'^itinerary/$', views.itineraryView.as_view(), name='viewitinerary'),
+    url(r'^itinerary/add-itinerary/$', views.createItinerary.as_view(), name='createitinerary'),
+    url(r'^itinerary/update-itinerary/(?P<pk>[0-9]+)/$', views.ItineraryUpdate.as_view(), name='updateitinerary'),
+    url(r'^itinerary/itinerary-detail/(?P<pk>[0-9]+)/$', views.itineraryDetails.as_view(), name='itinerarydetail'),
+    url(r'^itinerary/delete-itinerary/(?P<pk>[0-9]+)/$', views.itineraryDelete.as_view(), name='deleteitinerary'),
+
+    
+    url(r'^usermanual/$', views.usermanual.as_view(), name='user-manual'),
+
+    url(r'^usermanual111/$', TemplateView.as_view(template_name='user-manual.html')),
+
 
 
 ]

@@ -2,40 +2,45 @@
 {% block title %}<title>Itinerary</title> {% endblock %}
 
 {% block body %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <script>
+  $(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+  });
+  </script>
 
-<a class="btn fas fa-arrow-alt-circle-left fa-2x" href="{% url 'inventory:index' %}" role="button" style="color: Dodgerblue;">&nbsp;Back To Home</a>
+
+
+
+<a class="btn fas fa-arrow-alt-circle-left fa-2x" href="{% url 'inventory:index' %}" role="button" style="color: Dodgerblue;">&nbsp;</a>
+  
+
+
+<h1 class='text-center'>Itinerary Page</h1>
+<hr/>
+<a href="{% url 'inventory:createitinerary' %}" class="btn btn-dark" role="button">Create New Itinerary</a>
+<a href="#" data-toggle="tooltip" data-placement="right" style="padding-left: 10px;" title="Itinerary are listed here. You can 'Edit' or 'Delete' an itinerary by clicking the appropriate button. Clicking 'Create New Itinerary' will take you to the itinerary builder page.">[Help]</a>
+
+
 <br>
-<br>   
-
-    <h2>Itinerary List: </h2>
-    <div>
-        {% for tripItinerary in object_list %}
-            <li>
-                {{ tripItinerary.Itinerary_title }}
-                <a href="#">edit</a>
-            </li>
-        {% empty %}
-            <li>No Itineraries yet</li>
-        {% endfor %}
+{% for tripItinerary in object_list %}
+<br>
+<div class="row">
+    <div class="col-sm-6">
+      <div class="card">
+        <div class="card-body">
+            <h2 class="card-title text-center"><strong>{{ tripItinerary.Itinerary_title }}</strong></h2>
+            <a href="{% url 'inventory:updateitinerary' tripItinerary.id %}" class="btn btn-outline-dark">Edit</a>
+            <a href="{% url 'inventory:deleteitinerary' tripItinerary.id %}"style="padding-left: 10px;" class="btn btn-outline-dark text-danger">Delete</a>
+        <hr/>
+            <pr class="card-text">
+                {{ tripItinerary.itinerary|safe }}
+            </pr>
+        </div>
+        </div>
     </div>
-    <br>
-    <div>
-        <a href="{% url 'inventory:createitinerary' %}" class="btn btn-dark" role="button">Create New Itinerary</a>
-
-        <p>
-        </p>
-    </div>
-
-
-    <ul>
-        {% for tripItinerary in object_list %}
-            <li>{{ tripItinerary.name }} | 
-                <a href="#">edit</a>
-                <a href="{% url 'inventory:createitinerary' %}">create</a>
-            </li>
-        {% empty %}
-            <li>No Itineraries yet.</li>
-        {% endfor %}
-
-    </ul>
+</div>
+{% endfor %}
+    
 {% endblock %}
