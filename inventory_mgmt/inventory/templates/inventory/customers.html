@@ -35,6 +35,7 @@
           <th scope="col">Phone number</th>
           <th scope="col">Email</th>
           <th scope="col">Group size</th>
+          <th scope="col">Comments</th>
           <th scope="col">Edit</th>
         </tr>
       </thead>
@@ -46,6 +47,7 @@
           <td>{{ customer.phone_number }}</td>
           <td>{{ customer.email }}</td>
           <td>{{ customer.group_size }}</td>
+          <td>{{ customer.comments }}</td>
           <td><a href="{% url 'inventory:edit-customer' customer.id %}" class="btn btn-warning fas fa-edit" role="button">&nbsp;</a></td>
         </tr>
     {% endfor %}
