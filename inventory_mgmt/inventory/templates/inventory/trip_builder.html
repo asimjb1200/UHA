@@ -2,9 +2,6 @@
 {% block title %}<title>Build Trip</title> {% endblock %}
 
 {% block body %}
-
-<a href={% url 'inventory:view-trips' %} class="btn btn-warning">Cancel</a>
-
     <div class="card text-white bg-secondary mb-3" >
         <div class="card-header">
             <strong>Build Trip</strong>
@@ -24,6 +21,7 @@
                     <div class='form-group'>
                         <div class='col-sm-offset-2 col-sm-10'>
                             <button type='submit' class='btn btn-primary'>Submit</button>
+                            <button onclick="window.history.back();" class="btn btn-warning" type="button">Cancel</button>
                         </div>
                     </div>
                 </form>
