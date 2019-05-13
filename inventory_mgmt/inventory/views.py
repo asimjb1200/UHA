@@ -202,8 +202,7 @@ class Customers(LoginRequiredMixin, generic.ListView):
         # get the context data from the generic list view
         context = super().get_context_data(**kwargs)
         # add the filter to the context that will go to the template
-        context['filter'] = CustomerFilter(
-            self.request.GET, queryset=self.get_queryset())
+        context['filter'] = CustomerFilter(self.request.GET, queryset=self.get_queryset())
         return context
 
 
@@ -585,6 +584,7 @@ class MealBuilder(LoginRequiredMixin, View):
 
 class FoodDelete(LoginRequiredMixin, DeleteView, PermissionRequiredMixin):
     """Will allow the user to delete food from the database."""
+
     model = food
     template_name = 'inventory/confirm_delete.html'
     success_url = reverse_lazy('inventory:meals')
@@ -607,8 +607,7 @@ class SuppliesView(LoginRequiredMixin, generic.ListView):
         # get the context data from the generic list view
         context = super().get_context_data(**kwargs)
         # add the filter to the context that will go to the template
-        context['filter'] = SupplyFilter(
-            self.request.GET, queryset=self.get_queryset())
+        context['filter'] = SupplyFilter(self.request.GET, queryset=self.get_queryset())
         return context
 
 
@@ -775,6 +774,7 @@ class VanUpdate(LoginRequiredMixin, UpdateView):
 
 class VanDelete(LoginRequiredMixin, DeleteView, PermissionRequiredMixin):
     """Will allow the user to delete a trip from the database."""
+    
     model = vans
     template_name = 'inventory/confirm_delete.html'
     success_url = reverse_lazy('inventory:vans')
@@ -784,6 +784,7 @@ class VanDelete(LoginRequiredMixin, DeleteView, PermissionRequiredMixin):
 
 class UserFormView(LoginRequiredMixin, View):
     # what is the form's blueprint/class?
+    
     form_class = UserForm
     template_name = 'inventory/registration_form.html'
     login_url = '/'
@@ -841,13 +842,15 @@ class TripBuilder(LoginRequiredMixin, View):
         form = self.form_class(
             request.POST)  # pass in the user's that was submitted in form
 
-        def toggleAvailable(self, car):
+        def toggleVan(self, car):
             van1 = vans.objects.filter(vanName=car.vanName)
             van1.update(available=False)
 
-        # def date_check(self, trip_end, car):
-        #     van1 = vans.objects.filter(vanName = car.vanName)
-        #     if
+        def toggleKayak(self, kayak_used):
+            for choice in kayak_used:
+                current = kayak.objects.get(kayak_name=choice.kayak_name)
+                current.available = False
+                current.save()
 
         if form.is_valid():
             # create an object so we can clean the data before saving it
@@ -869,21 +872,24 @@ class TripBuilder(LoginRequiredMixin, View):
             extra_supplies = form.cleaned_data['extra_supplies']
             trip_Itinerary = form.cleaned_data['trip_Itinerary']     
 
-            
-
-            if trips.objects.filter(van_used = form.cleaned_data['van_used']).exists():
-                messages.warning(request, van_used.vanName + ' is currently in use. Pick another vehicle.' )
+            if (trip_end < trip_start):
                 return render(request, self.template_name, {'form': form})
+
+            if van_used is not None:
+                if trips.objects.filter(van_used = form.cleaned_data['van_used']).exists():
+                    messages.warning(request, van_used.vanName + ' is currently in use. Pick another vehicle.' )
+                    return render(request, self.template_name, {'form': form})
+                toggleVan(self, van_used)
+            
+            if kayak_used is not None:
+                toggleKayak(self, kayak_used)
 
             if (trip_end is None and trip_start is None):
                 trip.save()
                 form.save_m2m()
-            elif (trip_end < trip_start):
-                return render(request, self.template_name, {'form': form})
 
             trip.save()
             form.save_m2m()
-            toggleAvailable(self, van_used)
 
             if trip is not None:
                 return redirect('inventory:view-trips')
@@ -916,7 +922,6 @@ class TripDetails(LoginRequiredMixin, generic.DetailView):
     template_name = 'inventory/trip_details.html'
     login_url = '/'
     redirect_field_name = 'redirect_to'
-    #form_class = itineraryform
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -940,6 +945,7 @@ class TripUpdate(LoginRequiredMixin, UpdateView):
 
 class TripDelete(LoginRequiredMixin, DeleteView):
     """Will allow the user to delete a trip from the database."""
+    
     model = trips
     template_name = 'inventory/confirm_delete.html'
     success_url = reverse_lazy('inventory:view-trips')
@@ -948,7 +954,7 @@ class TripDelete(LoginRequiredMixin, DeleteView):
 
 
 class VanKitView(LoginRequiredMixin, generic.ListView):
-    """Display list of VanKits for user"""
+    """Display list of VanKits for user."""
 
     model = van_kit
     template_name = 'inventory/vankit.html'
@@ -964,7 +970,8 @@ class VanKitView(LoginRequiredMixin, generic.ListView):
 
 
 class AddVanKit(LoginRequiredMixin, View):
-    # allow an item to be added to the table/database
+    """Add van kit to the database."""
+   
     form_class = VanKitForm
     template_name = 'inventory/new_supply.html'
     login_url = '/'
@@ -1012,6 +1019,7 @@ class VanKitUpdate(LoginRequiredMixin, UpdateView):
 
 class VanKitDelete(LoginRequiredMixin, DeleteView):
     """Will allow the user to delete a vk from the database."""
+    
     model = van_kit
     template_name = 'inventory/confirm_delete.html'
     success_url = reverse_lazy('inventory:vankit')
@@ -1020,7 +1028,8 @@ class VanKitDelete(LoginRequiredMixin, DeleteView):
 
 
 class AddVKMasterlist(LoginRequiredMixin, View):
-    # allow an item to be added to the table/database
+    """Add item to the vankit master list."""
+
     form_class = VKMasterlistForm
     template_name = 'inventory/new_supply.html'
     login_url = '/'
@@ -1055,6 +1064,7 @@ class AddVKMasterlist(LoginRequiredMixin, View):
 
 class VKMasterlistUpdate(LoginRequiredMixin, UpdateView):
     """This view lets user update vkmasterlist."""
+
     model = VanKitMasterlist
     form_class = VKMasterlistForm
     template_name = 'inventory/new_supply.html'
@@ -1065,6 +1075,7 @@ class VKMasterlistUpdate(LoginRequiredMixin, UpdateView):
 
 class VKMasterlistDelete(LoginRequiredMixin, DeleteView):
     """Will allow the user to delete a vkml from the database."""
+
     model = VanKitMasterlist
     template_name = 'inventory/confirm_delete.html'
     success_url = reverse_lazy('inventory:vankit')

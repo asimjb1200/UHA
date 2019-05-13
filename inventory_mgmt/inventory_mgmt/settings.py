@@ -44,7 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'phonenumber_field',
     'phonenumbers',
-    'filters',
+    #'filters',
     'crispy_forms',
     'psycopg2',
     'background_task',

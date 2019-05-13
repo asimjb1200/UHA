@@ -28,8 +28,8 @@
     {% endfor %}
 </div>
 <br>
-<h1 class="text-center" style="font-family: Oleo Script;">Menus</h1>
-<div class="row justify-content-center">
+<h1 class="text-center">Menus</h1>
+<div class="row justify-content-center" style="font-family:Raleway;">
     <h2><a href="{% url 'inventory:menu-builder' %}" class="btn btn-success border text-center rounded-square shadow-lg food" role="button">Build Menu</a></h2>
     {% for menu in menu_list  %}
         <div class="btn btn-dark border text-center rounded-square shadow-lg food">
