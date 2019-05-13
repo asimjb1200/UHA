@@ -238,7 +238,7 @@ class trips(models.Model):
     extra_meals_purchased = models.ManyToManyField(meal, related_name="trip_meals", blank=True)
     #extra_food_purchased = models.ManyToManyField(food, related_name='food_used', blank=True)
     extra_supplies = models.ManyToManyField(supplies, related_name='trip_extras', blank=True)
-    trip_Itinerary = models.ForeignKey(tripItinerary, on_delete=models.CASCADE, blank=True, null=True)
+    trip_Itinerary = models.ForeignKey(tripItinerary, on_delete=models.CASCADE, blank=True)#null=True
 
     def __str__(self):
         return self.first_name + ' ' + self.last_name
