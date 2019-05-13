@@ -108,7 +108,7 @@ DATABASES = {
         'NAME': 'ebdb',
         'USER': 'dev',
         'PASSWORD': 'Superbad2', #'Megabad2',
-        'HOST': 'mydb.cvdsecoqidto.us-west-2.rds.amazonaws.com',
+        'HOST': 'mydb1.cvdsecoqidto.us-west-2.rds.amazonaws.com',
         'PORT': '5432'
     }
 }
