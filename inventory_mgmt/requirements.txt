@@ -20,6 +20,7 @@ ffmpeg==1.4
 flake8==3.7.7
 idna==2.8
 IMAPClient==2.1.0
+import_export
 isort==4.3.4
 jdcal==1.4
 Jinja2==2.10
