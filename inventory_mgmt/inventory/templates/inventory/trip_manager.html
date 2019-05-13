@@ -2,8 +2,22 @@
 {% block title %}<title>Trip Manager</title>{% endblock title %}
 {% block body %}
 
-<div class="card-deck" style="font-family: Montserrat">
-<div class="card shadow-lg text-center mb-3 rounded-circle" style="min-width: 15rem; transform: scale(0.8, 0.8);">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <script>
+  $(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+  });
+  </script>
+
+
+
+<a class="btn fas fa-arrow-alt-circle-left fa-2x" href="{% url 'inventory:index' %}" role="button" style="color: Dodgerblue;">&nbsp;</a>
+<hr/>
+<a href="#" data-toggle="tooltip" data-placement="right" title="Clicking the build a trip button will take the user to the page where they can build a new trip. By clicking the edit trip button, they will be able to make changes to existing trips. And finally, they can use the delete button to delete trips." >[Help]</a>
+
+<div class="card-deck">
+<div class="card shadow-lg text-center mb-3 rounded-square" style="min-width: 15rem; transform: scale(0.8, 0.8);">
   <div class="my-auto">
     <i class="fas fa-user-plus fa-5x" aria-hidden="true" style="color: black;"></i>
     <p class="card-title"><a href="{% url 'inventory:trip-builder' %}" class="stretched-link" style="color: black;"><strong>Build A New Trip</strong></a></p>

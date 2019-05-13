@@ -2,24 +2,190 @@
 # Circa 2019
 from django.views import generic
 from django.shortcuts import render, redirect
-from .models import supplies, van_kit, vans, trips, meal, menu, food, customer, warehouse, trailers, kayak, VanKitMasterlist
+from .models import tripItinerary, supplies, van_kit, vans, trips, meal, menu, food, customer, warehouse, trailers, kayak, VanKitMasterlist
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic import View
 from .filters import SupplyFilter, CustomerFilter
-from .forms import SupplyForm, WarehouseForm, KayakForm, TrailerForm, FoodForm, CustomerForm, MenuForm, UserForm, TripForm, VanForm, MealForm, VanKitForm, VKMasterlistForm
+from .forms import  itineraryform, SupplyForm, WarehouseForm, KayakForm, TrailerForm, FoodForm, CustomerForm, MenuForm, UserForm, TripForm, VanForm, MealForm, VanKitForm, VKMasterlistForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 import datetime
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib import messages
+from django.views.generic.base import TemplateView
+
+
+#from .forms import tripsform, itineraryform,
+# from django.db import transaction
+# from django.views.generic import ListView
+#from .models import itineraryDays, tripItinerary, 
 
 
 @login_required
 def index(request):
     """Display the landing page of the website."""
     return render(request, 'inventory/index.html')
+
+
+class usermanual(LoginRequiredMixin, TemplateView):
+    """This view will be used to display the details of a trip from the view trips page."""
+    
+    template_name = 'inventory/user-manual.html'
+    # login_url = '/'
+    # redirect_field_name = 'redirect_to'
+
+    def get(self, request):
+        #do something with 'GET' method
+        return render(request, 'inventory/user-manual.html')
+
+    # def post(self, request):
+    #     #do something with 'POST' method
+    #     return Response("some data")
+
+
+class itineraryDetails(LoginRequiredMixin, generic.DetailView):
+    """This view will be used to display the details of a trip from the view trips page."""
+    
+    model = tripItinerary
+    template_name = 'inventory/it-details.html'
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
+
+
+class itineraryDelete(LoginRequiredMixin, DeleteView, PermissionRequiredMixin):
+    """Will allow the user to delete food from the database."""
+    model = tripItinerary
+    template_name = 'inventory/confirm_delete.html'
+    success_url = reverse_lazy('inventory:viewitinerary')
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
+
+
+class itineraryView(LoginRequiredMixin, generic.ListView):
+    model = tripItinerary
+    template_name = 'inventory/view-itinerary.html'
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
+
+    def get_queryset(self):
+        """Return a list of all customers."""
+        return tripItinerary.objects.all()
+
+    # def get_context_data(self, **kwargs):
+    #     # get the context data from the generic list view
+    #     context = super().get_context_data(**kwargs)
+    #     # add the filter to the context that will go to the template
+    #     context['filter'] = ItineraryFilter(self.request.GET, queryset=self.get_queryset())
+    #     return context
+
+# class ItineraryList(ListView):
+#     model = tripItinerary
+#     template_name = 'inventory/view-itinerary.html'
+#     success_url = reverse_lazy('index')
+#     fields = ['name']
+
+class createItinerary(LoginRequiredMixin, View):#CreateView
+    model = tripItinerary
+    #fields = ['first_name']
+    template_name = 'inventory/itinerary-form.html'
+    form_class = itineraryform
+    login_url ='/'
+    redirect_field_name = 'redirect_to'
+
+    def get(self, request):
+        """Return a blank form to the user to be filled out."""
+        form = self.form_class(None)
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        """Take in user data, clean it, and then post it to the database."""
+        form = self.form_class(request.POST) # pass in the user's data to that was submitted in form 
+
+        if form.is_valid():
+            schedule = form.save(commit=False) 
+
+            #trips = form.cleaned_data['trips']
+            itinerary = form.cleaned_data['itinerary']
+            Itinerary_title = form.cleaned_data['Itinerary_title']
+
+            schedule.save()
+
+            if schedule is not None:
+                return redirect('inventory:viewitinerary')
+
+        # if it doesn't work, have them try again
+        return render(request, self.template_name, {'form': form})
+
+
+class ItineraryUpdate(LoginRequiredMixin, UpdateView):
+    """This view will allow the user to update customer information."""
+
+    model = tripItinerary
+    form_class = itineraryform
+    template_name = 'inventory/itinerary-form.html'
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
+    success_url = reverse_lazy('inventory:viewitinerary')
+    
+
+    # def get_context_data(self, **kwargs):
+    #     data = super(createItinerary, self).get_context_data(**kwargs)
+    #     if self.request.POST:
+    #         data['familymembers'] = ItineraryFormSet(self.request.POST)
+    #     else:
+    #         data['familymembers'] = ItineraryFormSet()
+    #     return data
+    
+    # def form_valid(self, form):
+    #     context = self.get_context_data()
+    #     familymembers = context['familymembers']
+    #     with transaction.atomic():
+    #         self.object = form.save()
+
+    #         if familymembers.is_valid():
+    #             familymembers.instance = self.object
+    #             familymembers.save()
+
+    #             #if familymembers is not None:
+    #             #    return redirect('inventory:index')
+                
+    #     return super(createItinerary, self).form_valid(form)
+
+
+    
+
+# class ItineraryUpdate(LoginRequiredMixin, UpdateView):
+#     model = tripItinerary
+#     template_name = 'inventory/itinerary-form.html'
+#     form_class = itineraryform
+#     success_url = reverse_lazy('inventory:viewitinerary')
+#     login_url = '/'
+#     redirect_field_name = 'redirect_to'
+
+    # def get_context_data(self, **kwargs):
+    #     data = super(ItineraryUpdate, self).get_context_data(**kwargs)
+    #     if self.request.POST:
+    #         data['familymembers'] = ItineraryFormSet(self.request.POST, instance=self.object)
+    #     else:
+    #         data['familymembers'] = ItineraryFormSet(instance=self.object)
+    #     return data
+    
+    # def form_valid(self, form):
+    #     context = self.get_context_data()
+    #     familymembers = context['familymembers']
+    #     with transaction.atomic():
+    #         self.object = form.save()
+
+    #         if familymembers.is_valid():
+    #             familymembers.instance = self.object
+    #             familymembers.save()
+
+    #             #if familymembers is not None:
+    #             #    return redirect('inventory:viewitinerary')
+                
+    #     return super(ItineraryUpdate, self).form_valid(form)
 
 
 class Customers(LoginRequiredMixin, generic.ListView):
@@ -196,7 +362,7 @@ class NewCustomer(LoginRequiredMixin, View, PermissionRequiredMixin):
     """This view will allow the user to add a customer to the database."""
 
     form_class = CustomerForm
-    template_name = 'inventory/new_supply.html'
+    template_name = 'inventory/new-customer.html'
     login_url = '/'
     redirect_field_name = 'redirect_to'
 
@@ -244,6 +410,24 @@ class MealsView(LoginRequiredMixin, generic.ListView):
         context['menu_list'] = menu.objects.all()
         context['food_list'] = food.objects.all()
         return context
+
+
+class menuDelete(LoginRequiredMixin, DeleteView, PermissionRequiredMixin):
+    """Will allow the user to delete food from the database."""
+    model = menu
+    template_name = 'inventory/confirm_delete.html'
+    success_url = reverse_lazy('inventory:meals')
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
+
+
+class mealDelete(LoginRequiredMixin, DeleteView, PermissionRequiredMixin):
+    """Will allow the user to delete food from the database."""
+    model = meal
+    template_name = 'inventory/confirm_delete.html'
+    success_url = reverse_lazy('inventory:meals')
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
 
 
 class NewFood(LoginRequiredMixin, View):
@@ -311,12 +495,30 @@ class MenuUpdate(LoginRequiredMixin, UpdateView):
     redirect_field_name = 'redirect_to'
     success_url = reverse_lazy('inventory:meals')
 
+class MenuDetails(LoginRequiredMixin, generic.DetailView):
+    """This view will be used to display the details of a trip from the view trips page."""
+    
+    model = menu
+    template_name = 'inventory/menu_details.html'
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
+
+
+class MealDetails(LoginRequiredMixin, generic.DetailView):
+    """This view will be used to display the details of a trip from the view trips page."""
+    
+    model = meal
+    template_name = 'inventory/meal_details.html'
+    login_url = '/'
+    redirect_field_name = 'redirect_to'
+    #form_class = itineraryform
+
 
 class MenuBuilder(LoginRequiredMixin, View):
     """This view will allow the user to build a trip through a form."""
 
     form_class = MenuForm
-    template_name = 'inventory/new_supply.html'
+    template_name = 'inventory/new-menu.html'
     login_url = '/'
     redirect_field_name = 'redirect_to'
 
@@ -663,11 +865,14 @@ class TripBuilder(LoginRequiredMixin, View):
             kayak_used = form.cleaned_data['kayak_used']
             menu = form.cleaned_data['menu']
             extra_meals_purchased = form.cleaned_data['extra_meals_purchased']
-            extra_food_purchased = form.cleaned_data['extra_food_purchased']
+            #extra_food_purchased = form.cleaned_data['extra_food_purchased']
             extra_supplies = form.cleaned_data['extra_supplies']
+            trip_Itinerary = form.cleaned_data['trip_Itinerary']     
 
-            if trips.objects.filter(van_used=form.cleaned_data['van_used']).exists():
-                messages.warning(request, van_used.vanName + ' is currently in use. Pick another vehicle.')
+            
+
+            if trips.objects.filter(van_used = form.cleaned_data['van_used']).exists():
+                messages.warning(request, van_used.vanName + ' is currently in use. Pick another vehicle.' )
                 return render(request, self.template_name, {'form': form})
 
             if (trip_end is None and trip_start is None):
@@ -711,12 +916,13 @@ class TripDetails(LoginRequiredMixin, generic.DetailView):
     template_name = 'inventory/trip_details.html'
     login_url = '/'
     redirect_field_name = 'redirect_to'
+    #form_class = itineraryform
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['today'] = datetime.date.today()
         return context
-
+    
 
 class TripUpdate(LoginRequiredMixin, UpdateView):
     """This view will allow the user to update trip information."""

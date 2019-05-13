@@ -1,9 +1,17 @@
 {% extends 'inventory/base.html' %}
 {% block title %}<title>Deletion</title>{% endblock title %}
 {% block body %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <script>
+  $(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+  });
+  </script>
+
 <form method="post">
     {% csrf_token %}
-    <h1>Are you sure you want to delete "{{ object }}"?</h1>
+    <h1>Are you sure you want to delete "{{ object }}"? &nbsp;<a href="#" data-toggle="tooltip" data-placement="right" title="This is the confirm delete page. This page shows up when you have clicked a button to delete an item. The item will not be removed from the system until you click on the red 'Delete' button">[Help]</a></h1>
     <input class="btn btn-danger" type="submit" value="Delete">
     <button onclick="window.history.back();" class="btn btn-warning" type="button">Cancel</button>
 </form>

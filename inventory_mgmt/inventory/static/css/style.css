@@ -43,7 +43,7 @@
 }
 
 .homePage a:hover {
-    color: dodgerblue;
+    color: rgb(21, 33, 51);
 }
 
 .text {
@@ -109,7 +109,7 @@ h1, h2 {
     z-index: 99; /* Make sure it does not overlap */
     border: none; /* Remove borders */
     outline: none; /* Remove outline */
-    background-color: rgb(40, 167, 69); /* Set a background color */
+    background-color: rgb(21, 33, 51); /* Set a background color */
     color: white; /* Text color */
     cursor: pointer; /* Add a mouse pointer on hover */
     padding: 15px; /* Some padding */

@@ -1,6 +1,26 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import trips, warehouse, trailers, customer, supplies, vans, kayak, meal, menu, food, van_kit, VanKitMasterlist
+from .models import tripItinerary, trips, warehouse, trailers, customer, supplies, vans, kayak, meal, menu, food, van_kit, VanKitMasterlist #menu_meals, #MealItem,
+# from .models import tripItinerary, itineraryDays
+from django.forms import ModelForm, modelformset_factory, inlineformset_factory, formset_factory
+
+# class tripsform(forms.ModelForm):
+#     class Meta:
+#         model = trips
+#         exclude = ('comments', 'payment_status', 'trip_start', 'trip_end', 'van_used', 'kayak_used', 'menu', 'extra_food_purchased', 'extra_meals_purchased', 'extra_supplies')
+
+class itineraryform(forms.ModelForm):
+    class Meta:
+        model = tripItinerary
+        #exclude = ('tripItinerary', )
+        fields = ['Itinerary_title', 'itinerary']
+        #fields = ['name']
+    
+# ItineraryFormSet = inlineformset_factory(tripItinerary, itineraryDays, 
+#     fields=['arrival','dropoff','activities'],
+#     form=itineraryform, extra=1)
+#         #ItineraryFormSet = formset_factory(itineraryform, extra=1)
+#         #ItineraryFormSet = modelformset_factory(tripItinerary, extra=1, fields=['arrival','dropoff','activities',])
 
 
 class TripForm(forms.ModelForm):
@@ -10,20 +30,35 @@ class TripForm(forms.ModelForm):
         """Specifying the database and fields to use."""
         model = trips
         fields = ['first_name', 'last_name','comments', 'payment_status', 'trip_start', 'trip_end',
-                  'van_used', 'kayak_used', 'menu', 'extra_meals_purchased', 'extra_food_purchased', 'extra_supplies']
+                  'van_used', 'kayak_used', 'menu', 'extra_meals_purchased', 'extra_supplies', 'trip_Itinerary']
+                #'extra_food_purchased',
+
+        help_texts = {
+            'first_name': "Enter the client's First Name here",
+        }
+
+        widgets = {
+            'first_name': forms.Textarea(attrs={'placeholder': "Enter primary contact's first name here", 'rows':1}),
+            'last_name': forms.Textarea(attrs={'placeholder': "Enter primary contact's last name here", 'rows':1}),
+            'comments': forms.Textarea(attrs={'placeholder': 'Place any extra comments here', 'rows':8}),
+            'trip_start': forms.DateInput(attrs={'placeholder': "Start date. Format: mm/dd/yyyy"}),
+            'trip_end': forms.DateInput(attrs={'placeholder': "End date. Format: mm/dd/yyyy"}),
+            
+            }
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["van_used"].queryset = vans.objects.filter(available=True)
         self.fields["kayak_used"].queryset = kayak.objects.filter(available=True)
+        self.fields["extra_supplies"].queryset = supplies.objects.all()
+        self.fields["trip_Itinerary"].queryset = tripItinerary.objects.all()
     
 
 class FoodForm(forms.ModelForm):
     class Meta:
         model = food
         fields = ['food_name', 'price', 'quantity', 'warehouse']
-
-
+        
 
 class WarehouseForm(forms.ModelForm):
     class Meta:

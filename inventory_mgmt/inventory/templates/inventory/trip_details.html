@@ -1,8 +1,20 @@
 {% extends 'inventory/base.html' %}
+<!--{% load static %}-->
 {% block title %}<title>Trip Details</title>{% endblock title %}
 {% block body %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <script>
+  $(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+  });
+  </script>
+
+
+
 <a class="btn fas fa-arrow-alt-circle-left fa-2x" href="{% url 'inventory:view-trips' %}" role="button" style="color: Dodgerblue;">&nbsp;</a>
-<br>
+<hr/>
+<a href="#" data-toggle="tooltip" data-placement="right" style="padding-left: 10px;" title="Welcome to the Trip Details page! Here you can view the detailed info of a past/current/future trip! You can also update the trip from here by clicking the 'Update Trip' text. You can also go straight to the itinerary page by clicking the text at the bottom of this page.">[Help]</a>
 <div class="card shadow-lg mb-3 text-center rounded">
         <div class="card-header"> <a href="{% url 'inventory:update-trip' trips.id %}"><strong>Update Trip</strong></a></div>
         <span class="fas fa-id-card fa-5x">&nbsp;</span>
@@ -83,5 +95,14 @@
   <h3 class="card-title">Comments About Trip</h3>
   <p class="card-text">{{ trips.comments }}</p>
 </div>
+
+<div class="card shadow-lg mb-3 text-center rounded">
+  <h3 class="card-title">Itinerary Used</h3>
+  <p class="card-text">{{ trips.trip_Itinerary }}</p>
+  <a href="{% url 'inventory:viewitinerary' %}" style="color: Dodgerblue;"><strong>to Trip Itinerary Page</a>
+
+</div>
+
+
 {% endblock body %}
 

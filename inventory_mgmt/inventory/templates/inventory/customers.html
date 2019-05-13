@@ -1,23 +1,62 @@
 {% extends 'inventory/base.html' %}
+{% load crispy_forms_tags %}
 {% block title %}<title>Customers</title> {% endblock %}
 {% load crispy_forms_tags %}
 {% block body %}
-<form method="GET">
-<div class="form-group" style="width: 50%;">
-{{ filter.form|crispy }}
-<button type="submit" class="btn btn-success fa fa-search">&nbsp;</button>
-</div>
-</form>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <script>
+  $(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+  });
+  </script>
 
-<div class="row justify-content-center">
-<div class="bg-danger rounded-circle shadow text-center text-truncate mx-auto my-auto custContainer">
-        <h4 class="cust"><a href="{% url 'inventory:add-customer' %}">Add Customer</a></h4>
-</div>
-{% for customer in filter.qs %}
-    <div class="bg-primary rounded-circle shadow text-center text-truncate mx-auto my-auto custContainer">
-        <h4 class="cust"><a href="{% url 'inventory:edit-customer' customer.id %}" class="stretched-link">{{ customer.first_name }} {{  customer.last_name }}</a></h4>
-        <small>{{ customer.email }}</small>
+
+
+
+<a class="btn fas fa-arrow-alt-circle-left fa-2x" href="{% url 'inventory:index' %}"role="button" style="color: Dodgerblue;">&nbsp;</a>
+<hr/>
+<a href="{% url 'inventory:add-customer' %}" class="btn btn-dark" role="button">Add Customer</a>
+&nbsp;
+<a href="{% url 'inventory:trip-builder' %}"role="button" class="btn btn-dark">Create Trip&nbsp;</a>
+
+<form method="GET">
+    <div class="form-group" style="width: 50%;">
+    {{ filter.form|crispy }}
+    <button type="submit" class="btn btn-success fa fa-search">&nbsp;</button><a href="#" data-toggle="tooltip" data-placement="right" style="padding-left: 5px;" title="This page displays current customers in the system along with their related information. You can search through the list using a customer's First Name or Last Name. You can edit current customer information by clicking the small yellow button and add new customers using the Add Customer button.">[Help]</a>
     </div>
-{% endfor %}
+    </form>
+    <div class="table-responsive">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">First name</th>
+          <th scope="col">Last name</th>
+          <th scope="col">Phone number</th>
+          <th scope="col">Email</th>
+          <th scope="col">Group size</th>
+          <th scope="col">Comments</th>
+          <th scope="col">Edit</th>
+        </tr>
+      </thead>
+    {% for customer in filter.qs %}
+    <tbody>
+        <tr>
+          <td>{{ customer.first_name }}</td>
+          <td>{{ customer.last_name}}</td>
+          <td>{{ customer.phone_number }}</td>
+          <td>{{ customer.email }}</td>
+          <td>{{ customer.group_size }}</td>
+          <td>{{ customer.comments }}</td>
+          <td><a href="{% url 'inventory:edit-customer' customer.id %}" class="btn btn-warning fas fa-edit" role="button">&nbsp;</a></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+    </table>
+    </div>
 </div>
+<br><br>
+
+
+
 {% endblock %}

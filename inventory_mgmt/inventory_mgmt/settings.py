@@ -25,25 +25,32 @@ SECRET_KEY = 'pg5%z$e($sch(ct6d!9zq6-s8lfsq*$3k0iw83s)%6^=va5vkv'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['invmgmt.ipqbehhmqi.us-west-2.elasticbeanstalk.com', 
+    'localhost', 
+    'ec2-52-40-84-187.us-west-2.compute.amazonaws.com',  
+    '127.0.0.1',
+    ]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'inventory',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'inventory',
     'phonenumber_field',
-    'django_filters',
+    'phonenumbers',
+    'filters',
     'crispy_forms',
     'psycopg2',
     'background_task',
     'import_export',
+    'ckeditor',
+    'django_icons',
 ]
 
 CACHES = {
@@ -114,6 +121,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
     {
         'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'OPTIONS': {
+            'min_length': 9,
+        }
     },
     {
         'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
@@ -142,6 +152,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = 'static'
 LOGIN_URL = '/'
 LOGIN_REDIRECT_URL = '/home/'
 LOGOUT_REDIRECT_URL = 'inventory:login'

@@ -25,7 +25,7 @@ class tripsAdmin(ImportExportModelAdmin):
 
     list_display = ('first_name', 'last_name', 'trip_start', 'trip_end', 'van_used')# display all trips in the db by the customer name
     search_fields = ['last_name', 'trip_start', 'payment_status'] # able to search through trips by customer name
-    filter_horizontal = ('extra_food_purchased','extra_supplies','kayak_used','extra_meals_purchased')
+    filter_horizontal = ('extra_supplies','kayak_used','extra_meals_purchased')
 
 @admin.register(KitSupplies)
 class KitSuppliesAdmin(ImportExportModelAdmin):

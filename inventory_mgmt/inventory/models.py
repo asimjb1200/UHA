@@ -1,5 +1,7 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
+from ckeditor.fields import RichTextField
+
 import datetime
 # from background_task import background
 # from background_task.models import Task
@@ -10,6 +12,7 @@ class customer(models.Model):
     phone_number = PhoneNumberField(blank=False)
     email = models.EmailField(max_length=254, blank=False)
     group_size = models.PositiveSmallIntegerField(blank=False, default=0)
+    comment = models.CharField(max_length=220, blank=False)
 
     def __str__(self):
         return self.first_name + " " + self.last_name
@@ -204,6 +207,14 @@ class menu(models.Model):
 #     meal_qty = models.PositiveSmallIntegerField(null=True)
 
 
+class tripItinerary(models.Model):
+    Itinerary_title = models.CharField(max_length=50, blank=False)
+    itinerary = RichTextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.Itinerary_title
+
+
 class trips(models.Model):
     class Meta:
         verbose_name_plural = "trips"
@@ -224,8 +235,9 @@ class trips(models.Model):
     kayak_used = models.ManyToManyField(kayak, related_name="kayak", blank=True)
     menu = models.ForeignKey(menu, on_delete=models.CASCADE, related_name="trip_menu", null=True, blank=True)
     extra_meals_purchased = models.ManyToManyField(meal, related_name="trip_meals", blank=True)
-    extra_food_purchased = models.ManyToManyField(food, related_name='food_used', blank=True)
+    #extra_food_purchased = models.ManyToManyField(food, related_name='food_used', blank=True)
     extra_supplies = models.ManyToManyField(supplies, related_name='trip_extras', blank=True)
+    trip_Itinerary = models.ForeignKey(tripItinerary, on_delete=models.CASCADE, blank=True)
 
     def __str__(self):
         return self.first_name + ' ' + self.last_name
