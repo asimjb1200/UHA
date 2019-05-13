@@ -31,6 +31,7 @@ urlpatterns = [
     url(r'^food/edit-meal/(?P<pk>[0-9]+)/$', views.MealUpdate.as_view(), name='edit-meal'),
     url(r'^food/edit-menu/(?P<pk>[0-9]+)/$', views.MenuUpdate.as_view(), name='edit-menu'),
     url(r'^food/add/$', views.NewFood.as_view(), name='add-food'),
+    url(r'^food/update-food/(?P<pk>[0-9]+)/$', views.FoodUpdate.as_view(), name='update-food'),
     url(r'^food/(?P<pk>[0-9]+)/delete/$', views.FoodDelete.as_view(), name='delete-food'),
     url(r'^food/delete-menu/(?P<pk>[0-9]+)/$', views.menuDelete.as_view(), name='delete-menu'),
     url(r'^food/delete-meal/(?P<pk>[0-9]+)/$', views.mealDelete.as_view(), name='delete-meal'),

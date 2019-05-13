@@ -58,11 +58,7 @@ class FoodForm(forms.ModelForm):
     class Meta:
         model = food
         fields = ['food_name', 'price', 'quantity', 'warehouse']
-
-    # def __init__(self, *args, **kwargs):
-    #     super().__init__(*args, **kwargs)
-    #     self.fields["warehouse"].widget = forms.widgets.CheckboxSelectMultiple()
-
+        
 
 class WarehouseForm(forms.ModelForm):
     class Meta:
