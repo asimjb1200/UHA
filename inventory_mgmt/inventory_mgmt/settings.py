@@ -29,6 +29,8 @@ ALLOWED_HOSTS = ['invmgmt.ipqbehhmqi.us-west-2.elasticbeanstalk.com',
     'localhost', 
     'ec2-52-40-84-187.us-west-2.compute.amazonaws.com',  
     '127.0.0.1',
+    'gacuha.us-west-2.elasticbeanstalk.com',
+    'alaska.us-west-2.elasticbeanstalk.com', 
     ]
 
 
@@ -101,8 +103,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         #'NAME': 'os.path.join(BASE_DIR, 'db.sqlite3')',
-        'NAME': 'ebdb1',
-        'USER': 'devpostgres',
+        'NAME': 'ebdb',
+        'USER': 'dev',
         'PASSWORD': 'Superbad2', #'Megabad2',
         'HOST': 'mydb.cvdsecoqidto.us-west-2.rds.amazonaws.com',
         'PORT': '5432'

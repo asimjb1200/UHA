@@ -7,6 +7,10 @@
     height: 150px;
 }
 
+.homepage span {
+    margin-top: 20px;
+}
+
 .homePage > img{
     opacity: 0.5;
     transition: .5s ease;
@@ -43,8 +47,8 @@
 }
 
 .text {
-    background-color: rgb(21, 33, 51);
-    color: white;
+    background-color:rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
     font-size: 16px;
     padding: 16px 32px;
   }
@@ -148,4 +152,20 @@ and (-webkit-min-device-pixel-ratio: 2) {
         display: inline-block;
         justify-content: space-around; 
     }
+}
+
+
+span > span h2 {
+    font-family: 'Raleway';
+}
+
+
+.reports button h2 {
+    font-family: 'Raleway';
+    font-weight: bold;
+    color: black;
+}
+
+.reports li {
+    font-size: 1.3rem;
 }
