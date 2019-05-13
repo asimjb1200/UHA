@@ -47,11 +47,11 @@ INSTALLED_APPS = [
     'phonenumber_field',
     'phonenumbers',
     'crispy_forms',
-    'psycopg2',
     'background_task',
     'import_export',
     'ckeditor',
     'django_icons',
+    'psycopg2',
     
 ]
 
