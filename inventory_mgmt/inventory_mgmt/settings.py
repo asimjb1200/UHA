@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'phonenumber_field',
     'phonenumbers',
     'crispy_forms',
-    'psycopg2',
+    'psycopg2-binary',
     'background_task',
     'import_export',
     'ckeditor',
