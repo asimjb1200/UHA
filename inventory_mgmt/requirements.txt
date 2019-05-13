@@ -8,6 +8,7 @@ chardet==3.0.4
 colorama==0.4.1
 Django==2.1.7
 django-bootstrap-form==3.4
+django-background_task
 django-crispy-forms==1.7.2
 django-filter==2.1.0
 django-ckeditor
