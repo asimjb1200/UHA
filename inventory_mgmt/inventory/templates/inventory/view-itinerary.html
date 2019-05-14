@@ -11,32 +11,11 @@
   });
   </script>
 
-
-
-
-
-
-<a class="btn fas fa-arrow-alt-circle-left fa-2x" href="{% url 'inventory:index' %}" role="button" style="color: Dodgerblue;">&nbsp;</a>
-  
-
-
+<a class="btn fas fa-arrow-left fa-2x" href="{% url 'inventory:index' %}" role="button" style="color: Dodgerblue;">&nbsp;</a>
 <h1 class='text-center'>Itinerary Page</h1>
 <hr/>
 <a href="{% url 'inventory:createitinerary' %}" class="btn btn-dark" role="button">Create New Itinerary</a>
-<a href="#" data-toggle="tooltip" data-placement="right" style="padding-left: 10px;" title="Itinerary are listed here. You can 'Edit' or 'Delete' an itinerary by clicking the appropriate button. Clicking 'Create New Itinerary' will take you to the itinerary builder page.">[Help]</a>
-
-<span class="glyphicon">&#xe085;</span>
-{% load icons %}
-
-<!-- Font Awesome CSS -->
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-      rel="stylesheet"
-      integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
-      crossorigin="anonymous"
->
-
-{% icon 'pencil' %}
-
+<a href="#" data-toggle="tooltip" data-placement="right" style="padding-left: 10px;" title="Itinerary are listed here. You can 'Edit' or 'Delete' an itinerary by clicking the appropriate button. Clicking 'Create New Itinerary' will take you to the itinerary builder page."><i class="fas fa-info-circle fa-2x">&nbsp;</i></a>
 <br>
 {% for tripItinerary in object_list %}
 <br>

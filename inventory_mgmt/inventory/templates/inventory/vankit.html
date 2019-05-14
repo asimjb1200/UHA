@@ -9,12 +9,10 @@
     $('[data-toggle="tooltip"]').tooltip();   
   });
   </script>
-
-
-<a class="btn fas fa-arrow-alt-circle-left fa-2x" href="{% url 'inventory:index' %}" role="button" style="color: Dodgerblue;">&nbsp;</a>
+<a class="btn fas fa-arrow-left fa-2x" href="{% url 'inventory:index' %}" role="button" style="color: Dodgerblue;">&nbsp;</a>
 <hr/>
-<a href="{% url 'inventory:add-vankit' %}" class="btn btn-success" role="button" style="font-family: Montserrat">Add Van Kit</a><a href="#" data-toggle="tooltip" data-placement="right" style="padding-left: 5px;" title="Here you can add, edit, and delete van kits and view items included in van kits. Below the van kit table, you can also view the items that should be included in a van kit. Users with the appropriate privilege levels can also edit the items in the van kit template.">[Help]</a>
-<div class="table-responsive" style="font-family: Montserrat">
+<a href="{% url 'inventory:add-vankit' %}" class="btn btn-success" role="button" style="font-family: Raleway">Add Van Kit</a><a href="#" data-toggle="tooltip" data-placement="right" style="padding-left: 5px;" title="Here you can add, edit, and delete van kits and view items included in van kits. Below the van kit table, you can also view the items that should be included in a van kit. Users with the appropriate privilege levels can also edit the items in the van kit template."><i class="fas fa-info-circle fa-2x">&nbsp;</i></a>
+<div class="table-responsive" style="font-family: Raleway;">
     <table class="table table-hover">
     <thead>
         <tr>
@@ -45,9 +43,9 @@
     </table>
 </div>
 <br><hr/>
-<h3 class="text-center justify-content-center" style="font-family: Montserrat">The following table represents the items that should be included in each van kit.</h3><br>
-<div class="table-responsive" style="font-family: Montserrat">
-    <a href="{% url 'inventory:add-vkml' %}" class="btn btn-success" role="button" style="font-family: Montserrat">Add item to Van Kit Masterlist</a>
+<h3 class="text-center justify-content-center" style="font-family: Raleway;">The following table represents the items that should be included in each van kit.</h3><br>
+<div class="table-responsive" style="font-family: Raleway;">
+    <a href="{% url 'inventory:add-vkml' %}" class="btn btn-success" role="button" style="font-family: Raleway;">Add item to Van Kit Masterlist</a>
     <table class="table table-hover">
     <thead>
         <tr>

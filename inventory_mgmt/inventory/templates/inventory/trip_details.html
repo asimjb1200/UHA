@@ -9,12 +9,9 @@
     $('[data-toggle="tooltip"]').tooltip();   
   });
   </script>
-
-
-
-<a class="btn fas fa-arrow-alt-circle-left fa-2x" href="{% url 'inventory:view-trips' %}" role="button" style="color: Dodgerblue;">&nbsp;</a>
+<a class="btn fas fa-arrow-left fa-2x" href="{% url 'inventory:view-trips' %}" role="button" style="color: Dodgerblue;">&nbsp;</a>
 <hr/>
-<a href="#" data-toggle="tooltip" data-placement="right" style="padding-left: 10px;" title="Welcome to the Trip Details page! Here you can view the detailed info of a past/current/future trip! You can also update the trip from here by clicking the 'Update Trip' text. You can also go straight to the itinerary page by clicking the text at the bottom of this page.">[Help]</a>
+<a href="#" data-toggle="tooltip" data-placement="right" style="padding-left: 10px;" title="Welcome to the Trip Details page! Here you can view the detailed info of a past/current/future trip! You can also update the trip from here by clicking the 'Update Trip' text. You can also go straight to the itinerary page by clicking the text at the bottom of this page."><i class="fas fa-info-circle fa-2x">&nbsp;</i></a>
 <div class="card shadow-lg mb-3 text-center rounded">
         <div class="card-header"> <a href="{% url 'inventory:update-trip' trips.id %}"><strong>Update Trip</strong></a></div>
         <span class="fas fa-id-card fa-5x">&nbsp;</span>
