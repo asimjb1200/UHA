@@ -5,7 +5,8 @@ from .models import vans, van_kit, supplies, food, trips, menu, meal, kayak, war
 
 @admin.register(food)
 class foodAdmin(ImportExportModelAdmin):
-    pass
+    list_display = ('food_name', 'price', 'quantity', 'warehouse')
+    search_fileds =['food_name', 'warehouse']
 
 @admin.register(vans)
 class vansAdmin(ImportExportModelAdmin):

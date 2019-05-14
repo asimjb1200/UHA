@@ -178,6 +178,7 @@ span > span h2 {
   
   .reports .active, .accordion:hover {
     background-color: #ccc;
+    color: black;
   }
   
   .accordion:after {
