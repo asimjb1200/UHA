@@ -121,9 +121,6 @@ h1, h2 {
     background-color: dodgerblue;
   }
 
-  #index .card-header{
-      display: none;
-  }
 /* ----------- iPhone 6, 6S, 7 and 8 ----------- */
 
 /* Portrait and Landscape */
@@ -165,13 +162,40 @@ span > span h2 {
     font-family: 'Raleway';
 }
 
-
-.reports button h2 {
-    font-family: 'Raleway';
+ .accordion {
+    background-color: rgb(56, 55, 55);
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 40px;
+    transition: 0.4s;
+    font-family: 'Raleway'
+  }
+  
+  .reports .active, .accordion:hover {
+    background-color: #ccc;
+  }
+  
+  .accordion:after {
+    content: '\002B';
+    color: #777;
     font-weight: bold;
-    color: black;
-}
-
-.reports li {
-    font-size: 1.3rem;
-}
+    float: right;
+    margin-left: 5px;
+  }
+  
+  .reports .active:after {
+    content: "\2212";
+  }
+  
+  .panel {
+    padding: 0 18px;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+  }

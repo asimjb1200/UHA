@@ -7,21 +7,9 @@
 <h3 class="text-center">Total Cost of Supplies and Food - ${{grandTotal}}<h3>
 <br>
 <div class="reports">
- <div class="w-75 mx-auto" id="accordion">
-
-  <div class="card">
-    <div class="card-header text-center" id="headingOne">
-      <h5 class="mb-0">
-        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-          <h2 style="float: left;">Backcountry</h2>
-          <h4 style="float: right;"><span class="badge badge-dark badge-pill" >${{bcTotal}}</span></h4>
-        </button>
-      </h5>
-    </div>
-
-    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
-      <div class="card-body">
-        <ul>
+<button class="accordion">Backcountry - ${{bcTotal}}</button>
+<div class="panel">
+         <ul>
             {% for supply in supplies %}
                 {% if supply.category == "BACK-COUNTRY" %}
                     {% if supply.total is not None %}
@@ -31,23 +19,11 @@
                     {% endif %}
                 {% endif %}
             {% endfor %}
-        </ul>
-      </div>
-    </div>
-  </div>
+        </ul></div>
 
-  <div class="card">
-    <div class="card-header text-center" id="headingTwo">
-      <h5 class="mb-0">
-        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-          <h2 style="float: left;">Crew Gear</h2>
-          <h4 style="float: right"><span class="badge badge-dark badge-pill">${{cgTotal}}</span></h4>
-        </button>
-      </h5>
-    </div>
-
-    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
-      <div class="card-body">
+<button class="accordion">Crew Gear - ${{cgTotal}}</button>
+<div class="panel">
+  <ul>
         {% for supply in supplies %}
                 {% if supply.category == "CREW-GEAR" %}
                     {% if supply.total is not None %}
@@ -57,58 +33,53 @@
                     {% endif %}
                 {% endif %}
         {% endfor %}
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-header text-center" id="headingThree" >
-      <h5 class="mb-0">
-        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-          <h2 style="float: left;">Consumables</h2>
-          <h4 style="float: right"><span class="badge badge-dark badge-pill">${{conTotal}}</span></h4>
-        </button>
-      </h5>
-    </div>
-
-    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordion">
-      <div class="card-body">
-            {% for supply in supplies %}
-                {% if supply.category == "CONSUMABLE" %}
-                    {% if supply.total is not None %}
-                        <li>{{ supply.supplyName }} - {{supply.quantity}} - ${{ supply.total }}</li>
-                        {% else %}
-                        <li>{{ supply.supplyName }} - Price Unavailable</li>
-                    {% endif %}
-                {% endif %}
-        {% endfor %}
-      </div>
-    </div>
-  </div>
-
-    <div class="card">
-        <div class="card-header text-center" id="headingThree" >
-        <h5 class="mb-0">
-            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false" aria-controls="collapseThree">
-                <h2 style="float: left;">Food</h2>
-                <h4 style="float: right"><span class="badge badge-dark badge-pill">${{ foodTotal }}</span></h4>
-            </button>
-      </h5>
-    </div>
-
-    <div id="collapseFour" class="collapse" aria-labelledby="headingFour" data-parent="#accordion">
-      <div class="card-body">
-            {% for item in food %}
-                    {% if item.total is not None %}
-                        <li>{{ item.food_name }} - {{item.quantity}} - ${{ item.total }}</li>
-                        {% else %}
-                        <li>{{ item.food_name }} - Price Unavailable</li>
-                    {% endif %}
-            {% endfor %}
-      </div>
-    </div>
-  </div>
-
-</div> 
+  </ul>
 </div>
+
+<button class="accordion">Consumables - ${{conTotal}}</button>
+<div class="panel">
+ <ul>
+    {% for supply in supplies %}
+      {% if supply.category == "CONSUMABLE" %}
+        {% if supply.total is not None %}
+          <li>{{ supply.supplyName }} - {{supply.quantity}} - ${{ supply.total }}</li>
+        {% else %}
+          <li>{{ supply.supplyName }} - Price Unavailable</li>
+        {% endif %}
+      {% endif %}
+    {% endfor %}
+        </ul>
+</div>
+
+<button class="accordion">Food - ${{foodTotal}}</button>
+<div class="panel">
+  <ul>
+    {% for item in food %}
+      {% if item.total is not None %}
+        <li>{{ item.food_name }} - {{item.quantity}} - ${{ item.total }}</li>
+      {% else %}
+        <li>{{ item.food_name }} - Price Unavailable</li>
+      {% endif %}
+    {% endfor %}
+  </ul>
+</div>
+</div>
+
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.maxHeight){
+      panel.style.maxHeight = null;
+    } else {
+      panel.style.maxHeight = panel.scrollHeight + "px";
+    } 
+  });
+}
+</script>
+
 {% endblock %}
