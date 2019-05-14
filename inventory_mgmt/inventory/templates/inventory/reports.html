@@ -1,9 +1,23 @@
 {% extends 'inventory/base.html' %}
 {% block title %}<title>Reports</title>{% endblock title %}
 {% block body %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <script>
+  $(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+  });
+  </script>
+
+
+
 <a class="btn fas fa-arrow-left fa-2x" href="{% url 'inventory:index' %}" role="button" style="color: Dodgerblue;">&nbsp;</a>
+<br><a href="#" data-toggle="tooltip" data-placement="right" role="button" style="padding-left: 10px;" title="This page displays the running inventory totals across the system. Here you can see the total cost and current inventory. The format: 'Item' - 'Quantity' - 'Price' - 'Total'"><i class="fas fa-info-circle fa-2x">&nbsp;</i></a>
+<h1 class = "text-center">Inventory Reports</h1>
+
 <hr/>
-<h1 class = "text-center">Supply Categories</h1>
+
+<br>
 <h3 class="text-center">Total Cost of Supplies and Food - ${{grandTotal}}<h3>
 <br>
 <div class="reports">

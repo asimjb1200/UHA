@@ -32,7 +32,8 @@ ALLOWED_HOSTS = [
     'gacuha.us-west-2.elasticbeanstalk.com',
     'alaska.us-west-2.elasticbeanstalk.com',
     'sandor.ipqbehhmqi.us-west-2.elasticbeanstalk.com',
-     
+    'alaska.gacuha.com'
+
     ]
 
 
@@ -109,7 +110,7 @@ DATABASES = {
         #'NAME': 'os.path.join(BASE_DIR, 'db.sqlite3')',
         'NAME': 'inventory',
         'USER': 'postgres',
-        'PASSWORD': 'Superbad2', #'Megabad2',
+        'PASSWORD': 'devpostgres', #'Megabad2',
         'HOST': 'localhost',
         'PORT': ''
     }

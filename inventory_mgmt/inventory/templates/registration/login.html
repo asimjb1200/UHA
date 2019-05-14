@@ -13,10 +13,12 @@
 
     <div class="card shadow-lg mb-3">
         <div class="card-header rounded">
+            <a href="#" data-toggle="tooltip" data-placement="right" title="1- Input username issued to you or you created. 2- Then, will need to insert your password in the password field. 3- After that, hit the login button to enter the web and go to the home page." ><a href="#" data-toggle="tooltip" data-placement="right" title="If the user clicks the new account button, they will be taken to the page below. The user will put a username, email address (optional) and password. After filling all of that, the user will hit the submit button to create the account." ><i class="fas fa-info-circle">&nbsp;</i></a></a>
+
         Login
         </div>
         <div class="card-body text-dark">
-            <h5 class="card-title">Welcome to Ultimate High Adventures &nbsp;<a href="#" data-toggle="tooltip" data-placement="right" title="1- Input username issued to you or you created. 2- Then, will need to insert your password in the password field. 3- After that, hit the login button to enter the web and go to the home page." >[Help]</a></h5>
+            <h5 class="card-title">Welcome to Ultimate High Adventures &nbsp;</h5>
             {% if next %}
                 <p class="card-title"><strong>You have to log in first</strong></p>
             {% endif %}
@@ -24,7 +26,8 @@
                 {% csrf_token %}
                 {% include 'inventory/form-template.html' %}
                 
-                <button type="submit" value="Login" class="btn btn-success fas fa-sign-in-alt">&nbsp;</button> 
+                <button type="submit" value="Login" class="btn btn-success fas fa-sign-in-alt">&nbsp;</button>
+                 
             </form>
         </div>
     </div>
