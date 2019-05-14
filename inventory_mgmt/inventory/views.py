@@ -7,7 +7,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic import View
-from .filters import SupplyFilter, CustomerFilter
+from .filters import SupplyFilter, CustomerFilter, FoodFilter
 from .forms import  itineraryform, SupplyForm, WarehouseForm, KayakForm, TrailerForm, FoodForm, CustomerForm, MenuForm, UserForm, TripForm, VanForm, MealForm, VanKitForm, VKMasterlistForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -393,6 +393,7 @@ class MealsView(LoginRequiredMixin, generic.ListView):
         # Add in a QuerySet of all the books
         context['menu_list'] = menu.objects.all()
         context['food_list'] = food.objects.all()
+        context['filter'] = FoodFilter(self.request.GET, queryset=food.objects.all())
         return context
 
 
