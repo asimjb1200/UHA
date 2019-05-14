@@ -1,8 +1,6 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 from ckeditor.fields import RichTextField
-#from django.contrib import messages
-
 import datetime
 # from background_task import background
 # from background_task.models import Task
@@ -66,7 +64,6 @@ class kayak(models.Model):
         return self.kayak_name
 
 
-
 class vans(models.Model):
     class Meta:
         verbose_name_plural = "vans"
@@ -118,7 +115,7 @@ class supplies(models.Model):
 
 
 class van_kit(models.Model):
-    supply_name = models.ManyToManyField(supplies, through='KitSupplies', through_fields=('vanKit', 'supplyName'), related_name="supplies")
+    supply_name = models.ManyToManyField(supplies, related_name="supplies")
     van_kit_name = models.CharField(max_length=100)
     vanName = models.OneToOneField(vans, on_delete=models.CASCADE)
     Available = models.BooleanField(default=True, blank=False)
@@ -140,16 +137,16 @@ class VanKitMasterlist(models.Model):
         return self.supplyQuantity
 
 
-class KitSupplies(models.Model):
-    supplyName = models.ForeignKey(supplies, on_delete=models.CASCADE)
-    vanKit = models.ForeignKey(van_kit, on_delete=models.CASCADE)
-    quantity = models.PositiveSmallIntegerField(blank=False)
+# class KitSupplies(models.Model):
+#     supplyName = models.ForeignKey(supplies, on_delete=models.CASCADE)
+#     vanKit = models.ForeignKey(van_kit, on_delete=models.CASCADE)
+#     quantity = models.PositiveSmallIntegerField(blank=False)
 
-    def __str__(self):
-        return str(self.supplyName)
+#     def __str__(self):
+#         return str(self.supplyName)
 
-    class Meta:
-        verbose_name_plural = 'Kit Supplies'
+#     class Meta:
+#         verbose_name_plural = 'Kit Supplies'
 
 
 class food(models.Model):
@@ -178,7 +175,6 @@ class food(models.Model):
 
 class meal(models.Model):
     meal_name = models.CharField(max_length=30, unique=True, blank=False)
-    # , through="MealItem", through_fields=("mealName", "foodName")
     items = models.ManyToManyField(food)
     description = models.TextField(max_length=200)
 
@@ -231,20 +227,18 @@ class trips(models.Model):
     last_name = models.CharField(max_length=100, blank=False)
     comments = models.TextField(blank=True, null=True, max_length=300)
     payment_status = models.CharField(max_length=150, choices=choices, null=True)
-    trip_start = models.DateField(blank=True, null=True)
-    trip_end = models.DateField(blank=True, null=True)
+    trip_start = models.DateField(blank=False)
+    trip_end = models.DateField(blank=False)
     van_used = models.ForeignKey(vans, on_delete=models.CASCADE, blank=True, null=True)
     kayak_used = models.ManyToManyField(kayak, related_name="kayak", blank=True)
     menu = models.ForeignKey(menu, on_delete=models.CASCADE, related_name="trip_menu", null=True, blank=True)
     extra_meals_purchased = models.ManyToManyField(meal, related_name="trip_meals", blank=True)
-    #extra_food_purchased = models.ManyToManyField(food, related_name='food_used', blank=True)
     extra_supplies = models.ManyToManyField(supplies, related_name='trip_extras', blank=True)
     trip_Itinerary = models.ForeignKey(tripItinerary, on_delete=models.CASCADE, null=True, blank=True)
 
     def __str__(self):
         return self.first_name + ' ' + self.last_name
 
-    
     def end_check(self):
         today = datetime.date.today()
         """Will be used as a background task to make sure trips that have ended or haven't started don't hog availability."""
@@ -275,7 +269,6 @@ class trips(models.Model):
 
     def delete(self, *args, **kwargs):
         """When a trip is deleted, mark the van that it used as available."""
-
         if vans.objects.filter(vanName=self.van_used).exists():
             vans.objects.filter(vanName=self.van_used).update(available=True)
         
@@ -284,6 +277,5 @@ class trips(models.Model):
                 current = kayak.objects.get(kayak_name=choice.kayak_name)
                 current.available = True
                 current.save()
-        
         
         super(trips, self).delete(*args, **kwargs)

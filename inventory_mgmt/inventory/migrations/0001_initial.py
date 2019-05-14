@@ -48,16 +48,6 @@ class Migration(migrations.Migration):
             ],
         ),
         migrations.CreateModel(
-            name='KitSupplies',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('quantity', models.PositiveSmallIntegerField()),
-            ],
-            options={
-                'verbose_name_plural': 'Kit Supplies',
-            },
-        ),
-        migrations.CreateModel(
             name='meal',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
@@ -115,8 +105,8 @@ class Migration(migrations.Migration):
                 ('last_name', models.CharField(max_length=100)),
                 ('comments', models.TextField(blank=True, max_length=300, null=True)),
                 ('payment_status', models.CharField(choices=[('Outreach', 'customer contacted'), ('Deposit Made', 'payment secured'), ('Trip Started', 'Trip ready')], max_length=150, null=True)),
-                ('trip_start', models.DateField(blank=True, null=True)),
-                ('trip_end', models.DateField(blank=True, null=True)),
+                ('trip_start', models.DateField()),
+                ('trip_end', models.DateField()),
                 ('extra_meals_purchased', models.ManyToManyField(blank=True, related_name='trip_meals', to='inventory.meal')),
                 ('extra_supplies', models.ManyToManyField(blank=True, related_name='trip_extras', to='inventory.supplies')),
                 ('kayak_used', models.ManyToManyField(blank=True, related_name='kayak', to='inventory.kayak')),
@@ -134,7 +124,7 @@ class Migration(migrations.Migration):
                 ('van_kit_name', models.CharField(max_length=100)),
                 ('Available', models.BooleanField(default=True)),
                 ('comments', models.TextField(blank=True, max_length=150, null=True)),
-                ('supply_name', models.ManyToManyField(related_name='supplies', through='inventory.KitSupplies', to='inventory.supplies')),
+                ('supply_name', models.ManyToManyField(related_name='supplies', to='inventory.supplies')),
             ],
         ),
         migrations.CreateModel(
@@ -189,16 +179,6 @@ class Migration(migrations.Migration):
             model_name='trailers',
             name='warehouse',
             field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='inventory.warehouse'),
-        ),
-        migrations.AddField(
-            model_name='kitsupplies',
-            name='supplyName',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='inventory.supplies'),
-        ),
-        migrations.AddField(
-            model_name='kitsupplies',
-            name='vanKit',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='inventory.van_kit'),
         ),
         migrations.AddField(
             model_name='kayak',
