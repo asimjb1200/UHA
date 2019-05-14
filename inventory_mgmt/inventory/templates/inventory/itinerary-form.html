@@ -13,15 +13,20 @@
 
 
 
-<a class="btn fas fa-arrow-alt-circle-left fa-2x" href="{% url 'inventory:index' %}" role="button" style="color: Dodgerblue;">&nbsp;</a>
+<a class="btn fas fa-arrow-left fa-2x" href="{% url 'inventory:index' %}" role="button" style="color: Dodgerblue;">&nbsp;</a>
 <hr/>
-<a href="#" data-toggle="tooltip" data-placement="right" style="padding-left: 10px;" title="This page will allow you create/edit an itinerary and save your changes! The 'Itinerary title' is required to create an itinerary. Enter the body of your itinerary into 'Itinerary' and when you are done, hit 'Save'! If you wish to return to the previous page, hit the blue back arrow in the top left.">[Help]</a>
+<a href="#" data-toggle="tooltip" data-placement="right" style="padding-left: 10px;" title="This page will allow you create/edit an itinerary and save your changes! The 'Itinerary title' is required to create an itinerary. Enter the body of your itinerary into 'Itinerary' and when you are done, hit 'Save'! If you wish to return to the previous page, hit the blue back arrow in the top left."><i class="fas fa-info-circle fa-2x">&nbsp;</i></a>
 <br>
 <form action="" method="POST">
     {% csrf_token %}
     {{ form.media }}
     {% include 'inventory/form-template.html' %}
-    <input type="submit" value="Save">
+    <div class='form-group'>
+      <div class='col-sm-offset-2 col-sm-10'>
+        <button type='submit' class='btn btn-primary'>Submit</button>
+        <button onclick="window.history.back();" class="btn btn-warning" type="button">Cancel</button>
+      </div>
+    </div>
 </form>
 
 {% endblock %}

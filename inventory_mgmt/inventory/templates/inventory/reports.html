@@ -1,6 +1,8 @@
 {% extends 'inventory/base.html' %}
 {% block title %}<title>Reports</title>{% endblock title %}
 {% block body %}
+<a class="btn fas fa-arrow-left fa-2x" href="{% url 'inventory:index' %}" role="button" style="color: Dodgerblue;">&nbsp;</a>
+<hr/>
 <h1 class = "text-center">Supply Categories</h1>
 <h3 class="text-center">Total Cost of Supplies and Food - ${{grandTotal}}<h3>
 <br>

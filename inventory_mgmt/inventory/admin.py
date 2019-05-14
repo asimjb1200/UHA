@@ -27,12 +27,12 @@ class tripsAdmin(ImportExportModelAdmin):
     search_fields = ['last_name', 'trip_start', 'payment_status'] # able to search through trips by customer name
     filter_horizontal = ('extra_supplies','kayak_used','extra_meals_purchased')
 
-@admin.register(KitSupplies)
-class KitSuppliesAdmin(ImportExportModelAdmin):
-    """Configure how I want the database to look in the admin page. Also making it searchable."""
+# @admin.register(KitSupplies)
+# class KitSuppliesAdmin(ImportExportModelAdmin):
+#     """Configure how I want the database to look in the admin page. Also making it searchable."""
 
-    list_display = ('supplyName', 'vanKit', 'quantity')
-    search_fields = ['vanKit__van_kit_name']
+#     list_display = ('supplyName', 'vanKit', 'quantity')
+#     search_fields = ['vanKit__van_kit_name']
 
 @admin.register(customer)
 class customerAdmin(ImportExportModelAdmin):
@@ -83,6 +83,10 @@ class suppliesAdmin(ImportExportModelAdmin):
 @admin.register(warehouse)
 class warehouseAdmin(ImportExportModelAdmin):
     list_display = ('id', 'location')
+
+@admin.register(VanKitMasterlist)
+class vankitmasterlistAdmin(ImportExportModelAdmin):
+    pass
 
 
 # admin.site.register(vans)

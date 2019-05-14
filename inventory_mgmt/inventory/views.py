@@ -16,13 +16,6 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib import messages
 from django.views.generic.base import TemplateView
 
-
-#from .forms import tripsform, itineraryform,
-# from django.db import transaction
-# from django.views.generic import ListView
-#from .models import itineraryDays, tripItinerary, 
-
-
 @login_required
 def index(request):
     """Display the landing page of the website."""
@@ -846,11 +839,19 @@ class TripBuilder(LoginRequiredMixin, View):
             van1 = vans.objects.filter(vanName=car.vanName)
             van1.update(available=False)
 
+
         def toggleKayak(self, kayak_used):
             for choice in kayak_used:
                 current = kayak.objects.get(kayak_name=choice.kayak_name)
                 current.available = False
                 current.save()
+
+        def mid_check(self, trip_start, trip_end, van_used):
+            for next in trips.objects.all():
+                if trip_start > next.trip_start and trip_end < next.trip_end:
+                    if van_used == next.van_used.vanName:
+                        messages.warning(request, van_used.vanName + ' is in use during that time period. Pick another vehicle.' )
+                        return render(request, self.template_name, {'form': form})
 
         if form.is_valid():
             # create an object so we can clean the data before saving it
@@ -876,9 +877,10 @@ class TripBuilder(LoginRequiredMixin, View):
                 return render(request, self.template_name, {'form': form})
 
             if van_used is not None:
-                if trips.objects.filter(van_used = form.cleaned_data['van_used']).exists():
-                    messages.warning(request, van_used.vanName + ' is currently in use. Pick another vehicle.' )
-                    return render(request, self.template_name, {'form': form})
+                mid_check(self, trip_start, trip_end, van_used)
+                # if trips.objects.filter(van_used = form.cleaned_data['van_used']).exists():
+                #     messages.warning(request, van_used.vanName + ' is currently in use. Pick another vehicle.' )
+                #     return render(request, self.template_name, {'form': form})
                 toggleVan(self, van_used)
             
             if kayak_used is not None:
@@ -905,8 +907,11 @@ class TripManager(LoginRequiredMixin, generic.ListView):
     template_name = 'inventory/trip_manager.html'
     login_url = '/'
     redirect_field_name = 'redirect_to'
+    
 
     def get_queryset(self):
+        for trip in trips.objects.all():
+            trip.end_check()
         return trips.objects.all().order_by('trip_start')
 
     def get_context_data(self, **kwargs):

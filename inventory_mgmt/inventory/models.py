@@ -1,6 +1,7 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 from ckeditor.fields import RichTextField
+#from django.contrib import messages
 
 import datetime
 # from background_task import background
@@ -102,7 +103,7 @@ class supplies(models.Model):
     category = models.CharField(max_length=20, choices=choices, blank=False)
     quantity = models.PositiveSmallIntegerField(blank=False)  # set up default
     # inputting price is optional
-    price = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
+    price = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True, default=0)
 
     def __str__(self):
         return self.supplyName
@@ -156,7 +157,7 @@ class food(models.Model):
         verbose_name_plural = "food"
     food_name = models.CharField(max_length=100, blank=False)
     # inputting price is optional
-    price = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
+    price = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True, default=0)
     quantity = models.PositiveSmallIntegerField(blank=False)
     warehouse = models.ForeignKey(warehouse, on_delete=models.CASCADE)
 
@@ -244,12 +245,29 @@ class trips(models.Model):
         return self.first_name + ' ' + self.last_name
 
     
-    # def date_check(self):
-    #      """Will be used as a background task to make sure trips that have ended don't hog van availability."""
-    #      today = datetime.date.today()
-    #      name = self.van_used
-    #      if today > self.trip_start and today > self.trip_end:
-    #         vans.objects.filter(vanName = name).update(available = True)
+    def end_check(self):
+        today = datetime.date.today()
+        """Will be used as a background task to make sure trips that have ended or haven't started don't hog availability."""
+        if vans.objects.filter(vanName = self.van_used).exists():
+            if today > self.trip_start and today > self.trip_end:
+                car = vans.objects.get(vanName = self.van_used)
+                car.available = True
+                car.save()
+
+        if self.kayak_used is not None:
+            if today > self.trip_start and today > self.trip_end:
+                for choice in self.kayak_used.all():
+                    current = kayak.objects.get(kayak_name=choice.kayak_name)
+                    current.available = True
+                    current.save()
+    
+    def beg_check(self):
+        today = datetime.date.today()
+        if vans.objects.filter(vanName = self.van_used).exists():
+            if today < self.trip_start:
+                car = vans.objects.get(vanName = self.van_used)
+                car.available = True
+                car.save()
     
     # def save(self, *args, **kwargs):
     #     super().save(*args, **kwargs)
