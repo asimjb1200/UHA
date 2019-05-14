@@ -18,7 +18,7 @@
 }
 
 .middle {
-    transition: .5s ease;
+    transition: .3s ease;
     opacity: 0;
     position: absolute;
     top: 50%;
@@ -59,7 +59,7 @@
 
 
 thead {
-    background-color: Dodgerblue;
+    background-color: rgb(41, 54, 66);
     color: white;
     font-family: Montserrat!important;
 }
@@ -134,6 +134,13 @@ and (-webkit-min-device-pixel-ratio: 2) {
         justify-content: space-evenly; 
         margin: 5px;
     }
+
+
+    #index span {
+        transform: scale(0.5);
+        margin-top: 40px;
+    }
+
 }
 
 /* ----------- iPhone X ----------- */
@@ -155,13 +162,41 @@ span > span h2 {
     font-family: 'Raleway';
 }
 
-
-.reports button h2 {
-    font-family: 'Raleway';
-    font-weight: bold;
+ .accordion {
+    background-color: rgb(56, 55, 55);
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 40px;
+    transition: 0.4s;
+    font-family: 'Raleway'
+  }
+  
+  .reports .active, .accordion:hover {
+    background-color: #ccc;
     color: black;
-}
-
-.reports li {
-    font-size: 1.3rem;
-}
+  }
+  
+  .accordion:after {
+    content: '\002B';
+    color: #777;
+    font-weight: bold;
+    float: right;
+    margin-left: 5px;
+  }
+  
+  .reports .active:after {
+    content: "\2212";
+  }
+  
+  .panel {
+    padding: 0 18px;
+    background-color: white;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+  }
