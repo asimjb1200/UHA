@@ -1,4 +1,4 @@
-# Designed by Asim J. Brown for use by Alaska Ultimate High Adventure employees.
+# Designed by Asim J.B. and Sean M. for use by Alaska Ultimate High Adventure employees.
 # Circa 2019
 from django.views import generic
 from django.shortcuts import render, redirect
@@ -14,7 +14,6 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 import datetime
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib import messages
-from django.views.generic.base import TemplateView
 
 @login_required
 def index(request):
@@ -22,24 +21,8 @@ def index(request):
     return render(request, 'inventory/index.html')
 
 
-class usermanual(LoginRequiredMixin, TemplateView):
-    """This view will be used to display the details of a trip from the view trips page."""
-    
-    template_name = 'inventory/user-manual.html'
-    # login_url = '/'
-    # redirect_field_name = 'redirect_to'
-
-    def get(self, request):
-        #do something with 'GET' method
-        return render(request, 'inventory/user-manual.html')
-
-    # def post(self, request):
-    #     #do something with 'POST' method
-    #     return Response("some data")
-
-
 class itineraryDetails(LoginRequiredMixin, generic.DetailView):
-    """This view will be used to display the details of a trip from the view trips page."""
+    """This view will be used to display the details of a itinerary."""
     
     model = tripItinerary
     template_name = 'inventory/it-details.html'
@@ -48,7 +31,8 @@ class itineraryDetails(LoginRequiredMixin, generic.DetailView):
 
 
 class itineraryDelete(LoginRequiredMixin, DeleteView, PermissionRequiredMixin):
-    """Will allow the user to delete food from the database."""
+    """Will allow the user to delete itineraries."""
+
     model = tripItinerary
     template_name = 'inventory/confirm_delete.html'
     success_url = reverse_lazy('inventory:viewitinerary')
@@ -57,13 +41,15 @@ class itineraryDelete(LoginRequiredMixin, DeleteView, PermissionRequiredMixin):
 
 
 class itineraryView(LoginRequiredMixin, generic.ListView):
+    """View all itineraries in the database."""
+    
     model = tripItinerary
     template_name = 'inventory/view-itinerary.html'
     login_url = '/'
     redirect_field_name = 'redirect_to'
 
     def get_queryset(self):
-        """Return a list of all customers."""
+        """Return a list of all itineraries."""
         return tripItinerary.objects.all()
 
     # def get_context_data(self, **kwargs):
@@ -79,7 +65,9 @@ class itineraryView(LoginRequiredMixin, generic.ListView):
 #     success_url = reverse_lazy('index')
 #     fields = ['name']
 
-class createItinerary(LoginRequiredMixin, View):#CreateView
+class createItinerary(LoginRequiredMixin, View):
+    """Create a new itinerary."""
+
     model = tripItinerary
     #fields = ['first_name']
     template_name = 'inventory/itinerary-form.html'
@@ -113,7 +101,7 @@ class createItinerary(LoginRequiredMixin, View):#CreateView
 
 
 class ItineraryUpdate(LoginRequiredMixin, UpdateView):
-    """This view will allow the user to update customer information."""
+    """This view will allow the user to update itinerary information."""
 
     model = tripItinerary
     form_class = itineraryform
@@ -182,6 +170,8 @@ class ItineraryUpdate(LoginRequiredMixin, UpdateView):
 
 
 class Customers(LoginRequiredMixin, generic.ListView):
+    """This page will display customer information."""
+
     model = customer
     template_name = 'inventory/customers.html'
     login_url = '/'
@@ -200,6 +190,8 @@ class Customers(LoginRequiredMixin, generic.ListView):
 
 
 class OtherCompanyInfo(LoginRequiredMixin, generic.ListView):
+    """This page will display kayaks, trailers and warehouse locations."""
+
     model = warehouse
     template_name = 'inventory/warehouses.html'
     login_url = '/'
@@ -264,7 +256,7 @@ class NewTrailer(LoginRequiredMixin, View, PermissionRequiredMixin):
 
 
 class TrailerUpdate(LoginRequiredMixin, UpdateView, PermissionRequiredMixin):
-    """This view will allow the user to update customer information."""
+    """This view will allow the user to update trailer information."""
 
     model = trailers
     form_class = TrailerForm
@@ -310,7 +302,7 @@ class NewKayak(LoginRequiredMixin, View, PermissionRequiredMixin):
 
 
 class KayakUpdate(LoginRequiredMixin, UpdateView, PermissionRequiredMixin):
-    """This view will allow the user to update meals."""
+    """This view will allow the user to update kayaks."""
 
     model = kayak
     form_class = KayakForm
@@ -387,7 +379,7 @@ class NewCustomer(LoginRequiredMixin, View, PermissionRequiredMixin):
 
 
 class MealsView(LoginRequiredMixin, generic.ListView):
-    """Display menus and meals to the user"""
+    """Display menus, meals and food to the user"""
 
     model = meal
     template_name = 'inventory/food_sets.html'
@@ -405,7 +397,8 @@ class MealsView(LoginRequiredMixin, generic.ListView):
 
 
 class menuDelete(LoginRequiredMixin, DeleteView, PermissionRequiredMixin):
-    """Will allow the user to delete food from the database."""
+    """Will allow the user to delete menus from the database."""
+
     model = menu
     template_name = 'inventory/confirm_delete.html'
     success_url = reverse_lazy('inventory:meals')
@@ -414,7 +407,8 @@ class menuDelete(LoginRequiredMixin, DeleteView, PermissionRequiredMixin):
 
 
 class mealDelete(LoginRequiredMixin, DeleteView, PermissionRequiredMixin):
-    """Will allow the user to delete food from the database."""
+    """Will allow the user to delete meals from the database."""
+
     model = meal
     template_name = 'inventory/confirm_delete.html'
     success_url = reverse_lazy('inventory:meals')
@@ -423,7 +417,7 @@ class mealDelete(LoginRequiredMixin, DeleteView, PermissionRequiredMixin):
 
 
 class NewFood(LoginRequiredMixin, View):
-    """This view will allow the user to build a trip through a form."""
+    """This view will allow the user to create new food."""
 
     form_class = FoodForm
     template_name = 'inventory/new_supply.html'
@@ -456,7 +450,7 @@ class NewFood(LoginRequiredMixin, View):
         return render(request, self.template_name, {'form': form})
 
 class FoodUpdate(LoginRequiredMixin, UpdateView):
-    """This view will allow the user to update meals."""
+    """This view will allow the user to update food."""
 
     model = food
     form_class = FoodForm
@@ -488,7 +482,7 @@ class MenuUpdate(LoginRequiredMixin, UpdateView):
     success_url = reverse_lazy('inventory:meals')
 
 class MenuDetails(LoginRequiredMixin, generic.DetailView):
-    """This view will be used to display the details of a trip from the view trips page."""
+    """This view will be used to display the details of a menu."""
     
     model = menu
     template_name = 'inventory/menu_details.html'
@@ -497,7 +491,7 @@ class MenuDetails(LoginRequiredMixin, generic.DetailView):
 
 
 class MealDetails(LoginRequiredMixin, generic.DetailView):
-    """This view will be used to display the details of a trip from the view trips page."""
+    """This view will be used to display the details of a meal."""
     
     model = meal
     template_name = 'inventory/meal_details.html'
@@ -605,7 +599,8 @@ class SuppliesView(LoginRequiredMixin, generic.ListView):
 
 
 class AddSupply(LoginRequiredMixin, View):
-    # allow an item to be added to the table/database
+    """Add a supply to the database."""
+
     form_class = SupplyForm
     template_name = 'inventory/new_supply.html'
     login_url = '/'
@@ -617,7 +612,7 @@ class AddSupply(LoginRequiredMixin, View):
         return render(request, self.template_name, {'form': form})
 
     def post(self, request):
-        """Take in user data, clean it, and then post it to the database."""
+        """Take in data, clean it, and then post it to the database."""
         form = self.form_class(
             request.POST)  # pass in the user's data to that was submitted in form
 
@@ -641,11 +636,15 @@ class AddSupply(LoginRequiredMixin, View):
 
 
 class FinancialListView(LoginRequiredMixin, generic.ListView):
+    """Reports on inventory prices."""
+
     model = supplies
     template_name = "inventory/reports.html"
 
 
     def get_context_data(self, **kwargs):
+        """Getting total prices to be displayed in the reports page."""
+
         supplyTotal = 0
         foodTotal = 0
         cgTotal = 0
@@ -686,6 +685,7 @@ class FinancialListView(LoginRequiredMixin, generic.ListView):
 
 class SupplyUpdate(LoginRequiredMixin, UpdateView):
     """This will allow the user to update an item."""
+
     model = supplies
     form_class = SupplyForm
     template_name = 'inventory/new_supply.html'
@@ -696,6 +696,7 @@ class SupplyUpdate(LoginRequiredMixin, UpdateView):
 
 class SupplyDelete(LoginRequiredMixin, DeleteView, PermissionRequiredMixin):
     """Will allow the user to delete a trip from the database."""
+
     model = supplies
     template_name = 'inventory/confirm_delete.html'
     success_url = reverse_lazy('inventory:supplies')
@@ -717,7 +718,8 @@ class VansView(LoginRequiredMixin, generic.ListView):
 
 
 class AddVan(LoginRequiredMixin, View):
-    # allow an item to be added to the table/database
+    """Adding a van to the database."""
+
     form_class = VanForm
     template_name = 'inventory/new_supply.html'
     login_url = '/'
@@ -729,7 +731,7 @@ class AddVan(LoginRequiredMixin, View):
         return render(request, self.template_name, {'form': form})
 
     def post(self, request):
-        """Take in user data, clean it, and then post it to the database."""
+        """Take in data, clean it, and then post it to the database."""
         form = self.form_class(
             request.POST)  # pass in the user's data to that was submitted in form
 
@@ -776,8 +778,8 @@ class VanDelete(LoginRequiredMixin, DeleteView, PermissionRequiredMixin):
 
 
 class UserFormView(LoginRequiredMixin, View):
-    # what is the form's blueprint/class?
-    
+    """Creating a new user."""
+
     form_class = UserForm
     template_name = 'inventory/registration_form.html'
     login_url = '/'
@@ -832,26 +834,17 @@ class TripBuilder(LoginRequiredMixin, View):
 
     def post(self, request):
         """Take in user data, clean it, and then post it to the database."""
-        form = self.form_class(
-            request.POST)  # pass in the user's that was submitted in form
+        form = self.form_class(request.POST)  # pass in the user's that was submitted in form
 
         def toggleVan(self, car):
             van1 = vans.objects.filter(vanName=car.vanName)
             van1.update(available=False)
-
 
         def toggleKayak(self, kayak_used):
             for choice in kayak_used:
                 current = kayak.objects.get(kayak_name=choice.kayak_name)
                 current.available = False
                 current.save()
-
-        def mid_check(self, trip_start, trip_end, van_used):
-            for next in trips.objects.all():
-                if trip_start > next.trip_start and trip_end < next.trip_end:
-                    if van_used == next.van_used.vanName:
-                        messages.warning(request, van_used.vanName + ' is in use during that time period. Pick another vehicle.' )
-                        return render(request, self.template_name, {'form': form})
 
         if form.is_valid():
             # create an object so we can clean the data before saving it
@@ -869,7 +862,6 @@ class TripBuilder(LoginRequiredMixin, View):
             kayak_used = form.cleaned_data['kayak_used']
             menu = form.cleaned_data['menu']
             extra_meals_purchased = form.cleaned_data['extra_meals_purchased']
-            #extra_food_purchased = form.cleaned_data['extra_food_purchased']
             extra_supplies = form.cleaned_data['extra_supplies']
             trip_Itinerary = form.cleaned_data['trip_Itinerary']     
 
@@ -877,11 +869,40 @@ class TripBuilder(LoginRequiredMixin, View):
                 return render(request, self.template_name, {'form': form})
 
             if van_used is not None:
-                mid_check(self, trip_start, trip_end, van_used)
-                # if trips.objects.filter(van_used = form.cleaned_data['van_used']).exists():
-                #     messages.warning(request, van_used.vanName + ' is currently in use. Pick another vehicle.' )
-                #     return render(request, self.template_name, {'form': form})
-                toggleVan(self, van_used)
+                # Checking the entire trip database for vans that have already been booked
+                if trips.objects.filter(van_used = form.cleaned_data['van_used']).exists():
+                    for next in trips.objects.filter(van_used=van_used):
+                            
+                            if trip_start >= next.trip_start and trip_end <= next.trip_end:
+                                if van_used == next.van_used:
+                                    messages.warning(request, van_used.vanName + ' is in use during that time period. Pick another vehicle or change trip dates.')
+                                    return render(request, self.template_name, {'form': form})
+                            
+                            elif trip_start <= next.trip_end and trip_start >= next.trip_start:
+                                if van_used == next.van_used:
+                                    messages.warning(request, van_used.vanName + ' is in use during that time period. Pick another vehicle or change trip dates.')
+                                    return render(request, self.template_name, {'form': form})
+                            
+                            elif trip_end >= next.trip_start and trip_end <= next.trip_end:
+                                if van_used == next.van_used:
+                                    messages.warning(request, van_used.vanName + ' is in use during that time period. Pick another vehicle or change trip dates.')
+                                    return render(request, self.template_name, {'form': form})
+
+                            elif next.trip_start >= trip_start and next.trip_end <= trip_end:
+                                if van_used == next.van_used:
+                                    messages.warning(request, van_used.vanName + ' is in use during that time period. Pick another vehicle or change trip dates.')
+                                    return render(request, self.template_name, {'form': form})
+                            
+                            elif next.trip_start <= trip_end and next.trip_start >= trip_start:
+                                if van_used == next.van_used:
+                                    messages.warning(request, van_used.vanName + ' is in use during that time period. Pick another vehicle or change trip dates.')
+                                    return render(request, self.template_name, {'form': form})
+                            
+                            elif next.trip_end >= trip_start and next.trip_end <= trip_end:
+                                if van_used == next.van_used:
+                                    messages.warning(request, van_used.vanName + ' is in use during that time period. Pick another vehicle or change trip dates.')
+                                    return render(request, self.template_name, {'form': form})
+                #toggleVan(self, van_used)
             
             if kayak_used is not None:
                 toggleKayak(self, kayak_used)
@@ -908,9 +929,10 @@ class TripManager(LoginRequiredMixin, generic.ListView):
     login_url = '/'
     redirect_field_name = 'redirect_to'
     
-
     def get_queryset(self):
+        """Run checks on all trip objects to make sure dates don't hog availability."""
         for trip in trips.objects.all():
+            trip.beg_check()
             trip.end_check()
         return trips.objects.all().order_by('trip_start')
 

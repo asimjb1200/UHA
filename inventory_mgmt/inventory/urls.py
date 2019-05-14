@@ -61,18 +61,13 @@ urlpatterns = [
     url(r'^vankits/edit-vkml/(?P<pk>[0-9]+)/$', views.VKMasterlistUpdate.as_view(), name='edit-vkml'),
     url(r'^vankits/delete-vkml/(?P<pk>[0-9]+)/$', views.VKMasterlistDelete.as_view(), name='delete-vkml'),
 
-
     url(r'^itinerary/$', views.itineraryView.as_view(), name='viewitinerary'),
     url(r'^itinerary/add-itinerary/$', views.createItinerary.as_view(), name='createitinerary'),
     url(r'^itinerary/update-itinerary/(?P<pk>[0-9]+)/$', views.ItineraryUpdate.as_view(), name='updateitinerary'),
     url(r'^itinerary/itinerary-detail/(?P<pk>[0-9]+)/$', views.itineraryDetails.as_view(), name='itinerarydetail'),
     url(r'^itinerary/delete-itinerary/(?P<pk>[0-9]+)/$', views.itineraryDelete.as_view(), name='deleteitinerary'),
 
-    
-    url(r'^usermanual/$', views.usermanual.as_view(), name='user-manual'),
-
-    url(r'^usermanual111/$', TemplateView.as_view(template_name='user-manual.html')),
-
-
+    # url(r'^usermanual/$', views.usermanual.as_view(), name='user-manual'),
+    # url(r'^usermanual111/$', TemplateView.as_view(template_name='user-manual.html')),
 
 ]

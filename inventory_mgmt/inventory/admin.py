@@ -1,6 +1,6 @@
 from django.contrib import admin
 from import_export.admin import ImportExportModelAdmin
-from .models import vans, van_kit, supplies, food, trips, KitSupplies, menu, meal, kayak, warehouse, employee, customer, trailers, VanKitMasterlist
+from .models import vans, van_kit, supplies, food, trips, menu, meal, kayak, warehouse, employee, customer, trailers, VanKitMasterlist
 # Register your models here so they'll show in the admin page.
 
 @admin.register(food)

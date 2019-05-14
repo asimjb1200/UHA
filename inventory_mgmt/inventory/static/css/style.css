@@ -18,7 +18,7 @@
 }
 
 .middle {
-    transition: .5s ease;
+    transition: .3s ease;
     opacity: 0;
     position: absolute;
     top: 50%;
@@ -59,7 +59,7 @@
 
 
 thead {
-    background-color: Dodgerblue;
+    background-color: rgb(41, 54, 66);
     color: white;
     font-family: Montserrat!important;
 }
@@ -141,7 +141,7 @@ and (-webkit-min-device-pixel-ratio: 2) {
 
     #index span {
         transform: scale(0.5);
-        margin-top: 10px;
+        margin-top: 40px;
     }
 
 }
